@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('admin.market.produce.index');
+        return view('admin.market.product.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('admin.market.produce.create');
+        return view('admin.market.product.create');
     }
 
     /**

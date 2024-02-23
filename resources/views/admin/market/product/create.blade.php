@@ -79,7 +79,7 @@
                         <section class="col-12">
                             <div class="form-group">
                                 <label for="">توضیحات</label>
-                                <textarea name="body" id="body"  class="form-control form-control-sm" rows="6"></textarea>
+                                <textarea name="body" id="body" class="form-control form-control-sm" rows="6"></textarea>
                             </div>
                         </section>
 

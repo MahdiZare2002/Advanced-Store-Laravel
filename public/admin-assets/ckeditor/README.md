@@ -1,9 +1,39 @@
-CKEditor 5 classic editor build v41.1.0
-=======================================
+CKEditor 4
+==========
 
-In order to start using CKEditor 5 Builds, configure or customize them, please visit http://docs.ckeditor.com/ckeditor5/latest/builds/index.html
+Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
+https://ckeditor.com - See LICENSE.md for license information.
 
-## License
+CKEditor 4 is a text editor to be used inside web pages. It's not a replacement
+for desktop text editors like Word or OpenOffice, but a component to be used as
+part of web applications and websites.
 
-Licensed under the terms of [GNU General Public License Version 2 or later](http://www.gnu.org/licenses/gpl.html).
-For full details about the license, please check the LICENSE.md file.
+## Documentation
+
+The full editor documentation is available online at the following address:
+https://ckeditor.com/docs/
+
+## Installation
+
+Installing CKEditor is an easy task. Just follow these simple steps:
+
+ 1. **Download** the latest version from the CKEditor website:
+    https://ckeditor.com. You should have already completed this step, but be
+    sure you have the very latest version.
+ 2. **Extract** (decompress) the downloaded file into the root of your website.
+
+**Note:** CKEditor is by default installed in the `ckeditor` folder. You can
+place the files in whichever you want though.
+
+## Checking Your Installation
+
+The editor comes with a few sample pages that can be used to verify that
+installation proceeded properly. Take a look at the `samples` directory.
+
+To test your installation, just call the following page at your website:
+
+	http://<your site>/<CKEditor installation path>/samples/index.html
+
+For example:
+
+	http://www.example.com/ckeditor/samples/index.html
