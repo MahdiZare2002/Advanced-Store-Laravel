@@ -17,10 +17,10 @@
                 </section>
                 <section class="sidebar-dropdown">
                     <a href="{{ route('admin.market.category.index') }}">دسته بندی</a>
-                    <a href="#">فرم کالا</a>
+                    <a href="{{ route('admin.market.property.index') }}">فرم کالا</a>
                     <a href="{{ route('admin.market.brand.index') }}">برندها</a>
                     <a href="{{ route('admin.market.product.index') }}">کالاها</a>
-                    <a href="#">انبار</a>
+                    <a href="{{ route('admin.market.store.index') }}">انبار</a>
                     <a href="{{ route('admin.market.comment.index') }}">نظرات</a>
                 </section>
             </section>
