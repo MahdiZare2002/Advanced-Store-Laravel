@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\User\RoleController;
 use App\Http\Controllers\Admin\Content\FAQController;
 use App\Http\Controllers\Admin\Content\MenuController;
 use App\Http\Controllers\Admin\Content\PageController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\Admin\Market\CategoryController;
 use App\Http\Controllers\Admin\Market\DeliveryController;
 use App\Http\Controllers\Admin\Market\DiscountController;
 use App\Http\Controllers\Admin\Market\PropertyController;
+use App\Http\Controllers\Admin\User\PermissionController;
 use App\Http\Controllers\Admin\Content\CommentController as ContentCommentController;
 use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
 
@@ -263,5 +265,28 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::put('/update/{id}', [CustomerController::class, 'update'])->name('admin.user.customer.update');
             Route::delete('/destroy/{id}', [CustomerController::class, 'destroy'])->name('admin.user.customer.destroy');
         });
+
+        //role
+        Route::prefix('role')->group(function () {
+
+            Route::get('/', [RoleController::class, 'index'])->name('admin.user.role.index');
+            Route::get('/create', [RoleController::class, 'show'])->name('admin.user.role.create');
+            Route::post('/store', [RoleController::class, 'store'])->name('admin.user.role.store');
+            Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('admin.user.role.edit');
+            Route::put('/update/{id}', [RoleController::class, 'update'])->name('admin.user.role.update');
+            Route::delete('/destroy/{id}', [RoleController::class, 'destroy'])->name('admin.user.role.destroy');
+        });
+
+        //permission
+        Route::prefix('permission')->group(function () {
+
+            Route::get('/', [PermissionController::class, 'index'])->name('admin.user.permission.index');
+            Route::get('/create', [PermissionController::class, 'show'])->name('admin.user.permission.create');
+            Route::post('/store', [PermissionController::class, 'store'])->name('admin.user.permission.store');
+            Route::get('/edit/{id}', [PermissionController::class, 'edit'])->name('admin.user.permission.edit');
+            Route::put('/update/{id}', [PermissionController::class, 'update'])->name('admin.user.permission.update');
+            Route::delete('/destroy/{id}', [PermissionController::class, 'destroy'])->name('admin.user.permission.destroy');
+        });
     });
 });
+
