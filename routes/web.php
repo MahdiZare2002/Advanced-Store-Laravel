@@ -342,3 +342,13 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
         Route::delete('/destroy/{id}', [SettingController::class, 'destroy'])->name('admin.setting.destroy');
     });
 });
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
