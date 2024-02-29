@@ -14,8 +14,8 @@ class CreateProductUserTable extends Migration
     public function up()
     {
         Schema::create('product_user', function (Blueprint $table) {
-            $table->foreignId('product_id')->nullable()->constrained('products')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('user_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('product_id')->constrained('products')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->primary(['user_id', 'product_id']);
         });
     }

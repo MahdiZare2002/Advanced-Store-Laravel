@@ -15,7 +15,7 @@ class CreatePublicMailFilesTable extends Migration
     {
         Schema::create('public_mail_files', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('public_mail_id')->nullable()->constrained('public_mail')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('public_mail_id')->constrained('public_mail')->onUpdate('cascade')->onDelete('cascade');
             $table->text('file_path');
             $table->bigInteger('file_size');
             $table->string('file_type');

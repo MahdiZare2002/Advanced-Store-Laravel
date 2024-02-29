@@ -16,7 +16,7 @@ class CreateOfflinePaymentsTable extends Migration
         Schema::create('offline_payments', function (Blueprint $table) {
             $table->id();
             $table->decimal('amount', 20, 3);
-            $table->foreignId('user_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->string('transaction_id')->nullable();
             $table->timestamp('pay_date');
             $table->tinyInteger('status')->default(0);
