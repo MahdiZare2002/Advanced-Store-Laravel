@@ -21,6 +21,7 @@ class CreateCartItemsTable extends Migration
             $table->foreignId('guarantee_id')->nullable()->constrained('guarantees')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('number');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
