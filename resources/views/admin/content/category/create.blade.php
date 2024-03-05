@@ -51,8 +51,11 @@
                             <section class="col-12 col-md-6 my-2">
                                 <div class="form-group">
                                     <label for="tags">تگ ها</label>
-                                    <input type="text" class="form-control form-control-sm" name="tags" id="tags"
+                                    <input type="hidden" class="form-control form-control-sm" name="tags" id="tags"
                                         value="{{ old('tags') }}">
+                                    <select class="select2 form-control form-control-sm" id="select_tags" multiple>
+
+                                    </select>
                                 </div>
                                 @error('tags')
                                     <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
