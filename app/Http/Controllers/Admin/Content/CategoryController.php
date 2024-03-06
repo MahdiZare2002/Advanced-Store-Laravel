@@ -99,5 +99,14 @@ class CategoryController extends Controller
     {
         $postCategory->status = $postCategory->status == 0 ? 1 : 0;
         $result = $postCategory->save();
+        if ($result) {
+            if ($postCategory == 0) {
+                return response()->json(['status' => true, 'chacked' => false]);
+            } else {
+                return response()->json(['status' => true, 'chacked' => true]);
+            }
+        } else {
+            return response()->json(['status' => false]);
+        }
     }
 }
