@@ -74,7 +74,7 @@
                                             method="post">
                                             @csrf
                                             {{ method_field('delete') }}
-                                            <button class="btn btn-danger btn-sm" type="submit"><i
+                                            <button class="btn btn-danger btn-sm delete" type="submit"><i
                                                     class="fa fa-trash-alt"></i> حذف</button>
                                         </form>
                                     </td>
@@ -155,4 +155,7 @@
             }
         }
     </script>
+
+
+    @include('admin.alerts.sweetalert.delete-confirm', ['className' => 'delete'])
 @endsection
