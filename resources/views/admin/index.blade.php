@@ -74,7 +74,7 @@
         </section>
         <section class="col-lg-3 col-md-6 col-12">
             <a href="#" class="text-decoration-none d-block mb-4">
-                <section class="card bg-custom-blue text-white">
+                <section class="card bg-custom-yellow text-white">
                     <section class="card-body">
                         <section class="d-flex justify-content-between">
                             <section class="info-box-body">
