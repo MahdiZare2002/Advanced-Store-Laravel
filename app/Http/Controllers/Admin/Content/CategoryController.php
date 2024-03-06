@@ -17,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $postCategories = PostCategory::all();
+        $postCategories = PostCategory::orderBy('created_at', 'desc')->simplePaginate(15);
         return view('admin.content.category.index', compact('postCategories'));
     }
 
@@ -43,7 +43,7 @@ class CategoryController extends Controller
         $inputs['slug'] = str_replace(' ', '-', $inputs['name']) . '-' . Str::random(5);
         $inputs['image'] = 'image';
         $postCategory = PostCategory::create($inputs);
-        return redirect()->route('admin.content.category.index');
+        return redirect()->route('admin.content.category.index')->with('swal-success', 'دسته بندی جدید شما با موفقیت ثبت شد');
     }
 
     /**
@@ -80,7 +80,7 @@ class CategoryController extends Controller
         $inputs = $request->all();
         $inputs['image'] = 'image';
         $postCategory->update($inputs);
-        return redirect()->route('admin.content.category.index');
+        return redirect()->route('admin.content.category.index')->with('swal-success', 'دسته بندی شما با موفقیت ویرایش شد');;
     }
 
     /**
@@ -92,18 +92,20 @@ class CategoryController extends Controller
     public function destroy(PostCategory $postCategory)
     {
         $result = $postCategory->delete();
-        return redirect()->route('admin.content.category.index');
+        return redirect()->route('admin.content.category.index')->with('swal-success', 'دسته بندی شما با موفقیت حذف شد');
     }
+
 
     public function status(PostCategory $postCategory)
     {
+
         $postCategory->status = $postCategory->status == 0 ? 1 : 0;
         $result = $postCategory->save();
         if ($result) {
-            if ($postCategory == 0) {
-                return response()->json(['status' => true, 'chacked' => false]);
+            if ($postCategory->status == 0) {
+                return response()->json(['status' => true, 'checked' => false]);
             } else {
-                return response()->json(['status' => true, 'chacked' => true]);
+                return response()->json(['status' => true, 'checked' => true]);
             }
         } else {
             return response()->json(['status' => false]);
