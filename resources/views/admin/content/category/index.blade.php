@@ -57,7 +57,10 @@
                                     <td>{{ $postCategory->tags }}</td>
                                     <td>
                                         <label for="">
-                                            <input type="checkbox" @if ($postCategory->status === 1) checked @endif>
+                                            <input id="{{ $postCategory->id }}"
+                                                onchange="changeStatus({{ $postCategory->id }})"
+                                                data-url="{{ route('admin.content.category.status', $postCategory->id) }}"
+                                                type="checkbox" @if ($postCategory->status === 1) checked @endif>
                                         </label>
                                     </td>
                                     <td class="width-16-rem text-left">
@@ -66,10 +69,13 @@
                                             ویرایش
                                         </a>
 
-                                        <form class="d-inline" action="{{ route('admin.content.category.destroy', $postCategory->id) }}" method="post">
+                                        <form class="d-inline"
+                                            action="{{ route('admin.content.category.destroy', $postCategory->id) }}"
+                                            method="post">
                                             @csrf
                                             {{ method_field('delete') }}
-                                            <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i>حذف</button>
+                                            <button class="btn btn-danger btn-sm" type="submit"><i
+                                                    class="fa fa-trash-alt"></i>حذف</button>
                                         </form>
                                     </td>
                                 </tr>
