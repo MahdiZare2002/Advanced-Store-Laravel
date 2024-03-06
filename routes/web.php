@@ -58,6 +58,10 @@ use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryCont
 |--------------------------------------------------------------------------
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
 Route::prefix('admin')->namespace('Admin')->group(function () {
     Route::get('/', [AdminDashboardController::class, 'index'])->name('admin.home');
 
