@@ -2,6 +2,8 @@
 
 namespace App\Http\Services\Image;
 
+use Illuminate\Validation\Rules\Exists;
+
 class ImageToolsService
 {
 
@@ -81,5 +83,30 @@ class ImageToolsService
     public function setFinalImageName($finalImageName)
     {
         $this->finalImageName = $finalImageName;
+    }
+
+    protected function checkDirectory($imageDirectory)
+    {
+        if (!file_exists($imageDirectory)) {
+            mkdir($imageDirectory, 666, true);
+        }
+    }
+
+    public function getImageAddress()
+    {
+        return $this->finalImageDirectory . DIRECTORY_SEPARATOR . $this->finalImageName;
+    }
+
+    protected function provider()
+    {
+        //////// set properties ///////
+        //check if image directory doesnt exist (?? => if not exist)
+        $this->getImageDirectory() ?? $this->setImageDirectory(date('Y') . DIRECTORY_SEPARATOR . date('m') . DIRECTORY_SEPARATOR . date('d'));
+        //check if image name not exist (also with ??)
+        $this->getImageName() ?? $this->setImageName(time());
+        //check if image format doesnt specified
+        $this->getImageFormat() ?? $this->setImageFormat($this->image->extension());
+
+        
     }
 }
