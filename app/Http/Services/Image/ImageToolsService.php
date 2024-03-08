@@ -107,6 +107,9 @@ class ImageToolsService
         //check if image format doesnt specified
         $this->getImageFormat() ?? $this->setImageFormat($this->image->extension());
 
-        
+        ////////// set final image directory/////////////
+        $finalImageDirectory = empty($this->getExclusiveDirectory()) ? $this->getImageDirectory() : $this->getExclusiveDirectory() . DIRECTORY_SEPARATOR . $this->getImageDirectory();
+
+        $this->setFinalImageDirectory($finalImageDirectory);
     }
 }
