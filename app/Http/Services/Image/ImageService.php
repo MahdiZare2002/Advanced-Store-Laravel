@@ -48,5 +48,38 @@ class ImageService extends ImageToolsService
 
         //set image
         $this->setImage($image);
+
+        //set directory
+        $this->getImageDirectory() ?? $this->setImageDirectory(date("Y") . DIRECTORY_SEPARATOR . date('m') . DIRECTORY_SEPARATOR . date('d'));
+        $this->setImageDirectory($this->getImageDirectory() . DIRECTORY_SEPARATOR . time());
+
+        //set name
+        $this->getImageName() ?? $this->setImageName(time());
+        $imageName = $this->getImageName();
+
+        $manager = new ImageManager(new Driver());
+        $indexArray = [];
+        foreach ($imageSizes as $sizeAlias => $imageSize) {
+
+            //create and set this size name
+            $currentImageName = $imageName . '_' . $sizeAlias;
+            $this->setImageName($currentImageName);
+
+            //execute provider
+            $this->provider();
+
+            //save image
+            $result = $manager->read($image->getRealPath())->cover($imageSize['width'], $imageSize['height'])->save(public_path($this->getImageAddress()), null, $this->getImageFormat());
+            if ($result)
+                $indexArray[$sizeAlias] = $this->getImageAddress();
+            else {
+                return false;
+            }
+        }
+        $images['indexArray'] = $indexArray;
+        $images['directory'] = $this->getFinalImageDirectory();
+        $images['currentImage'] = Config::get('image.default-current-index-image');
+
+        return $images;
     }
 }
