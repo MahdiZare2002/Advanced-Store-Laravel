@@ -114,5 +114,8 @@ class ImageToolsService
 
         ////////// set final image name/////////////
         $this->setFinalImageName($this->getImageName() . '.' . $this->getImageFormat());
+
+        ////////// check and create final image directory //////////
+        $this->checkDirectory($this->getFinalImageDirectory());
     }
 }
