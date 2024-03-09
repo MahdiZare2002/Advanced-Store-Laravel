@@ -45,11 +45,12 @@ class CategoryController extends Controller
         if ($request->hasFile('image')) {
             $imageService->setExclusiveDirectory('image' . DIRECTORY_SEPARATOR . 'post-category');
 
-            $imageService->createIndexAndSave($request->file('image'));
+            $result = $imageService->createIndexAndSave($request->file('image'));
         } else {
             return redirect()->route('admin.content.category.index')->with('swal-error', 'عکس شما آپلود نشد');
         }
 
+        $inputs['image'] = $result;
         $postCategory = PostCategory::create($inputs);
         return redirect()->route('admin.content.category.index')->with('swal-success', 'دسته بندی جدید شما با موفقیت ثبت شد');
     }
