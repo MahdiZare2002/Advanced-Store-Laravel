@@ -82,4 +82,11 @@ class ImageService extends ImageToolsService
 
         return $images;
     }
+
+    public function deleteImage($imagePath)
+    {
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+    }
 }
