@@ -57,7 +57,7 @@ class ImageService extends ImageToolsService
         $this->getImageName() ?? $this->setImageName(time());
         $imageName = $this->getImageName();
 
-        $manager = new ImageManager(new Driver());
+
         $indexArray = [];
         foreach ($imageSizes as $sizeAlias => $imageSize) {
 
@@ -67,7 +67,7 @@ class ImageService extends ImageToolsService
 
             //execute provider
             $this->provider();
-
+            $manager = new ImageManager(new Driver());
             //save image
             $result = $manager->read($image->getRealPath())->cover($imageSize['width'], $imageSize['height'])->save(public_path($this->getImageAddress()), null, $this->getImageFormat());
             if ($result)

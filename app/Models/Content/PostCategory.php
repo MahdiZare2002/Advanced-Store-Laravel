@@ -15,11 +15,13 @@ class PostCategory extends Model
     public function sluggable(): array
     {
         return [
-            'slug' =>[
+            'slug' => [
                 'source' => 'name',
             ]
         ];
     }
+
+    protected $casts = ['image' => 'array'];
 
     protected $fillable = ['name', 'description', 'slug', 'image', 'status', 'tags'];
 }
