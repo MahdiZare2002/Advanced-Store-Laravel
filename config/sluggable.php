@@ -171,7 +171,7 @@ return [
      * If set to "true", then uniqueness is enforced across trashed and existing models.
      */
 
-    'includeTrashed' => false,
+    'includeTrashed' => true,
 
     /**
      * An array of slug names that can never be used for this model,
