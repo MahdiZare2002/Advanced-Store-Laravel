@@ -244,7 +244,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
         Route::prefix('post')->group(function () {
 
             Route::get('/', [PostController::class, 'index'])->name('admin.content.post.index');
-            Route::get('/create', [PostController::class, 'show'])->name('admin.content.post.create');
+            Route::get('/create', [PostController::class, 'create'])->name('admin.content.post.create');
             Route::post('/store', [PostController::class, 'store'])->name('admin.content.post.store');
             Route::get('/edit/{id}', [PostController::class, 'edit'])->name('admin.content.post.edit');
             Route::put('/update/{id}', [PostController::class, 'update'])->name('admin.content.post.update');
