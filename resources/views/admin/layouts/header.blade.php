@@ -1,4 +1,4 @@
-<header class="header">
+<header class="header-main">
     <section class="sidebar-header bg-gray">
         <section class="d-flex justify-content-between flex-md-row-reverse px-2">
             <span id="sidebar-toggle-show" class="d-inline d-md-none pointer"><i class="fas fa-toggle-off"></i></span>
