@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Content;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Content\MenuRequest;
 use App\Models\Content\Menu;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menus = Menu::orderby('created_at', 'desc')->simplePaginate(15);
+        $menus = Menu::orderBy('created_at', 'desc')->simplePaginate(15);
         return view('admin.content.menu.index', compact('menus'));
     }
 
@@ -26,7 +27,8 @@ class MenuController extends Controller
      */
     public function create()
     {
-        return view('admin.content.menu.create');
+        $menus = Menu::where('parent_id', null)->get();
+        return view('admin.content.menu.create', compact('menus'));
     }
 
     /**
@@ -35,9 +37,11 @@ class MenuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MenuRequest $request)
     {
-        //
+        $inputs = $request->all();
+        $menu = Menu::create($inputs);
+        return redirect()->route('admin.content.menu.index')->with('swal-success', 'منوی شما با موفقیت تشکیل شد');
     }
 
     /**
@@ -46,7 +50,7 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
         //
     }
@@ -57,9 +61,9 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Menu $menu)
     {
-        //
+        return view('admin.content.menu.edit', compact('menu'));
     }
 
     /**
