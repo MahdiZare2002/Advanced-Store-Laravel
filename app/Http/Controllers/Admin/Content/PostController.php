@@ -150,14 +150,13 @@ class PostController extends Controller
         }
     }
 
-
     public function commentable(Post $post)
     {
 
-        $post->status = $post->status == 0 ? 1 : 0;
+        $post->commentable = $post->commentable == 0 ? 1 : 0;
         $result = $post->save();
         if ($result) {
-            if ($post->status == 0) {
+            if ($post->commentable == 0) {
                 return response()->json(['commentable' => true, 'checked' => false]);
             } else {
                 return response()->json(['commentable' => true, 'checked' => true]);
