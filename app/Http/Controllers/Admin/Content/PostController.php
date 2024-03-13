@@ -128,9 +128,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $result = $post->delete();
+        return redirect()->route('admin.content.post.index')->with('swal-success', 'دسته بندی شما با موفقیت حذف شد');
     }
 
     public function status(Post $post)
