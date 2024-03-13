@@ -62,7 +62,7 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
-        return redirect()->route('admin.content.page.edit', compact('page'));
+        return view('admin.content.page.edit', compact('page'));
     }
 
     /**
