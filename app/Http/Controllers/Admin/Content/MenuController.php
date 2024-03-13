@@ -89,7 +89,8 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
-        //
+        $menu->delete();
+        return redirect()->route('admin.content.menu.index')->with('swal-success' , 'منوی شما با موفقیت حذف شد');
     }
 
     public function status(Menu $menu)
