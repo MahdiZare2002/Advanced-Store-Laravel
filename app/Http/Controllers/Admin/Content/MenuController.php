@@ -63,7 +63,8 @@ class MenuController extends Controller
      */
     public function edit(Menu $menu)
     {
-        return view('admin.content.menu.edit', compact('menu'));
+        $parent_menus = Menu::where('parent_id', null)->get();
+        return view('admin.content.menu.edit', compact('menu', 'parent_menus'));
     }
 
     /**
@@ -73,9 +74,11 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MenuRequest $request, Menu $menu)
     {
-        //
+        $inputs = $request->all();
+        $menu->update($inputs);
+        return redirect()->route('admin.content.menu.index')->with('swal-success' , 'منوی شما با موفقیت آپدیت شد');
     }
 
     /**
@@ -84,7 +87,7 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Menu $menu)
     {
         //
     }
