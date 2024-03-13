@@ -43,7 +43,7 @@ class CategoryController extends Controller
         $inputs = $request->all();
 
         if ($request->hasFile('image')) {
-            $imageService->setExclusiveDirectory('image' . DIRECTORY_SEPARATOR . 'post-category');
+            $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'post-category');
 
             $result = $imageService->createIndexAndSave($request->file('image'));
         } else {
@@ -92,7 +92,7 @@ class CategoryController extends Controller
                 $this->deleteDirectoryAndFiles($postCategory->image['directory']);
             }
 
-            $imageService->setExclusiveDirectory('image' . DIRECTORY_SEPARATOR . 'post-category');
+            $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'post-category');
 
             $result = $imageService->createIndexAndSave($request->file('image'));
             if ($result === false) {
@@ -108,7 +108,7 @@ class CategoryController extends Controller
         }
 
         $postCategory->update($inputs);
-        return redirect()->route('admin.content.category.index')->with('swal-success', 'دسته بندی شما با موفقیت ویرایش شد');;
+        return redirect()->route('admin.content.category.index')->with('swal-success', 'دسته بندی شما با موفقیت ویرایش شد');
     }
 
     /**
