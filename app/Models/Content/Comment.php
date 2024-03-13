@@ -10,5 +10,5 @@ class Comment extends Model
 {
     use HasFactory, SoftDeletes;
 
-    
+    protected $fillable = ['body', 'parent_id', 'author_id', 'commentable_id', 'commentable_type', 'seen', 'approved', 'status'];
 }
