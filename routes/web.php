@@ -201,10 +201,9 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
 
             Route::get('/', [ContentCommentController::class, 'index'])->name('admin.content.comment.index');
             Route::get('/show', [ContentCommentController::class, 'show'])->name('admin.content.comment.show');
-            Route::post('/store', [ContentCommentController::class, 'store'])->name('admin.content.comment.store');
-            Route::get('/edit/{id}', [ContentCommentController::class, 'edit'])->name('admin.content.comment.edit');
-            Route::put('/update/{id}', [ContentCommentController::class, 'update'])->name('admin.content.comment.update');
-            Route::delete('/destroy/{id}', [ContentCommentController::class, 'destroy'])->name('admin.content.comment.destroy');
+            Route::delete('/destroy/{comment}', [ContentCommentController::class, 'destroy'])->name('admin.content.comment.destroy');
+            Route::get('/approved/{comment}', [ContentCommentController::class, 'approved'])->name('admin.content.comment.approved');
+            Route::get('/status/{comment}', [ContentCommentController::class, 'status'])->name('admin.content.comment.status');
         });
 
         //FAQ
