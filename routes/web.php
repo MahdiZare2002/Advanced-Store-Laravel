@@ -234,11 +234,12 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
         Route::prefix('page')->group(function () {
 
             Route::get('/', [PageController::class, 'index'])->name('admin.content.page.index');
-            Route::get('/create', [PageController::class, 'show'])->name('admin.content.page.create');
+            Route::get('/create', [PageController::class, 'create'])->name('admin.content.page.create');
             Route::post('/store', [PageController::class, 'store'])->name('admin.content.page.store');
-            Route::get('/edit/{id}', [PageController::class, 'edit'])->name('admin.content.page.edit');
-            Route::put('/update/{id}', [PageController::class, 'update'])->name('admin.content.page.update');
-            Route::delete('/destroy/{id}', [PageController::class, 'destroy'])->name('admin.content.page.destroy');
+            Route::get('/edit/{page}', [PageController::class, 'edit'])->name('admin.content.page.edit');
+            Route::put('/update/{page}', [PageController::class, 'update'])->name('admin.content.page.update');
+            Route::delete('/destroy/{page}', [PageController::class, 'destroy'])->name('admin.content.page.destroy');
+            Route::get('/status/{page}', [PageController::class, 'status'])->name('admin.content.page.status');
         });
 
         //post

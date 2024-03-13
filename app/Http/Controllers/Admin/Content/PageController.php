@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin\Content;
 
-use App\Http\Controllers\Controller;
+use App\Models\Content\Page;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Content\PageRequest;
 
 class PageController extends Controller
 {
@@ -14,7 +16,8 @@ class PageController extends Controller
      */
     public function index()
     {
-        return view('admin.content.page.index');
+        $pages = Page::orderby('created_at', 'desc')->simplePaginate(15);
+        return view('admin.content.page.index', compact('pages'));
     }
 
     /**
@@ -33,9 +36,11 @@ class PageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PageRequest $request)
     {
-        //
+        $inputs = $request->all();
+        $page = Page::create($inputs);
+        return redirect()->route('admin.content.page.index')->with('swal-success', 'پیج شما با موفقیت ایجاد شد');
     }
 
     /**
@@ -44,7 +49,7 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
         //
     }
@@ -55,9 +60,9 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Page $page)
     {
-        //
+        return redirect()->route('admin.content.page.edit', compact('page'));
     }
 
     /**
@@ -67,9 +72,11 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PageRequest $request, Page $page)
     {
-        //
+        $inputs = $request->all();
+        $page->update($inputs);
+        return redirect()->route('admin.content.page.index')->with('swal-success', 'پیج شما با موفقیت ویرایش شد');
     }
 
     /**
@@ -78,8 +85,24 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Page $page)
     {
-        //
+        $page->delete();
+        return redirect()->route('admin.content.page.index')->with('swal-success', 'پرسش شما با موفقیت حذف شد');;
+    }
+
+    public function status(Page $page)
+    {
+        $page->status = $page->status == 0 ? 1 : 0;
+        $result = $page->save();
+        if ($result) {
+            if ($page->status == 0) {
+                return response()->json(['status' => true, 'checked' => false]);
+            } else {
+                return response()->json(['status' => true, 'checked' => true]);
+            }
+        } else {
+            return response()->json(['status' => false]);
+        }
     }
 }
