@@ -47,13 +47,14 @@
                             </tr>
                         </thead>
                         <tbody>
+                            
                             @foreach ($comments as $key => $comment)
                                 <tr>
                                     <th>{{ $key + 1 }}</th>
                                     <td>{{ Str::limit($comment->body, 10) }}</td>
                                     <td>{{ $comment->parent_id ? Str::limit($comment->parent->body, 10) : '' }}</td>
                                     <td>{{ $comment->author_id }}</td>
-                                    <td>{{ $comment->user->fullName }}</td>
+                                    <td>{{ $comment->user->first_name }}</td>
                                     <td>{{ $comment->commentable_id }}</td>
                                     <td>{{ $comment->commentable->title }}</td>
                                     <td>{{ $comment->approved == 1 ? 'تایید شده ' : 'تایید نشده' }} </td>

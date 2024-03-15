@@ -2,11 +2,12 @@
 
 namespace App\Models\Content;
 
-use App\Http\Controllers\Admin\Content\CategoryController;
-use Cviebrock\EloquentSluggable\Sluggable;
+use App\Models\Content\Comment;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Http\Controllers\Admin\Content\CategoryController;
 
 class Post extends Model
 {
@@ -28,5 +29,10 @@ class Post extends Model
     public function postCategory()
     {
         return $this->belongsTo(PostCategory::class, 'category_id');
+    }
+
+    public function comments()
+    {
+        return $this->morphMany('App\Models\Content\Comment', 'commentable');
     }
 }
