@@ -60,7 +60,13 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function comments(){
+    public function getFullNameAttribute()
+    {
+        return ucwords("{$this->first_name} {$this->last_name}");
+    }
+
+    public function comments()
+    {
         return $this->hasMany(Comment::class);
     }
 }

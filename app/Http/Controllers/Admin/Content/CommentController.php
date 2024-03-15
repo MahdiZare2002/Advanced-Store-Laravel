@@ -100,4 +100,15 @@ class CommentController extends Controller
             return response()->json(['status' => false]);
         }
     }
+
+    public function approved(Comment $comment)
+    {
+        $comment->approved = $comment->approved == 0 ? 1 : 0;
+        $result = $comment->save();
+        if ($result) {
+            return redirect()->route('admin.content.comment.index')->with('swal-success', '  وضعیت نظر با موفقیت تغییر کرد');
+        } else {
+            return redirect()->route('admin.content.comment.index')->with('swal-error', 'وضعیت نظر شما تغییر نیافت');
+        }
+    }
 }
