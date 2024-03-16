@@ -65,9 +65,9 @@ class SMSController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(SMS $sms)
     {
-        //
+        return view('admin.notify.sms.edit' , compact('sms'));
     }
 
     /**
