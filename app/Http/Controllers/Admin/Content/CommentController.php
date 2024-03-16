@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Content;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Content\CommentRequest;
 use App\Models\Content\Comment;
 use Illuminate\Http\Request;
 
@@ -109,6 +110,23 @@ class CommentController extends Controller
             return redirect()->route('admin.content.comment.index')->with('swal-success', '  وضعیت نظر با موفقیت تغییر کرد');
         } else {
             return redirect()->route('admin.content.comment.index')->with('swal-error', 'وضعیت نظر شما تغییر نیافت');
+        }
+    }
+
+    public function answer(CommentRequest $request, Comment $comment)
+    {
+        if ($comment->parent == null) {
+            $inputs = $request->all();
+            $inputs['author_id'] = 1;
+            $inputs['parent_id'] = $comment->id;
+            $inputs['commentable_id'] = $comment->commentable_id;
+            $inputs['commentable_type'] = $comment->commentable_type;
+            $inputs['approved'] = 1;
+            $inputs['status'] = 1;
+            $comment = Comment::create($inputs);
+            return redirect()->route('admin.content.comment.index')->with('swal-success', '  پاسخ شما با موفقیت ثبت شد');
+        } else {
+            return redirect()->route('admin.content.comment.index')->with('swal-error', 'خطا');
         }
     }
 }
