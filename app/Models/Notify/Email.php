@@ -10,7 +10,7 @@ class Email extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'public_email';
+    protected $table = 'public_mail';
 
     protected $fillable = ['body', 'subject', 'status', 'published_at'];
 }
