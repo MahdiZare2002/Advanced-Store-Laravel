@@ -16,7 +16,7 @@ class SMSController extends Controller
     public function index()
     {
         $sms = SMS::orderby('created_at' , 'desc')->simplePaginate(15);
-        return view('admin.notify.sms.index');
+        return view('admin.notify.sms.index' , compact('sms'));
     }
 
     /**
