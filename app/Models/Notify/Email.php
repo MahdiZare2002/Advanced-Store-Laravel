@@ -12,5 +12,5 @@ class Email extends Model
 
     protected $table = 'public_email';
 
-    protected $fillable = ['title', 'subject', 'status', 'published_at'];
+    protected $fillable = ['body', 'subject', 'status', 'published_at'];
 }
