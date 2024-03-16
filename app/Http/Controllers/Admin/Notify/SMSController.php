@@ -16,8 +16,8 @@ class SMSController extends Controller
      */
     public function index()
     {
-        $sms = SMS::orderby('created_at' , 'desc')->simplePaginate(15);
-        return view('admin.notify.sms.index' , compact('sms'));
+        $sms = SMS::orderby('created_at', 'desc')->simplePaginate(15);
+        return view('admin.notify.sms.index', compact('sms'));
     }
 
     /**
@@ -91,5 +91,20 @@ class SMSController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function status(SMS $sms)
+    {
+        $sms->status = $sms->status == 0 ? 1 : 0;
+        $result = $sms->save();
+        if ($result) {
+            if ($sms->status == 0) {
+                return response()->json(['status' => true, 'checked' => false]);
+            } else {
+                return response()->json(['status' => true, 'checked' => true]);
+            }
+        } else {
+            return response()->json(['status' => false]);
+        }
     }
 }
