@@ -318,7 +318,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
         //sms
         Route::prefix('sms')->group(function () {
             Route::get('/', [SMSController::class, 'index'])->name('admin.notify.sms.index');
-            Route::get('/create', [SMSController::class, 'show'])->name('admin.notify.sms.create');
+            Route::get('/create', [SMSController::class, 'create'])->name('admin.notify.sms.create');
             Route::post('/store', [SMSController::class, 'store'])->name('admin.notify.sms.store');
             Route::get('/edit/{sms}', [SMSController::class, 'edit'])->name('admin.notify.sms.edit');
             Route::put('/update/{sms}', [SMSController::class, 'update'])->name('admin.notify.sms.update');
