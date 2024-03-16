@@ -45,7 +45,7 @@ class EmailController extends Controller
         $inputs['published_at'] = date("Y-m-d H:i:s", (int)$realTimestampStart);
 
         $sms = Email::create($inputs);
-        return redirect()->route('admin.notify.email.index')->with('swal-success', 'ایمیل جدید شما با موفقیت ثبت شد');
+        return redirect()->route('admin.notify.email.index')->with('swal-success', 'اطلاعیه ایمیل جدید شما با موفقیت ثبت شد');
     }
 
     /**
@@ -54,7 +54,7 @@ class EmailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
         //
     }
@@ -65,9 +65,9 @@ class EmailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Email $email)
     {
-        //
+        return view('admin.notify.email.edit', compact('email'));
     }
 
     /**
@@ -77,9 +77,16 @@ class EmailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EmailRequest $request, Email $email)
     {
-        //
+        $inputs = $request->all();
+
+        //date fixed
+        $realTimestampStart = substr($request->published_at, 0, 10);
+        $inputs['published_at'] = date("Y-m-d H:i:s", (int)$realTimestampStart);
+
+        $email->update($inputs);
+        return redirect()->route('admin.notify.email.index')->with('swal-success', 'اطلاعیه ایمیل شما با موفقیت تغییر یافت');
     }
 
     /**
@@ -88,8 +95,9 @@ class EmailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Email $email)
     {
-        //
+        $email->delete();
+        return redirect()->route('admin.notify.email.index')->with('swal-success', 'اطلاعیه ایمیل شما با موفقیت حذف شد');
     }
 }
