@@ -17,11 +17,12 @@ class SettingController extends Controller
     public function index()
     {
         $setting = Setting::first();
-        if($setting === null){
+        if ($setting === null) {
             $default = new SettingSeeder();
             $default->run();
+            $setting = Setting::first();
         }
-        return view('admin.setting.index');
+        return view('admin.setting.index', compact('setting'));
     }
 
     /**
@@ -31,7 +32,7 @@ class SettingController extends Controller
      */
     public function create()
     {
-        return view('admin.setting.create');
+        // return view('admin.setting.create');
     }
 
     /**
@@ -51,7 +52,7 @@ class SettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
         //
     }
@@ -62,9 +63,9 @@ class SettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Setting $setting)
     {
-        //
+        return view('admin.setting.edit', compact('setting'));
     }
 
     /**
