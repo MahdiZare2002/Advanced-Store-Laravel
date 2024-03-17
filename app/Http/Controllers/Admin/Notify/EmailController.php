@@ -100,4 +100,21 @@ class EmailController extends Controller
         $email->delete();
         return redirect()->route('admin.notify.email.index')->with('swal-success', 'اطلاعیه ایمیل شما با موفقیت حذف شد');
     }
+
+
+    public function status(Email $email)
+    {
+
+        $email->status = $email->status == 0 ? 1 : 0;
+        $result = $email->save();
+        if ($result) {
+            if ($email->status == 0) {
+                return response()->json(['status' => true, 'checked' => false]);
+            } else {
+                return response()->json(['status' => true, 'checked' => true]);
+            }
+        } else {
+            return response()->json(['status' => false]);
+        }
+    }
 }

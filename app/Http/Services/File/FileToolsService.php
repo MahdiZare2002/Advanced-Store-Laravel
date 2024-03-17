@@ -2,8 +2,6 @@
 
 namespace App\Http\Services\File;
 
-use Illuminate\Validation\Rules\Exists;
-
 class FileToolsService
 {
 
@@ -40,22 +38,21 @@ class FileToolsService
         $this->fileDirectory = trim($fileDirectory, '/\\');
     }
 
+    public function getFileSize()
+    {
+        return $this->fileSize;
+    }
+    public function setFileSize($file)
+    {
+        $this->fileSize = $file->getSize();
+    }
+
     public function getFileName()
     {
         return $this->fileName;
     }
 
-    public function setFileName($file)
-    {
-        $this->fileSize = $file->getSize();
-    }
-
-    public function getFileSize()
-    {
-        return $this->fileSize;
-    }
-
-    public function setFileSize($fileName)
+    public function setFileName($fileName)
     {
         $this->fileName = $fileName;
     }
@@ -99,7 +96,7 @@ class FileToolsService
     protected function checkDirectory($fileDirectory)
     {
         if (!file_exists($fileDirectory)) {
-            mkdir($fileDirectory, 666, true);
+            mkdir($fileDirectory, 0755, true);
         }
     }
 
@@ -110,28 +107,22 @@ class FileToolsService
 
     protected function provider()
     {
-        //////// set properties ///////
-        //check if file directory doesnt exist (?? => if not exist)
+        //set properties
         $this->getFileDirectory() ?? $this->setFileDirectory(date('Y') . DIRECTORY_SEPARATOR . date('m') . DIRECTORY_SEPARATOR . date('d'));
-        //check if file name not exist (also with ??)
         $this->getFileName() ?? $this->setFileName(time());
-        //check if file format doesnt specified
-        $this->getFileFormat(pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION));
+        $this->setFileFormat(pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION));
 
 
-        ////////// set final file directory/////////////
+        //set final File Directory
         $finalFileDirectory = empty($this->getExclusiveDirectory()) ? $this->getFileDirectory() : $this->getExclusiveDirectory() . DIRECTORY_SEPARATOR . $this->getFileDirectory();
-
         $this->setFinalFileDirectory($finalFileDirectory);
 
 
-
-        ////////// set final file name/////////////
+        //set final File name
         $this->setFinalFileName($this->getFileName() . '.' . $this->getFileFormat());
 
 
-
-        ////////// check and create final file directory //////////
+        //check adn create final File directory
         $this->checkDirectory($this->getFinalFileDirectory());
     }
 }
