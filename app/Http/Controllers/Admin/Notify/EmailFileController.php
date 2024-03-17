@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Notify;
 
 use App\Http\Controllers\Controller;
+use App\Models\Notify\Email;
 use Illuminate\Http\Request;
 
 class EmailFileController extends Controller
@@ -12,9 +13,9 @@ class EmailFileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Email $email)
     {
-        //
+        return view('admin.notify.email-file.index' , compact('email'));
     }
 
     /**

@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-<title>اطلاعیه پیامکی</title>
+<title>فایل های اطلاعیه ایمیلی </title>
 @endsection
 
 @section('content')
@@ -10,7 +10,8 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
       <li class="breadcrumb-item font-size-12"> <a href="#">اطلاع رسانی</a></li>
-      <li class="breadcrumb-item font-size-12 active" aria-current="page"> اطلاعیه پیامکی</li>
+      <li class="breadcrumb-item font-size-12"> <a href="#"> اطلاعیه ایمیلی</a></li>
+      <li class="breadcrumb-item font-size-12 active" aria-current="page"> فایل های اطلاعیه ایمیلی</li>
     </ol>
   </nav>
 
@@ -20,12 +21,12 @@
         <section class="main-body-container">
             <section class="main-body-container-header">
                 <h5>
-                   اطلاعیه پیامکی
+                   فایل اطلاعیه ایمیلی
                 </h5>
             </section>
 
             <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                <a href="{{ route('admin.notify.sms.create') }}" class="btn btn-info btn-sm">ایجاد اطلاعیه پیامکی</a>
+                <a href="{{ route('admin.notify.email-file.create', $email->id) }}" class="btn btn-info btn-sm">ایجاد فایل اطلاعیه ایمیلی</a>
                 <div class="max-width-16-rem">
                     <input type="text" class="form-control form-control-sm form-text" placeholder="جستجو">
                 </div>
@@ -36,31 +37,31 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>عنوان اطلاعیه</th>
-                            <th>متن پیامک</th>
-                            <th>تاریخ ارسال	</th>
+                            <th>عنوان ایمیل</th>
+                            <th>سایز فایل</th>
+                            <th>نوع فایل</th>
                             <th>وضعیت</th>
                             <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($sms as $key => $single_sms)
+                        @foreach ($email->files as $key => $file)
 
                         <tr>
                             <th>{{ $key + 1 }}</th>
-                            <td>{{ $single_sms->title }}</td>
-                            <td>{{ $single_sms->body }}</td>
-                            <td>{{ jalaliDate($single_sms->published_at, 'H:i:s Y-m-d') }}</td>
+                            <td>{{ $email->subject }}</td>
+                            <td>{{ $file->file_size }}</td>
+                            <td>{{ $email->file_type }}</td>
                             <td>
                                 <label>
-                                    <input id="{{ $single_sms->id }}" onchange="changeStatus({{ $single_sms->id }})" data-url="{{ route('admin.notify.sms.status', $single_sms->id) }}" type="checkbox" @if ($single_sms->status === 1)
+                                    <input id="{{ $file->id }}" onchange="changeStatus({{ $file->id }})" data-url="{{ route('admin.notify.email-file.status', $file->id) }}" type="checkbox" @if ($file->status === 1)
                                     checked
                                     @endif>
                                 </label>
                             </td>
                             <td class="width-16-rem text-left">
-                                <a href="{{ route('admin.notify.sms.edit', $single_sms->id) }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
-                                <form class="d-inline" action="{{ route('admin.notify.sms.destroy', $single_sms->id) }}" method="post">
+                                <a href="{{ route('admin.notify.email.edit', $email->id) }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
+                                <form class="d-inline" action="{{ route('admin.notify.email.destroy', $email->id) }}" method="post">
                                     @csrf
                                     {{ method_field('delete') }}
                                 <button class="btn btn-danger btn-sm delete" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
@@ -68,8 +69,6 @@
                         </tr>
 
                         @endforeach
-
-
 
                     </tbody>
                 </table>
@@ -80,6 +79,8 @@
 </section>
 
 @endsection
+
+
 
 @section('script')
 
@@ -96,11 +97,11 @@
                     if(response.status){
                         if(response.checked){
                             element.prop('checked', true);
-                            successToast('پیامک  با موفقیت فعال شد')
+                            successToast('ایمیل  با موفقیت فعال شد')
                         }
                         else{
                             element.prop('checked', false);
-                            successToast('پیامک  با موفقیت غیر فعال شد')
+                            successToast('ایمیل  با موفقیت غیر فعال شد')
                         }
                     }
                     else{

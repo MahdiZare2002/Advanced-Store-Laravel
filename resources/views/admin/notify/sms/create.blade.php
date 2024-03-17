@@ -6,6 +6,7 @@
 @endsection
 
 @section('content')
+
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
@@ -69,12 +70,9 @@
                             <section class="col-12">
                                 <div class="form-group">
                                     <label for="status">وضعیت</label>
-                                    <select name="status" id="" class="form-control form-control-sm"
-                                        id="status">
-                                        <option value="0" @if (old('status') == 0) selected @endif>غیرفعال
-                                        </option>
-                                        <option value="1" @if (old('status') == 1) selected @endif>فعال
-                                        </option>
+                                    <select name="status" id="" class="form-control form-control-sm" id="status">
+                                        <option value="0" @if (old('status') == 0) selected @endif>غیرفعال</option>
+                                        <option value="1" @if (old('status') == 1) selected @endif>فعال</option>
                                     </select>
                                 </div>
                                 @error('status')
@@ -89,7 +87,8 @@
                             <section class="col-12">
                                 <div class="form-group">
                                     <label for="">متن پیامک</label>
-                                    <textarea name="body" id="body" class="form-control form-control-sm" rows="6">{{ old('body') }}</textarea>
+                                    <textarea name="body" id="body" class="form-control form-control-sm"
+                                        rows="6">{{ old('body') }}</textarea>
                                 </div>
                                 @error('body')
                                     <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
@@ -112,10 +111,12 @@
             </section>
         </section>
     </section>
+
 @endsection
 
 
 @section('script')
+
     <script src="{{ asset('admin-assets/jalalidatepicker/persian-date.min.js') }}"></script>
     <script src="{{ asset('admin-assets/jalalidatepicker/persian-datepicker.min.js') }}"></script>
     <script>
@@ -132,4 +133,5 @@
             })
         });
     </script>
+
 @endsection

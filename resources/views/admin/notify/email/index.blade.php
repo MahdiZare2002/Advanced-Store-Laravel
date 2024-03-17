@@ -57,6 +57,8 @@
                                         </label>
                                     </td>
                                     <td class="width-16-rem text-left">
+                                        <a href="{{ route('admin.notify.email-file.index', $email->id) }}"
+                                            class="btn btn-warning btn-sm"><i class="fa fa-file"></i> فایل های ضمیمه شده</a>
                                         <a href="{{ route('admin.notify.email.edit', $email->id) }}"
                                             class="btn btn-info btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
                                         <form class="d-inline"
