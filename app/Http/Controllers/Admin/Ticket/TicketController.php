@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Ticket;
+namespace App\Http\Controllers\admin\ticket;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
+
     public function newTickets()
     {
         return view('admin.ticket.index');
@@ -28,7 +29,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        
+        return view('admin.ticket.index');
     }
 
     /**
@@ -38,7 +39,7 @@ class TicketController extends Controller
      */
     public function create()
     {
-        
+        //
     }
 
     /**
