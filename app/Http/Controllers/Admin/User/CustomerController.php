@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin\User;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class CustomerController extends Controller
 {
@@ -14,7 +15,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return view('admin.user.customer.index');
+        $users = User::where('user_type', 0)->get();
+        return view('admin.user.customer.index', compact('users'));
     }
 
     /**
