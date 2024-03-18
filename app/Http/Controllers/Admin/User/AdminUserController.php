@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\User\AdminUserRequest;
+use App\Http\Services\Image\ImageService;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminUserController extends Controller
 {
@@ -14,7 +18,8 @@ class AdminUserController extends Controller
      */
     public function index()
     {
-        return view('admin.user.admin-user.index');
+        $admins = User::where('user_type', 1)->get();
+        return view('admin.user.admin-user.index', compact('admins'));
     }
 
     /**
@@ -33,20 +38,23 @@ class AdminUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AdminUserRequest $request, ImageService $imageService)
     {
-        //
-    }
+        $inputs = $request->all();
+        if ($request->hasFile('profile_photo_path')) {
+            $imageService->getExclusiveDirectory('images', DIRECTORY_SEPARATOR, 'users');
+            $result = $imageService->save($request->file('profile_photo_path'));
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+            if ($result === false) {
+                return redirect()->route('admin.user.admin-user.index')->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
+            }
+
+            $inputs['profile_photo_path'] = $result;
+        }
+        $inputs['password'] = Hash::make($request->password);
+        $inputs['user_type'] = 1;
+        $user = User::create($inputs);
+        return redirect()->route('admin.user.admin-user.index')->with('swal-success', 'ادمین جدید با موفقیت ثبت شد');
     }
 
     /**
@@ -55,9 +63,9 @@ class AdminUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return view('admin.user.admin-user.edit', compact('user'));
     }
 
     /**
