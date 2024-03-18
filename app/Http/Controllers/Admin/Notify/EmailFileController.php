@@ -89,7 +89,7 @@ class EmailFileController extends Controller
         $inputs = $request->all();
 
         if ($request->hasFile('file')) {
-            if(!empty($file->file_path)){
+            if (!empty($file->file_path)) {
                 $fileService->deleteFile($file->file_path);
             }
 
@@ -99,15 +99,20 @@ class EmailFileController extends Controller
             $fileSize = $fileService->getFileSize();
             $result = $fileService->moveToPublic($request->file('file'));
             $fileFormat = $fileService->getFileFormat();
+
+
+            $inputs['file_path'] = $result;
+            $inputs['file_size'] = $fileSize;
+            $inputs['file_type'] = $fileFormat;
+
+
+            if ($result === false) {
+                return redirect()->route('admin.notify.email-file.index', $file->email->id)->with('swal-error', 'آپلود فایل شما با خطا مواجه شد');
+            }
         }
 
-        if ($result === false) {
-            return redirect()->route('admin.notify.email-file.index', $file->email->id)->with('swal-error', 'آپلود فایل شما با خطا مواجه شد');
-        }
 
-        $inputs['file_path'] = $result;
-        $inputs['file_size'] = $fileSize;
-        $inputs['file_type'] = $fileFormat;
+
 
         $file->update($inputs);
 
