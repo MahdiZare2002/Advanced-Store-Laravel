@@ -25,4 +25,14 @@ class Ticket extends Model
     public function priority(){
         return $this->belongsTo(TicketPriority::class);
     }
+
+    public function parent()
+    {
+        return $this->belongsTo($this, 'ticket_id')->with('parent');
+    }
+
+    public function children()
+    {
+        return $this->hasMany($this, 'ticket_id')->with('children');
+    }
 }
