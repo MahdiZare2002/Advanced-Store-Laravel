@@ -355,6 +355,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
         Route::get('/new-tickets', [TicketController::class, 'newTickets'])->name('admin.ticket.newTickets');
         Route::get('/open-tickets', [TicketController::class, 'openTickets'])->name('admin.ticket.openTickets');
         Route::get('/close-tickets', [TicketController::class, 'closeTickets'])->name('admin.ticket.closeTickets');
+        Route::get('/show/{ticket}', [TicketController::class, 'show'])->name('admin.ticket.show');
         Route::post('/answer/{ticket}', [TicketController::class, 'answer'])->name('admin.ticket.answer');
         Route::get('/change/{ticket}', [TicketController::class, 'change'])->name('admin.ticket.change');
         

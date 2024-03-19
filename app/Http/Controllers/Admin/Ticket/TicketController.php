@@ -37,6 +37,11 @@ class TicketController extends Controller
         return view('admin.ticket.index', compact('tickets'));
     }
 
+    public function show(Ticket $ticket)
+    {
+        return view('admin.ticket.show', compact('ticket'));
+    }
+
     public function change(Ticket $ticket)
     {
         $ticket->change = 1 ? 0 : 1;
