@@ -36,4 +36,11 @@ class TicketController extends Controller
         $tickets = Ticket::all();
         return view('admin.ticket.index', compact('tickets'));
     }
+
+    public function change(Ticket $ticket)
+    {
+        $ticket->change = 1 ? 0 : 1;
+        $result = $ticket->save();
+        return redirect()->route('admin.ticket.index')->with('swal-success', 'تغییر شما با موفقیت حذف شد');
+    }
 }
