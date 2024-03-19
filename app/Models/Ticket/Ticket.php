@@ -11,6 +11,8 @@ class Ticket extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = ['subject', 'description', 'status', 'seen', 'reference_id', 'user_id', 'category_id', 'priority_id', 'ticket_id'];
+
 
     public function user(){
         return $this->belongsTo(User::class);
