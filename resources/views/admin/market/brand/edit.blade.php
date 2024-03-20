@@ -29,16 +29,17 @@
                 </section>
 
                 <section>
-                    <form action="{{ route('admin.market.brand.store') }}" method="post" id="form"
+                    <form action="{{ route('admin.market.brand.update', $brand->id) }}" method="post" id="form"
                         enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <section class="row">
 
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="">نام اصلی برند</label>
                                     <input type="text" class="form-control form-control-sm" name="original_name"
-                                        value="{{ old('original_name') }}">
+                                        value="{{ old('original_name', $brand->original_name) }}">
                                 </div>
                                 @error('original_name')
                                     <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
@@ -53,7 +54,7 @@
                                 <div class="form-group">
                                     <label for="">نام فارسی برند</label>
                                     <input type="text" class="form-control form-control-sm" name="persian_name"
-                                        value="{{ old('persian_name') }}">
+                                        value="{{ old('persian_name', $brand->persian_name) }}">
                                 </div>
                                 @error('persian_name')
                                     <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
@@ -68,7 +69,7 @@
                                 <div class="form-group">
                                     <label for="tags">تگ ها</label>
                                     <input type="hidden" class="form-control form-control-sm" name="tags" id="tags"
-                                        value="{{ old('tags') }}">
+                                        value="{{ old('tags', $brand->tags) }}">
                                     <select class="select2 form-control form-control-sm" id="select_tags" multiple>
 
                                     </select>
@@ -83,14 +84,15 @@
                             </section>
 
 
+
                             <section class="col-12 col-md-6 my-2">
                                 <div class="form-group">
                                     <label for="status">وضعیت</label>
                                     <select name="status" id="" class="form-control form-control-sm"
                                         id="status">
-                                        <option value="0" @if (old('status') == 0) selected @endif>غیرفعال
+                                        <option value="0" @if (old('status', $brand->status) == 0) selected @endif>غیرفعال
                                         </option>
-                                        <option value="1" @if (old('status') == 1) selected @endif>فعال
+                                        <option value="1" @if (old('status', $brand->status) == 1) selected @endif>فعال
                                         </option>
                                     </select>
                                 </div>
@@ -102,6 +104,7 @@
                                     </span>
                                 @enderror
                             </section>
+
 
 
 
@@ -118,6 +121,31 @@
                                     </span>
                                 @enderror
                             </section>
+
+                            <section class="row">
+                                @php
+                                    $number = 1;
+                                @endphp
+                                @foreach ($brand->logo['indexArray'] as $key => $value)
+                                    <section class="col-md-{{ 6 / $number }}">
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" name="currentImage"
+                                                value="{{ $key }}" id="{{ $number }}"
+                                                @if ($brand->logo['currentImage'] == $key) checked @endif>
+                                            <label for="{{ $number }}" class="form-check-label mx-2">
+                                                <img src="{{ asset($value) }}" class="w-100" alt="">
+                                            </label>
+                                        </div>
+                                    </section>
+                                    @php
+                                        $number++;
+                                    @endphp
+                                @endforeach
+
+                            </section>
+
+
+
                             <section class="col-12">
                                 <button class="btn btn-primary btn-sm">ثبت</button>
                             </section>

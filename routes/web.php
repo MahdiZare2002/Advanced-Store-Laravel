@@ -75,9 +75,9 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/', [BrandController::class, 'index'])->name('admin.market.brand.index');
             Route::get('/create', [BrandController::class, 'create'])->name('admin.market.brand.create');
             Route::post('/store', [BrandController::class, 'store'])->name('admin.market.brand.store');
-            Route::get('/edit/{id}', [BrandController::class, 'edit'])->name('admin.market.brand.edit');
-            Route::put('/update/{id}', [BrandController::class, 'update'])->name('admin.market.brand.update');
-            Route::delete('/destroy/{id}', [BrandController::class, 'destroy'])->name('admin.market.brand.destroy');
+            Route::get('/edit/{brand}', [BrandController::class, 'edit'])->name('admin.market.brand.edit');
+            Route::put('/update/{brand}', [BrandController::class, 'update'])->name('admin.market.brand.update');
+            Route::delete('/destroy/{brand}', [BrandController::class, 'destroy'])->name('admin.market.brand.destroy');
         });
 
         //comment
