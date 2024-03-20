@@ -49,7 +49,7 @@ use App\Http\Controllers\Admin\Ticket\TicketAdminController;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/' , function(){
+Route::get('/', function () {
     return view('welcome');
 });
 
@@ -65,9 +65,9 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/', [CategoryController::class, 'index'])->name('admin.market.category.index');
             Route::get('/create', [CategoryController::class, 'create'])->name('admin.market.category.create');
             Route::post('/store', [CategoryController::class, 'store'])->name('admin.market.category.store');
-            Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('admin.market.category.edit');
-            Route::put('/update/{id}', [CategoryController::class, 'update'])->name('admin.market.category.update');
-            Route::delete('/destroy/{id}', [CategoryController::class, 'destroy'])->name('admin.market.category.destroy');
+            Route::get('/edit/{productCategory}', [CategoryController::class, 'edit'])->name('admin.market.category.edit');
+            Route::put('/update/{productCategory}', [CategoryController::class, 'update'])->name('admin.market.category.update');
+            Route::delete('/destroy/{productCategory}', [CategoryController::class, 'destroy'])->name('admin.market.category.destroy');
         });
 
         //brand
