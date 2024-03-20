@@ -81,11 +81,13 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
-    public function ticketAdmin(){
+    public function ticketAdmin()
+    {
         return $this->hasOne(TicketAdmin::class);
     }
 
-    public function tickets(){
+    public function tickets()
+    {
         return $this->hasMany(Ticket::class);
     }
 }

@@ -14,19 +14,27 @@ class Ticket extends Model
     protected $fillable = ['subject', 'description', 'status', 'seen', 'reference_id', 'user_id', 'category_id', 'priority_id', 'ticket_id'];
 
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
 
-    public function admin(){
+    public function admin()
+    {
         return $this->belongsTo(TicketAdmin::class, 'reference_id');
     }
 
-
-    public function priority(){
+    public function priority()
+    {
         return $this->belongsTo(TicketPriority::class);
     }
+
+    public function category()
+    {
+        return $this->belongsTo(TicketCategory::class);
+    }
+
 
     public function parent()
     {
