@@ -42,33 +42,24 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($productCategories as $productCategory)
+
                         <tr>
-                            <th>1</th>
-                            <td>نمایشگر	</td>
-                            <td>کالای الکترونیکی</td>
+                            <th>{{ $loop->iteration }}</th>
+                            <td>{{ $productCategory->name }}</td>
+                            <td>{{ $productCategory->parent_id ? $productCategory->parent->name : 'دسته اصلی' }}</td>
                             <td class="width-16-rem text-left">
-                                <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
-                                <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
-                            </td>
+                                <a href="{{ route('admin.market.category.edit', $productCategory->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
+                                <form class="d-inline" action="{{ route('admin.market.category.destroy', $productCategory->id) }}" method="post">
+                                    @csrf
+                                    {{ method_field('delete') }}
+                                <button class="btn btn-danger btn-sm delete" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
+                            </form>                            </td>
                         </tr>
-                        <tr>
-                            <th>2</th>
-                            <td>نمایشگر	</td>
-                            <td>کالای الکترونیکی</td>
-                            <td class="width-16-rem text-left">
-                                <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
-                                <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>3</th>
-                            <td>نمایشگر	</td>
-                            <td>کالای الکترونیکی</td>
-                            <td class="width-16-rem text-left">
-                                <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
-                                <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
-                            </td>
-                        </tr>
+
+                        @endforeach
+
+
                     </tbody>
                 </table>
             </section>
@@ -76,5 +67,13 @@
         </section>
     </section>
 </section>
+
+@endsection
+
+
+@section('script')
+
+@include('admin.alerts.sweetalert.delete-confirm', ['className' => 'delete'])
+
 
 @endsection
