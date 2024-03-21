@@ -41,7 +41,7 @@ class PropertyController extends Controller
     public function store(CategoryAttributeRequest $request)
     {
         $inputs = $request->all();
-        $category_attributes = CategoryAttribute::create($inputs);
+        $attribute = CategoryAttribute::create($inputs);
         return redirect()->route('admin.market.property.index')->with('swal-success', 'فرم جدید شما با موفقیت ثبت شد');
     }
 
@@ -51,7 +51,7 @@ class PropertyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
         //
     }
@@ -62,9 +62,12 @@ class PropertyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(CategoryAttribute $categoryAttribute)
     {
         //
+
+        $productCategories = ProductCategory::all();
+        return view('admin.market.property.edit', compact('categoryAttribute', 'productCategories'));
     }
 
     /**
@@ -74,9 +77,11 @@ class PropertyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryAttributeRequest $request, CategoryAttribute $categoryAttribute)
     {
-        //
+        $inputs = $request->all();
+        $categoryAttribute->update($inputs);
+        return redirect()->route('admin.market.property.index')->with('swal-success', 'فرم شما با موفقیت ویرایش شد');
     }
 
     /**
@@ -85,8 +90,9 @@ class PropertyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(CategoryAttribute $categoryAttribute)
     {
-        //
+        $result = $categoryAttribute->delete();
+        return redirect()->route('admin.market.property.index')->with('swal-success', 'فرم شما با موفقیت حذف شد');
     }
 }
