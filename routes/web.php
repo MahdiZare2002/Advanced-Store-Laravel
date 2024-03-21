@@ -26,11 +26,12 @@ use App\Http\Controllers\Admin\Market\PropertyController;
 use App\Http\Controllers\admin\setting\SettingController;
 use App\Http\Controllers\admin\user\PermissionController;
 use App\Http\Controllers\Admin\Notify\EmailFileController;
+use App\Http\Controllers\Admin\Ticket\TicketAdminController;
 use App\Http\Controllers\Admin\Ticket\TicketCategoryController;
 use App\Http\Controllers\Admin\Ticket\TicketPriorityController;
 use App\Http\Controllers\Admin\Content\CommentController as ContentCommentController;
 use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
-use App\Http\Controllers\Admin\Ticket\TicketAdminController;
+use App\Http\Controllers\Admin\Market\ProductColorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -144,7 +145,12 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::put('/update/{product}', [ProductController::class, 'update'])->name('admin.market.product.update');
             Route::delete('/destroy/{product}', [ProductController::class, 'destroy'])->name('admin.market.product.destroy');
 
-            
+            //email file
+            Route::get('/color/{product}', [ProductColorController::class, 'index'])->name('admin.market.color.index');
+            Route::get('/color/{product}/create', [ProductColorController::class, 'create'])->name('admin.market.color.create');
+            Route::post('/color/{product}/store', [ProductColorController::class, 'store'])->name('admin.market.color.store');
+            Route::delete('/color/destroy/{product}/{productColor}', [ProductColorController::class, 'destroy'])->name('admin.market.color.destroy');
+
             //gallery
             Route::get('/gallery', [GalleryController::class, 'index'])->name('admin.market.gallery.index');
             Route::post('/gallery/store', [GalleryController::class, 'store'])->name('admin.market.gallery.store');
@@ -283,9 +289,9 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/', [PermissionController::class, 'index'])->name('admin.user.permission.index');
             Route::get('/create', [PermissionController::class, 'create'])->name('admin.user.permission.create');
             Route::post('/store', [PermissionController::class, 'store'])->name('admin.user.permission.store');
-            Route::get('/edit/{permission}', [PermissionController::class, 'edit'])->name('admin.user.permission.edit');
-            Route::put('/update/{permission}', [PermissionController::class, 'update'])->name('admin.user.permission.update');
-            Route::delete('/destroy/{permission}', [PermissionController::class, 'destroy'])->name('admin.user.permission.destroy');
+            Route::get('/edit/{id}', [PermissionController::class, 'edit'])->name('admin.user.permission.edit');
+            Route::put('/update/{id}', [PermissionController::class, 'update'])->name('admin.user.permission.update');
+            Route::delete('/destroy/{id}', [PermissionController::class, 'destroy'])->name('admin.user.permission.destroy');
         });
     });
 
@@ -352,14 +358,14 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/status/{ticketPriority}', [TicketPriorityController::class, 'status'])->name('admin.ticket.priority.status');
         });
 
+
         //admin
         Route::prefix('admin')->group(function () {
             Route::get('/', [TicketAdminController::class, 'index'])->name('admin.ticket.admin.index');
             Route::get('/set/{admin}', [TicketAdminController::class, 'set'])->name('admin.ticket.admin.set');
         });
 
-
-        //tickets
+        //main
         Route::get('/', [TicketController::class, 'index'])->name('admin.ticket.index');
         Route::get('/new-tickets', [TicketController::class, 'newTickets'])->name('admin.ticket.newTickets');
         Route::get('/open-tickets', [TicketController::class, 'openTickets'])->name('admin.ticket.openTickets');

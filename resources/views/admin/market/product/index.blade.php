@@ -63,8 +63,9 @@
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                                 <a href="" class="dropdown-item text-right"><i
                                                         class="fa fa-images"></i> گالری</a>
-                                                <a href="" class="dropdown-item text-right"><i
-                                                        class="fa fa-list-ul"></i> قرم کالا</a>
+                                                <a href="{{ route('admin.market.color.index', $product->id) }}"
+                                                    class="dropdown-item text-right"><i class="fa fa-list-ul"></i> رنگ
+                                                    کالا</a>
                                                 <a href="{{ route('admin.market.product.edit', $product->id) }}"
                                                     class="dropdown-item text-right"><i class="fa fa-edit"></i> ویرایش</a>
                                                 <form class="d-inline"
