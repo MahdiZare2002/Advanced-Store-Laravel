@@ -23,7 +23,7 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
-        if($this->isMethod('post')){
+        if ($this->isMethod('post')) {
             return [
                 'name' => 'required|max:120|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
                 'introduction' => 'required|max:1000|min:5',
@@ -39,9 +39,10 @@ class ProductRequest extends FormRequest
                 'category_id' => 'required|min:1|max:100000000|regex:/^[0-9]+$/u|exists:product_categories,id',
                 'brand_id' => 'required|min:1|max:100000000|regex:/^[0-9]+$/u|exists:brands,id',
                 'published_at' => 'required|numeric',
+                'meta_key.*' => 'required',
+                'meta_value.*' => 'required',
             ];
-        }
-        else{
+        } else {
             return [
                 'name' => 'required|max:120|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
                 'introduction' => 'required|max:1000|min:5',
@@ -57,6 +58,8 @@ class ProductRequest extends FormRequest
                 'category_id' => 'required|min:1|max:100000000|regex:/^[0-9]+$/u|exists:product_categories,id',
                 'brand_id' => 'required|min:1|max:100000000|regex:/^[0-9]+$/u|exists:brands,id',
                 'published_at' => 'required|numeric',
+                'meta_key.*' => 'required',
+                'meta_value.*' => 'required',
             ];
         }
     }
