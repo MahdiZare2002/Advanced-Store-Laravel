@@ -2,6 +2,7 @@
 
 namespace App\Models\Market;
 
+use App\Models\Content\Post;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -35,8 +36,9 @@ class ProductCategory extends Model
         return $this->hasMany($this, 'parent_id')->with('children');
     }
 
-    public function products()
+    public function posts()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Post::class);
     }
+
 }

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Market;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Market\Gallery;
+use App\Models\Market\Product;
+use App\Http\Controllers\Controller;
+use App\Http\Services\Image\ImageService;
 
 class GalleryController extends Controller
 {
@@ -12,9 +15,9 @@ class GalleryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Product $product)
     {
-        //
+        return view('admin.market.product.gallery.index', compact('product'));
     }
 
     /**
@@ -22,9 +25,9 @@ class GalleryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Product $product)
     {
-        //
+        return view('admin.market.product.gallery.create', compact('product'));
     }
 
     /**
@@ -33,9 +36,23 @@ class GalleryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Product $product, ImageService $imageService)
     {
-        //
+        $validated = $request->validate([
+            'image' => 'required|image|mimes:png,jpg,jpeg,gif',
+        ]);
+        $inputs = $request->all();
+        if ($request->hasFile('image')) {
+            $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'product-gallery');
+            $result = $imageService->createIndexAndSave($request->file('image'));
+            if ($result === false) {
+                return redirect()->route('admin.market.gallery.index', $product->id)->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
+            }
+            $inputs['image'] = $result;
+            $inputs['product_id'] = $product->id;
+            $gallery = Gallery::create($inputs);
+            return redirect()->route('admin.market.gallery.index', $product->id)->with('swal-success', 'عکس شما با موفقیت ثبت شد');
+        }
     }
 
     /**
@@ -78,8 +95,9 @@ class GalleryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product,Gallery $gallery)
     {
-        //
+        $result = $gallery->delete();
+        return redirect()->route('admin.market.gallery.index', $product->id)->with('swal-success', 'عکس شما با موفقیت حذف شد');
     }
 }

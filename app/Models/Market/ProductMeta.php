@@ -11,10 +11,6 @@ class ProductMeta extends Model
     protected $table = 'product_meta';
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['meta_key', 'meta_value', 'product_id'];
 
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
-    }
+    protected $fillable = ['meta_key', 'meta_value', 'product_id'];
 }

@@ -46,7 +46,7 @@ class CommentController extends Controller
      */
     public function show()
     {
-        return view('admin.market.brand.show');
+        return view('admin.market.comment.show');
     }
 
     /**
