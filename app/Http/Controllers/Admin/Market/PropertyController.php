@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Market;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Market\CategoryAttributeRequest;
 use App\Models\Market\CategoryAttribute;
 use App\Models\Market\ProductCategory;
 use Illuminate\Http\Request;
@@ -37,9 +38,11 @@ class PropertyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryAttributeRequest $request)
     {
-        //
+        $inputs = $request->all();
+        $category_attributes = CategoryAttribute::create($inputs);
+        return redirect()->route('admin.market.property.index')->with('swal-success', 'فرم جدید شما با موفقیت ثبت شد');
     }
 
     /**
