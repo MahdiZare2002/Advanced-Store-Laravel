@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\Market;
 
 use App\Http\Controllers\Controller;
+use App\Models\Market\CategoryAttribute;
+use App\Models\Market\ProductCategory;
 use Illuminate\Http\Request;
 
 class PropertyController extends Controller
@@ -14,7 +16,8 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        return view('admin.market.property.index');
+        $category_attributes = CategoryAttribute::all();
+        return view('admin.market.property.index', compact('category_attributes'));
     }
 
     /**
@@ -24,7 +27,8 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        return view('admin.market.property.create');
+        $productCategories = ProductCategory::all();
+        return view('admin.market.property.create', compact('productCategories'));
     }
 
     /**
