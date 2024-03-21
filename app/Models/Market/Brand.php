@@ -13,8 +13,8 @@ class Brand extends Model
 
     public function sluggable(): array
     {
-        return [
-            'slug' => [
+        return[
+            'slug' =>[
                 'source' => 'original_name'
             ]
         ];
@@ -24,4 +24,10 @@ class Brand extends Model
 
 
     protected $fillable = ['persian_name', 'original_name', 'slug', 'logo', 'status', 'tags'];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
 }
