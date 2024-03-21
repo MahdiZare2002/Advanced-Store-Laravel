@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-    <title>مدیریت رنگ های محصول</title>
+    <title>گالری</title>
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
             <li class="breadcrumb-item font-size-12"> <a href="#">بخش فروش</a></li>
-            <li class="breadcrumb-item font-size-12 active" aria-current="page"> رنگ</li>
+            <li class="breadcrumb-item font-size-12 active" aria-current="page"> گالری</li>
         </ol>
     </nav>
 
@@ -19,12 +19,12 @@
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                        رنگ
+                        گالری
                     </h5>
                 </section>
 
                 <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.market.color.create', $product->id) }}" class="btn btn-info btn-sm">ایجاد رنگ
+                    <a href="{{ route('admin.market.gallery.create', $product->id) }}" class="btn btn-info btn-sm">ایجاد عکس
                         جدید </a>
                     <div class="max-width-16-rem">
                         <input type="text" class="form-control form-control-sm form-text" placeholder="جستجو">
@@ -37,26 +37,23 @@
                             <tr>
                                 <th>#</th>
                                 <th>نام کالا</th>
-                                <th> رنگ کالا</th>
-                                <th> افزایش قیمت</th>
+                                <th> تصویر کالا</th>
                                 <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($product->colors as $color)
+                            @foreach ($product->images as $image)
                                 <tr>
                                     <th>{{ $loop->iteration }}</th>
                                     <td>{{ $product->name }}</td>
                                     <td>
-                                        {{ $color->color_name }}
-                                    </td>
-                                    <td>
-                                        {{ $color->price_increase }}
+                                        <img src="{{ asset($image->image['indexArray'][$image->image['currentImage']]) }}"
+                                            alt="" width="100" height="50">
                                     </td>
 
                                     <td class="width-16-rem text-left">
                                         <form class="d-inline"
-                                            action="{{ route('admin.market.color.destroy', ['product' => $product->id, 'color' => $color->id]) }}"
+                                            action="{{ route('admin.market.gallery.destroy', ['product' => $product->id, 'gallery' => $image->id]) }}"
                                             method="post">
                                             @csrf
                                             {{ method_field('delete') }}
