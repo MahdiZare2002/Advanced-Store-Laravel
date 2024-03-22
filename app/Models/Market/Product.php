@@ -52,4 +52,9 @@ class Product extends Model
     {
         return $this->hasMany(CategoryValue::class);
     }
+
+    public function comments()
+    {
+        return $this->morphMany('App\Models\Content\Comment', 'commentable');
+    }
 }
