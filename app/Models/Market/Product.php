@@ -13,8 +13,8 @@ class Product extends Model
 
     public function sluggable(): array
     {
-        return[
-            'slug' =>[
+        return [
+            'slug' => [
                 'source' => 'name'
             ]
         ];
@@ -28,7 +28,7 @@ class Product extends Model
     {
         return $this->belongsTo(ProductCategory::class, 'category_id');
     }
-     public function brand()
+    public function brand()
     {
         return $this->belongsTo(Brand::class, 'brand_id');
     }
@@ -48,5 +48,8 @@ class Product extends Model
         return $this->hasMany(Gallery::class);
     }
 
-
+    public function values()
+    {
+        return $this->hasMany(CategoryValue::class);
+    }
 }
