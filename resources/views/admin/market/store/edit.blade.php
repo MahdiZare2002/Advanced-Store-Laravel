@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-    <title>اضافه کردن به انبار</title>
+    <title>ویرایش انبار</title>
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
             <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
             <li class="breadcrumb-item font-size-12"> <a href="#">بخش فروش</a></li>
             <li class="breadcrumb-item font-size-12"> <a href="#">انبار</a></li>
-            <li class="breadcrumb-item font-size-12 active" aria-current="page"> اضافه کردن به انبار</li>
+            <li class="breadcrumb-item font-size-12 active" aria-current="page"> ویرایش انبار</li>
         </ol>
     </nav>
 
@@ -20,7 +20,7 @@
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                        اضافه کردن به انبار
+                        ویرایش انبار
                     </h5>
                 </section>
 
@@ -29,42 +29,18 @@
                 </section>
 
                 <section>
-                    <form action="{{ route('admin.market.store.store', $product->id) }}" method="POST">
+                    <form action="{{ route('admin.market.store.update', $product->id) }}" method="POST">
                         @csrf
+                        @method('PUT')
                         <section class="row">
 
-                            <section class="col-12 col-md-6">
+
+
+                            <section class="col-12">
                                 <div class="form-group">
-                                    <label for="">نام تحویل گیرنده</label>
-                                    <input type="text" name="receiver" value="{{ old('receiver') }}"
-                                        class="form-control form-control-sm">
-                                </div>
-                                @error('receiver')
-                                    <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
-                                        <strong>
-                                            {{ $message }}
-                                        </strong>
-                                    </span>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="">نام تحویل دهنده</label>
-                                    <input type="text" name="deliverer" value="{{ old('deliverer') }}"
-                                        class="form-control form-control-sm">
-                                </div>
-                                @error('deliverer')
-                                    <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
-                                        <strong>
-                                            {{ $message }}
-                                        </strong>
-                                    </span>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="">تعداد</label>
-                                    <input type="text" name="marketable_number" value="{{ old('marketable_number') }}"
+                                    <label for="">تعداد قابل فروش</label>
+                                    <input type="text" name="marketable_number"
+                                        value="{{ old('marketable_number', $product->marketable_number) }}"
                                         class="form-control form-control-sm">
                                 </div>
                                 @error('marketable_number')
@@ -78,10 +54,12 @@
 
                             <section class="col-12">
                                 <div class="form-group">
-                                    <label for="">توضیحات</label>
-                                    <textarea name="description" rows="4" class="form-control form-control-sm">{{ old('description') }}</textarea>
+                                    <label for="">تعداد فروخته شده</label>
+                                    <input type="text" name="sold_number"
+                                        value="{{ old('sold_number', $product->sold_number) }}"
+                                        class="form-control form-control-sm">
                                 </div>
-                                @error('description')
+                                @error('sold_number')
                                     <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
                                         <strong>
                                             {{ $message }}
@@ -89,6 +67,24 @@
                                     </span>
                                 @enderror
                             </section>
+
+                            <section class="col-12">
+                                <div class="form-group">
+                                    <label for="">تعداد رزرو شده</label>
+                                    <input type="text" name="frozen_number"
+                                        value="{{ old('frozen_number', $product->frozen_number) }}"
+                                        class="form-control form-control-sm">
+                                </div>
+                                @error('frozen_number')
+                                    <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                                        <strong>
+                                            {{ $message }}
+                                        </strong>
+                                    </span>
+                                @enderror
+                            </section>
+
+
 
 
                             <section class="col-12">
