@@ -6,10 +6,14 @@
 <script src="{{ asset('admin-assets/sweetalert/sweetalert2.min.js') }}"></script>
 <script>
     let notificationDropdown = document.getElementById('header-notification-toggle')
-    notificationDropdown.addEventListener('click', function(){
+    notificationDropdown.addEventListener('click', function() {
         $.ajax({
-            type : 'POST',
-            url : 
+            type: "POST",
+            url: '/admin/notification/read-all',
+            data: {_token: "{{ csrf_token() }}"},
+            success: function() {
+                console.log('yes');
+            }
         })
     })
 </script>
