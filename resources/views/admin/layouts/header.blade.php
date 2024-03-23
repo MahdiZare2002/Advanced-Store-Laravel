@@ -27,7 +27,14 @@
             <section>
                 <span class="ml-2 ml-md-4 position-relative">
                     <span id="header-notification-toggle" class="pointer">
-                        <i class="far fa-bell"></i><sup class="badge badge-danger">4</sup>
+                        <i class="far fa-bell"></i>
+
+                        @if ($notifications->count() !== 0)
+                            <sup class="badge badge-danger">
+                                {{ $notifications->count() }}
+                            </sup>
+                        @endif
+
                     </span>
                     <section id="header-notification" class="header-notifictation rounded">
                         <section class="d-flex justify-content-between">
@@ -40,39 +47,19 @@
                         </section>
 
                         <ul class="list-group rounded px-0">
-                            <li class="list-group-item list-group-item-action">
-                                <section class="media">
-                                    <img class="notification-img" src="{{ asset('admin-assets/images/avatar-2.jpg') }}"
-                                        alt="avatar">
-                                    <section class="media-body pr-1">
-                                        <h5 class="notification-user">محمد هاشمی</h5>
-                                        <p class="notification-text">این یک متن تستی است</p>
-                                        <p class="notification-time">30 دقیقه پیش</p>
+
+                            @foreach ($notifications as $notification)
+                                <li class="list-group-item list-group-item-action">
+                                    <section class="media">
+                                        <section class="media-body pr-1">
+                                            <p class="notification-time">{{ $notification['data']['message'] }}</p>
+                                        </section>
                                     </section>
-                                </section>
-                            </li>
-                            <li class="list-group-item list-group-item-action">
-                                <section class="media">
-                                    <img class="notification-img" src="{{ asset('admin-assets/images/avatar-2.jpg') }}"
-                                        alt="">
-                                    <section class="media-body pr-1">
-                                        <h5 class="notification-user">محمد هاشمی</h5>
-                                        <p class="notification-text">این یک متن تستی است</p>
-                                        <p class="notification-time">30 دقیقه پیش</p>
-                                    </section>
-                                </section>
-                            </li>
-                            <li class="list-group-item list-group-item-action">
-                                <section class="media">
-                                    <img class="notification-img" src="{{ asset('admin-assets/images/avatar-2.jpg') }}"
-                                        alt="">
-                                    <section class="media-body pr-1">
-                                        <h5 class="notification-user">محمد هاشمی</h5>
-                                        <p class="notification-text">این یک متن تستی است</p>
-                                        <p class="notification-time">30 دقیقه پیش</p>
-                                    </section>
-                                </section>
-                            </li>
+                                </li>
+                            @endforeach
+
+
+
                         </ul>
                     </section>
                 </span>
@@ -121,8 +108,7 @@
                 </span>
                 <span class="ml-3 ml-md-5 position-relative">
                     <span id="header-profile-toggle" class="pointer">
-                        <img class="header-avatar" src="{{ asset('admin-assets/images/avatar-2.jpg') }}"
-                            alt="">
+                        <img class="header-avatar" src="{{ asset('admin-assets/images/avatar-2.jpg') }}" alt="">
                         <span class="header-username">کامران محمدی</span>
                         <i class="fas fa-angle-down"></i>
                     </span>
