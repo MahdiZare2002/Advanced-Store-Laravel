@@ -15,8 +15,8 @@ class ProductCategory extends Model
 
     public function sluggable(): array
     {
-        return[
-            'slug' =>[
+        return [
+            'slug' => [
                 'source' => 'name'
             ]
         ];
@@ -45,5 +45,4 @@ class ProductCategory extends Model
     {
         return $this->hasMany(CategoryAttribute::class);
     }
-
 }
