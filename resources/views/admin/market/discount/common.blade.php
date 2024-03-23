@@ -45,18 +45,27 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($commonDiscounts as $commonDiscount)
+
                         <tr>
-                            <th>1</th>
-                            <th>30%</th>
-                            <th>25,000 تومان</th>
-                            <th>پیروزی انقلاب</th>
-                            <td>22 بهمن 99</td>
-                            <td>22 بهمن 99</td>
+                            <th>{{ $loop->iteration }}</th>
+                            <th>{{ $commonDiscount->percentage }}%</th>
+                            <th>{{ $commonDiscount->discount_ceiling }} تومان</th>
+                            <th>{{ $commonDiscount->title }}</th>
+                            <td>{{ jalaliDate($commonDiscount->start_date) }}</td>
+                            <td>{{ jalaliDate($commonDiscount->end_date) }}</td>
                             <td class="width-16-rem text-left">
-                                <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
-                                <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
-                            </td>
+                                <a href="{{ route('admin.market.discount.commonDiscount.edit', $commonDiscount->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
+                                <form class="d-inline" action="{{ route('admin.market.discount.commonDiscount.destroy', $commonDiscount->id) }}" method="post">
+                                    @csrf
+                                    {{ method_field('delete') }}
+                                <button class="btn btn-danger btn-sm delete" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
+                            </form>
+                                </td>
                         </tr>
+
+                        @endforeach
+
                     </tbody>
                 </table>
             </section>
@@ -64,5 +73,13 @@
         </section>
     </section>
 </section>
+
+@endsection
+
+
+@section('script')
+
+@include('admin.alerts.sweetalert.delete-confirm', ['className' => 'delete'])
+
 
 @endsection

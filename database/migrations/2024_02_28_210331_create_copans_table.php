@@ -22,7 +22,7 @@ class CreateCopansTable extends Migration
             $table->tinyInteger('type')->default(0)->comment('0=> common ,,, 1=> private === just one time');
             $table->tinyInteger('status')->default(0);
             $table->timestamp('start_date')->useCurrent();
-            $table->timestamp('finish_date')->useCurrent();
+            $table->timestamp('end_date')->useCurrent();
             $table->foreignId('user_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

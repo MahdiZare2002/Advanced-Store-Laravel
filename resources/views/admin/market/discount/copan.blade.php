@@ -37,7 +37,8 @@
                         <tr>
                             <th>#</th>
                             <th>کد تخفیف</th>
-                            <th>درصد تخفیف</th>
+                            <th>میزان تخفیف</th>
+                            <th>نوع تخفیف</th>
                             <th>سقف تخفیف</th>
                             <th>نوع کوپن</th>
                             <th>تاریخ شروع</th>
@@ -46,19 +47,29 @@
                         </tr>
                     </thead>
                     <tbody>
+
+                        @foreach ($copans as $copan)
+
                         <tr>
-                            <th>1</th>
-                            <th>takhfif-blackfirdays</th>
-                            <th>30%</th>
-                            <th>25,000 تومان</th>
-                            <th>عمومی</th>
-                            <td>22 بهمن 99</td>
-                            <td>22 بهمن 99</td>
+                            <th>{{ $loop->iteration }}</th>
+                            <th>{{ $copan->code }}</th>
+                            <th>{{ $copan->amount }}</th>
+                            <th>{{ $copan->amount_type == 0 ? 'درصدی' : 'عددی' }}</th>
+                            <th>{{ $copan->discount_ceiling ?? '-' }} </th>
+                            <th>{{ $copan->type == 0 ? 'عمومی' : 'خصوصی' }}</th>
+                            <td>{{ jalaliDate($copan->start_date) }}</td>
+                            <td>{{ jalaliDate($copan->end_date) }}</td>
                             <td class="width-16-rem text-left">
-                                <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
-                                <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
-                            </td>
+                                <a href="{{ route('admin.market.discount.copan.edit', $copan->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
+                                <form class="d-inline" action="{{ route('admin.market.discount.copan.destroy', $copan->id) }}" method="post">
+                                    @csrf
+                                    {{ method_field('delete') }}
+                                <button class="btn btn-danger btn-sm delete" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
+                            </form>                            </td>
                         </tr>
+
+                        @endforeach
+
                     </tbody>
                 </table>
             </section>
@@ -66,5 +77,13 @@
         </section>
     </section>
 </section>
+
+@endsection
+
+
+@section('script')
+
+@include('admin.alerts.sweetalert.delete-confirm', ['className' => 'delete'])
+
 
 @endsection

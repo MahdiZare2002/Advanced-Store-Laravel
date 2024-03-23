@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-<title>ایجاد کوپن تخفیف</title>
+<title>ویرایش کوپن تخفیف</title>
 <link rel="stylesheet" href="{{ asset('admin-assets/jalalidatepicker/persian-datepicker.min.css') }}">
 @endsection
 
@@ -12,7 +12,7 @@
       <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
       <li class="breadcrumb-item font-size-12"> <a href="#">بخش فروش</a></li>
       <li class="breadcrumb-item font-size-12"> <a href="#">تخفیف</a></li>
-      <li class="breadcrumb-item font-size-12 active" aria-current="page"> ایجاد کوپن تخفیف</li>
+      <li class="breadcrumb-item font-size-12 active" aria-current="page"> ویرایش کوپن تخفیف</li>
     </ol>
   </nav>
 
@@ -22,7 +22,7 @@
         <section class="main-body-container">
             <section class="main-body-container-header">
                 <h5>
-                  ایجاد کوپن تخفیف
+                    ویرایش کوپن تخفیف
                 </h5>
             </section>
 
@@ -31,15 +31,16 @@
             </section>
 
             <section>
-                <form action="{{ route('admin.market.discount.copan.store') }}" method="POST">
+                <form action="{{ route('admin.market.discount.copan.update', $copan->id) }}" method="POST">
                     @csrf
+                    @method('PUT')
 
                     <section class="row">
 
                         <section class="col-12 col-md-6">
                             <div class="form-group">
                                 <label for="">کد کوپن</label>
-                                <input type="text" name="code" value="{{ old('code') }}"class="form-control form-control-sm">
+                                <input type="text" name="code" value="{{ old('code', $copan->code) }}"class="form-control form-control-sm">
                             </div>
                             @error('code')
                             <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
@@ -53,18 +54,18 @@
                             <div class="form-group">
                                 <label for="">نوع کوپن</label>
                                 <select name="type" id="type" class="form-control form-control-sm">
-                                    <option value="0" @if(old('type') == 0) selected @endif>عمومی</option>
-                                    <option value="1" @if(old('type') == 1) selected @endif>خصوصی</option>
+                                    <option value="0" @if(old('type', $copan->type) == 0) selected @endif>عمومی</option>
+                                    <option value="1" @if(old('type', $copan->type) == 1) selected @endif>خصوصی</option>
                                 </select>
                             </div>
                         </section>
                          <section class="col-12 col-md-6">
                             <div class="form-group">
                                 <label for="">کاربران</label>
-                                <select name="user_id" id="users" class="form-control form-control-sm" disabled>
+                                <select name="user_id" id="users" class="form-control form-control-sm" {{ $copan->type == 0 ? 'disabled' : ''}}>
                                     @foreach ($users as $user)
 
-                                    <option @if(old('user_id') == $user->id) selected @endif value="{{ $user->id }}">{{ $user->fullName }}</option>
+                                    <option @if(old('user_id', $copan->user_id) == $user->id) selected @endif value="{{ $user->id }}">{{ $user->fullName }}</option>
 
                                     @endforeach
 
@@ -83,8 +84,8 @@
                             <div class="form-group">
                                 <label for="">نوع تخفیف</label>
                                 <select name="amount_type" id="amount_type" class="form-control form-control-sm">
-                                    <option value="0" @if(old('amount_type') == 0) selected @endif>درصدی</option>
-                                    <option value="1" @if(old('amount_type') == 1) selected @endif>عددی</option>
+                                    <option value="0" @if(old('amount_type', $copan->amount_type) == 0) selected @endif>درصدی</option>
+                                    <option value="1" @if(old('amount_type', $copan->amount_type) == 1) selected @endif>عددی</option>
                                 </select>
                             </div>
                             @error('amount_type')
@@ -100,7 +101,7 @@
                         <section class="col-12 col-md-6">
                             <div class="form-group">
                                 <label for="">میزان تخفیف</label>
-                                <input type="text" name="amount" value="{{ old('amount') }}" class="form-control form-control-sm">
+                                <input type="text" name="amount" value="{{ old('amount', $copan->amount) }}" class="form-control form-control-sm">
                             </div>
                             @error('amount')
                             <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
@@ -115,7 +116,7 @@
                         <section class="col-12 col-md-6">
                             <div class="form-group">
                                 <label for="">حداکثر تخفیف</label>
-                                <input type="text" name="discount_ceiling" value="{{ old('discount_ceiling') }}" class="form-control form-control-sm">
+                                <input type="text" name="discount_ceiling" value="{{ old('discount_ceiling', $copan->discount_ceiling) }}" class="form-control form-control-sm">
                             </div>
                             @error('discount_ceiling')
                             <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
@@ -160,8 +161,8 @@
                             <div class="form-group">
                                 <label for="status">وضعیت</label>
                                 <select name="status" id="" class="form-control form-control-sm" id="status">
-                                    <option value="0" @if(old('status') == 0) selected @endif>غیرفعال</option>
-                                    <option value="1" @if(old('status') == 1) selected @endif>فعال</option>
+                                    <option value="0" @if(old('status', $copan->status) == 0) selected @endif>غیرفعال</option>
+                                    <option value="1" @if(old('status', $copan->status)) == 1) selected @endif>فعال</option>
                                 </select>
                             </div>
                             @error('status')

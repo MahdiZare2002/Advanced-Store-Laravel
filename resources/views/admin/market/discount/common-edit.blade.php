@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-<title>افزودن به فروش شگفت انگیز</title>
+<title>ویرایش تخفیف عمومی</title>
 <link rel="stylesheet" href="{{ asset('admin-assets/jalalidatepicker/persian-datepicker.min.css') }}">
 @endsection
 
@@ -11,8 +11,8 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
       <li class="breadcrumb-item font-size-12"> <a href="#">بخش فروش</a></li>
-      <li class="breadcrumb-item font-size-12"> <a href="#">برند</a></li>
-      <li class="breadcrumb-item font-size-12 active" aria-current="page"> افزودن به فروش شگفت انگیز</li>
+      <li class="breadcrumb-item font-size-12"> <a href="#">تخفیف</a></li>
+      <li class="breadcrumb-item font-size-12 active" aria-current="page"> ویرایش تخفیف عمومی</li>
     </ol>
   </nav>
 
@@ -22,44 +22,28 @@
         <section class="main-body-container">
             <section class="main-body-container-header">
                 <h5>
-                    افزودن به فروش شگفت انگیز
+                    ویرایش تخفیف عمومی
                 </h5>
             </section>
 
             <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                <a href="{{ route('admin.market.discount.amazingSale') }}" class="btn btn-info btn-sm">بازگشت</a>
+                <a href="{{ route('admin.market.discount.commonDiscount') }}" class="btn btn-info btn-sm">بازگشت</a>
             </section>
 
             <section>
-                <form action="{{ route('admin.market.discount.amazingSale.store') }}" method="POST">
+                <form action="{{ route('admin.market.discount.commonDiscount.update', $commonDiscount->id) }}" method="POST">
                     @csrf
-                     <section class="row">
+                    @method('PUT')
 
 
-                        <section class="col-12 col-md-6">
-                            <div class="form-group">
-                                <label for="">انتخاب کالا</label>
-                                <select name="product_id" id="" class="form-control form-control-sm">
-                                    <option value="">کالا را انتخاب کنید</option>
-                                    @foreach ($products as $product)
-                                    <option value="{{ $product->id }}" @if(old('product_id') == $product->id) selected @endif>{{ $product->name }}</option>
-                                    @endforeach
+                    <section class="row">
 
-                                </select>
-                            </div>
-                            @error('product_id')
-                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
-                                <strong>
-                                    {{ $message }}
-                                </strong>
-                            </span>
-                        @enderror
-                        </section>
+
 
                         <section class="col-12 col-md-6">
                             <div class="form-group">
                                 <label for="">درصد تخفیف</label>
-                                <input type="text" class="form-control form-control-sm" name="percentage" value="{{ old('percentage') }}">
+                                <input type="text" class="form-control form-control-sm" name="percentage" value="{{ old('percentage', $commonDiscount->percentage) }}">
                             </div>
                             @error('percentage')
                             <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
@@ -69,8 +53,45 @@
                             </span>
                         @enderror
                         </section>
-
-
+                        <section class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="">حداکثر تخفیف</label>
+                                <input type="text" name="discount_ceiling" value="{{ old('discount_ceiling', $commonDiscount->discount_ceiling) }}" class="form-control form-control-sm">
+                            </div>
+                            @error('discount_ceiling')
+                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                                <strong>
+                                    {{ $message }}
+                                </strong>
+                            </span>
+                        @enderror
+                        </section>
+                           <section class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="">حداقل مبلغ خرید</label>
+                                <input type="text" name="minimal_order_amount" value="{{ old('minimal_order_amount', $commonDiscount->minimal_order_amount) }}" class="form-control form-control-sm">
+                            </div>
+                            @error('minimal_order_amount')
+                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                                <strong>
+                                    {{ $message }}
+                                </strong>
+                            </span>
+                        @enderror
+                        </section>
+                        <section class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="">عنوان مناسبت</label>
+                                <input type="text" name="title" value="{{ old('title', $commonDiscount->title) }}" class="form-control form-control-sm">
+                            </div>
+                            @error('title')
+                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                                <strong>
+                                    {{ $message }}
+                                </strong>
+                            </span>
+                        @enderror
+                        </section>
                         <section class="col-12 col-md-6">
                             <div class="form-group">
                                 <label for="">تاریخ شروع</label>
@@ -105,18 +126,19 @@
                             <div class="form-group">
                                 <label for="status">وضعیت</label>
                                 <select name="status" id="" class="form-control form-control-sm" id="status">
-                                    <option value="0" @if(old('status') == 0) selected @endif>غیرفعال</option>
-                                    <option value="1" @if(old('status') == 1) selected @endif>فعال</option>
+                                    <option value="0" @if (old('status', $commonDiscount->status) == 0) selected @endif>غیرفعال</option>
+                                    <option value="1" @if (old('status', $commonDiscount->status) == 1) selected @endif>فعال</option>
                                 </select>
                             </div>
                             @error('status')
-                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
-                                <strong>
-                                    {{ $message }}
-                                </strong>
-                            </span>
-                        @enderror
+                                <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                                    <strong>
+                                        {{ $message }}
+                                    </strong>
+                                </span>
+                            @enderror
                         </section>
+
 
                         <section class="col-12">
                             <button class="btn btn-primary btn-sm">ثبت</button>
@@ -130,7 +152,6 @@
 </section>
 
 @endsection
-
 
 
 @section('script')
