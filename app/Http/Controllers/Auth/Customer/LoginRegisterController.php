@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Auth\Customer;
 
+use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\Customer\LoginRegisterRequest;
-use App\Models\User;
+use App\Models\Otp;
 
 class LoginRegisterController extends Controller
 {
@@ -43,5 +45,26 @@ class LoginRegisterController extends Controller
             $errorText = 'شناسه ورودی شما نه شماره موبایل است نه ایمیل';
             return redirect()->route('auth.customer.login-register-form')->withErrors(['id' => $errorText]);
         }
+
+        if(empty($user)){
+            $newUser['password'] = '25802580';
+            $newUser['activation'] = 1;
+            $user = User::craete($newUser);
+        }
+
+        //create otp code
+        $otpCode = rand(111111 , 999999);
+        $token = Str::random(60);
+        $otpInputs = [
+            'token' => $token,
+            'user_id' => $user->id,
+            'otp_code' => $otpCode,
+            'login_id' => $inputs['id'],
+            'type' => $type,
+        ];
+
+        Otp::create($otpInputs);
+
+
     }
 }
