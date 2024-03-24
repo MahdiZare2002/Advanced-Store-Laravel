@@ -1,0 +1,37 @@
+.payment-alert {
+    font-size: 0.8rem;
+}
+
+.payment-wrapper {
+    border-radius: 0.25rem;
+    border: 2px solid #dedede;
+    background-color: #fcfcfc;
+    font-size: 0.8rem;
+    transition: 0.4s;
+
+}
+
+.payment-wrapper:hover {
+    border: 2px solid #00d2e2;
+    background-color: #efefef;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.payment-select  input[type=radio] {
+    display: none;
+}
+
+.payment-select input[type=radio]:checked + .payment-wrapper {
+    border-color: #00b3c3;
+    transition: 0.4s;
+}
+
+.payment-selected {
+    position: absolute;
+    bottom: 0.4rem;
+    left: 0.4rem;
+    display: none;
+    color: #00b3c3;
+    font-size: 0.7rem;
+}

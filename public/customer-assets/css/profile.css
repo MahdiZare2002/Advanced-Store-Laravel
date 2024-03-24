@@ -1,0 +1,115 @@
+.order-wrapper {
+
+}
+
+.order-item {
+    border-bottom: 1px solid #dedede;
+    padding: 0.6rem 0rem;
+
+}
+
+.order-item:last-of-type {
+    border: none;
+}
+
+.order-item i{
+    color: #999999;
+    display: inline-block;
+    width: 2rem;
+    text-align: center;
+}
+
+.order-item-date {
+    font-size: 0.7rem;
+    margin-bottom: 0.4rem;
+}
+
+.order-item-id {
+    font-size: 0.7rem;
+    margin-bottom: 0.4rem;
+}
+
+.order-item-status {
+    font-size: 0.7rem;
+    margin-bottom: 0.4rem;
+}
+
+.order-item-products {
+    margin-top: 0.4rem;
+    margin-bottom: 0.4rem;
+}
+
+.order-item-products a {
+    text-decoration: none;
+    margin-left: 0.4rem;
+    padding: 0.1rem;
+    display: inline-block;
+    border: 1px solid #f7f7f7;
+    border-radius: 0.25rem;
+}
+
+.order-item-products a img {
+    width: 4rem;
+}
+
+.order-item-link a {
+    text-decoration: none;
+    color: #999999;
+    font-size: 0.7rem;
+    font-weight: bold;
+    transition: 0.4s;
+}
+
+.order-item-link a:hover {
+    color: #ff253a;
+    transition: 0.4s;
+}
+
+
+.my-address-wrapper {
+    display: block;
+    width: 100%;
+    position: relative;
+    border-radius: 0.25rem;
+    border: 2px solid #dedede;
+    background-color: #fcfcfc;
+    font-size: 0.8rem;
+    color: #333333;
+    transition: 0.4s;
+}
+
+.my-address-wrapper:hover {
+    background-color: #efefef;
+    transition: 0.4s;
+}
+
+.my-address-wrapper a{
+    position: absolute;
+    left: 0.4rem;
+    top: 0.4rem;
+    text-decoration: none;
+    font-size: 0.7rem;
+    margin: 0.2rem;
+    /*color: #00b5fe;*/
+    color: #999999;
+    background-color: inherit;
+    transition: 0.4s;
+}
+
+.my-address-wrapper:hover a{
+    color: #00b3c3;
+    transition: 0.4s;
+}
+
+
+.field-title {
+    font-size: 0.9rem;
+    font-weight: bold;
+    line-height: 1.6rem;
+}
+
+.field-value {
+    font-size: 0.9rem;
+    line-height: 1.6rem;
+
+}

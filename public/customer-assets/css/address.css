@@ -1,0 +1,151 @@
+.address-add-button {
+    display: block;
+    width: 100%;
+    text-align: center;
+    border-radius: 0.25rem;
+    border: 1px dashed #dedede;
+    color: #666666;
+    background-color: #fcfcfc;
+    font-size: 0.8rem;
+    line-height: 4rem;
+    padding-top: 0.3rem;
+    transition: 0.4s;
+}
+
+.address-add-button:hover {
+    border: 1px dashed #cdcdcd;
+    color: #333333;
+    background-color: #efefef;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    transition: 0.4s;
+}
+
+.address-add-wrapper .modal{
+    z-index: 999999;
+}
+
+.address-add-wrapper .modal-title {
+    font-size: 0.9rem;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    color: #000000;
+}
+
+.address-add-wrapper .btn-close {
+    font-size: 0.6rem;
+}
+
+.address-add-wrapper .modal-body {
+    font-size: 0.8rem;
+}
+
+.address-add-wrapper .form-control-sm {
+    font-size: 0.7rem;
+}
+
+.address-add-wrapper .form-select-sm {
+    font-size: 0.8rem;
+}
+
+.address-wrapper {
+    display: block;
+    width: 100%;
+    position: relative;
+    border-radius: 0.25rem;
+    border: 2px solid #dedede;
+    background-color: #fcfcfc;
+    font-size: 0.8rem;
+    color: #333333;
+    transition: 0.4s;
+}
+
+.address-wrapper:hover {
+    border: 2px solid #00d2e2;
+    background-color: #efefef;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.address-wrapper a{
+    position: absolute;
+    left: 0.4rem;
+    top: 0.4rem;
+    text-decoration: none;
+    font-size: 0.7rem;
+    margin: 0.2rem;
+    /*color: #00b5fe;*/
+    color: #999999;
+    background-color: inherit;
+    transition: 0.4s;
+}
+
+.address-wrapper:hover a{
+    color: #00b3c3;
+    transition: 0.4s;
+}
+
+.address-select input[type=radio] {
+    display: none;
+}
+
+.address-select input[type=radio]:checked + .address-wrapper {
+    /*background-color: #241009;*/
+    border-color: #00b3c3;
+    transition: 0.4s;
+}
+
+.address-selected {
+    position: absolute;
+    bottom: 0.4rem;
+    left: 0.4rem;
+    display: none;
+    color: #00b3c3;
+    font-size: 0.7rem;
+}
+
+.address-select input[type=radio]:checked + .address-wrapper .address-selected {
+    display: inline-block;
+}
+
+
+
+.delivery-select {
+
+}
+
+.delivery-wrapper {
+    border-radius: 0.25rem;
+    border: 2px solid #dedede;
+    background-color: #fcfcfc;
+    font-size: 0.8rem;
+    transition: 0.4s;
+
+}
+
+.delivery-wrapper:hover {
+    border: 2px solid #00d2e2;
+    background-color: #efefef;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.delivery-select  input[type=radio] {
+    display: none;
+}
+
+.delivery-select input[type=radio]:checked + .delivery-wrapper {
+    border-color: #00b3c3;
+    transition: 0.4s;
+}
+
+.delivery-selected {
+    position: absolute;
+    bottom: 0.4rem;
+    left: 0.4rem;
+    display: none;
+    color: #00b3c3;
+    font-size: 0.7rem;
+}
+
+.address-alert {
+    font-size: 0.8rem;
+}
