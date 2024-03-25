@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Config;
 use App\Http\Services\Message\MessageService;
 use App\Http\Services\Message\SMS\SmsService;
 use App\Http\Requests\Auth\Customer\LoginRegisterRequest;
+use App\Http\Services\Message\Email\EmailService;
 
 class LoginRegisterController extends Controller
 {
@@ -79,6 +80,20 @@ class LoginRegisterController extends Controller
             $smsService->setIsFlash(true);
 
             $messagesService = new MessageService($smsService);
+        } elseif ($type == 1) {
+            $emailService = new EmailService();
+            $details = [
+                'title' => 'ایمیل فعال سازی',
+                'body' => "کد فعال سازی شما : $otpCode",
+            ];
+            $emailService->setDetails($details);
+            $emailService->setFrom('noreplay@example.com' , 'example');
+            $emailService->setSubject('کد احراز هویت');
+            $emailService->setTo($inputs['id']);
+
+            $messageService = new MessageService($emailService);
         }
+
+        $messageService->send();
     }
 }
