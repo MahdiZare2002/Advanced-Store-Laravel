@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Auth\Customer;
 
+use App\Models\Otp;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
+use App\Http\Services\Message\MessageService;
+use App\Http\Services\Message\SMS\SmsService;
 use App\Http\Requests\Auth\Customer\LoginRegisterRequest;
-use App\Models\Otp;
 
 class LoginRegisterController extends Controller
 {
@@ -46,14 +49,14 @@ class LoginRegisterController extends Controller
             return redirect()->route('auth.customer.login-register-form')->withErrors(['id' => $errorText]);
         }
 
-        if(empty($user)){
+        if (empty($user)) {
             $newUser['password'] = '25802580';
             $newUser['activation'] = 1;
             $user = User::craete($newUser);
         }
 
         //create otp code
-        $otpCode = rand(111111 , 999999);
+        $otpCode = rand(111111, 999999);
         $token = Str::random(60);
         $otpInputs = [
             'token' => $token,
@@ -65,6 +68,17 @@ class LoginRegisterController extends Controller
 
         Otp::create($otpInputs);
 
+        //send sms or email
 
+        if ($type == 0) {
+            //send sms
+            $smsService = new SmsService();
+            $smsService->setFrom(Config::get('sms.otp_from'));
+            $smsService->setTo(['0' . $user->mobile]);
+            $smsService->setText("مجموعه آمازون \n  کد تایید : $otpCode");
+            $smsService->setIsFlash(true);
+
+            $messagesService = new MessageService($smsService);
+        }
     }
 }
