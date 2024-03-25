@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Auth\Customer;
 
+use Carbon\Carbon;
 use App\Models\Otp;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use App\Http\Services\Message\MessageService;
 use App\Http\Services\Message\SMS\SmsService;
-use App\Http\Requests\Auth\Customer\LoginRegisterRequest;
 use App\Http\Services\Message\Email\EmailService;
+use App\Http\Requests\Auth\Customer\LoginRegisterRequest;
 
 class LoginRegisterController extends Controller
 {
@@ -102,10 +104,36 @@ class LoginRegisterController extends Controller
     public function loginConfirmForm($token)
     {
         $otp = Otp::where('token', $token)->first();
-        if(empty($otp))
-        {
+        if (empty($otp)) {
             return redirect()->route('auth.customer.login-register-form')->withErrors(['id' => 'آدرس وارد شده نامعتبر میباشد']);
         }
         return view('auth.customer.login-confirm-form', compact('token', 'otp'));
+    }
+
+    public function loginConfirm($token, LoginRegisterRequest $request)
+    {
+        $inputs = $request->all();
+
+
+        $otp = Otp::where('token', $token)->where('used', 0)->where('created_at', '>=', Carbon::now()->subMinute(5)->toDateTimeString())->first();
+        if (empty($otp)) {
+            return redirect()->route('auth.customer.login-register-form', $token)->withErrors(['id' => 'آدرس وارد شده نامعتبر میباشد']);
+        }
+
+        //if otp not match
+        if ($otp->otp_code !== $inputs['otp']) {
+            return redirect()->route('auth.customer.login-confirm-form', $token)->withErrors(['otp' => 'کد وارد شده صحیح نمیباشد']);
+        }
+
+        // if everything is ok :
+        $otp->update(['used' => 1]);
+        $user = $otp->user()->first();
+        if ($otp->type == 0 && empty($user->mobile_verified_at)) {
+            $user->update(['mobile_verified_at' => Carbon::now()]);
+        } elseif ($otp->type == 1 && empty($user->email_verified_at)) {
+            $user->update(['email_verified_at' => Carbon::now()]);
+        }
+        Auth::login($user);
+        return redirect()->route('customer.home');
     }
 }
