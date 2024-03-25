@@ -26,7 +26,7 @@ class LoginRegisterController extends Controller
     {
         $inputs = $request->all();
 
-        //check if id is email
+        //check id is email or not
         if (filter_var($inputs['id'], FILTER_VALIDATE_EMAIL)) {
             $type = 1; // 1 => email
             $user = User::where('email', $inputs['id'])->first();
@@ -34,14 +34,16 @@ class LoginRegisterController extends Controller
                 $newUser['email'] = $inputs['id'];
             }
         }
-        //check if id is mobile
-        elseif (preg_match('/^(\+98|98|0)9\d{9}$/', $inputs['id'])) {
-            $type = 0; // 0 => mobile
 
-            //all mobiles must to be in the same format
-            $inputs['id'] = ltrim($inputs['id'], 0);
+        //check id is mobile or not
+        elseif (preg_match('/^(\+98|98|0)9\d{9}$/', $inputs['id'])) {
+            $type = 0; // 0 => mobile;
+
+
+            // all mobile numbers are in on format 9** *** ***
+            $inputs['id'] = ltrim($inputs['id'], '0');
             $inputs['id'] = substr($inputs['id'], 0, 2) === '98' ? substr($inputs['id'], 2) : $inputs['id'];
-            $inputs['id'] = str_replace($inputs['id'], '', '+98');
+            $inputs['id'] = str_replace('+98', '', $inputs['id']);
 
             $user = User::where('mobile', $inputs['id'])->first();
             if (empty($user)) {
@@ -53,9 +55,9 @@ class LoginRegisterController extends Controller
         }
 
         if (empty($user)) {
-            $newUser['password'] = '25802580';
+            $newUser['password'] = '98355154';
             $newUser['activation'] = 1;
-            $user = User::craete($newUser);
+            $user = User::create($newUser);
         }
 
         //create otp code
@@ -82,33 +84,36 @@ class LoginRegisterController extends Controller
             $smsService->setIsFlash(true);
 
             $messagesService = new MessageService($smsService);
-        } elseif ($type == 1) {
+        } elseif ($type === 1) {
             $emailService = new EmailService();
             $details = [
                 'title' => 'ایمیل فعال سازی',
-                'body' => "کد فعال سازی شما : $otpCode",
+                'body' => "کد فعال سازی شما : $otpCode"
             ];
             $emailService->setDetails($details);
-            $emailService->setFrom('noreplay@example.com', 'example');
+            $emailService->setFrom('noreply@example.com', 'example');
             $emailService->setSubject('کد احراز هویت');
             $emailService->setTo($inputs['id']);
 
-            $messageService = new MessageService($emailService);
+            $messagesService = new MessageService($emailService);
         }
 
-        $messageService->send();
+        $messagesService->send();
 
         return redirect()->route('auth.customer.login-confirm-form', $token);
     }
 
+
     public function loginConfirmForm($token)
     {
+
         $otp = Otp::where('token', $token)->first();
         if (empty($otp)) {
             return redirect()->route('auth.customer.login-register-form')->withErrors(['id' => 'آدرس وارد شده نامعتبر میباشد']);
         }
-        return view('auth.customer.login-confirm-form', compact('token', 'otp'));
+        return view('customer.auth.login-confirm', compact('token', 'otp'));
     }
+
 
     public function loginConfirm($token, LoginRegisterRequest $request)
     {
