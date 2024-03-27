@@ -58,4 +58,9 @@ class Product extends Model
     {
         return $this->morphMany('App\Models\Content\Comment', 'commentable');
     }
+
+    public function guarantees()
+    {
+        return $this->hasMany(Guarantee::class);
+    }
 }
