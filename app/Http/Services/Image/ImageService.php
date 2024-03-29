@@ -101,8 +101,8 @@ class ImageService extends ImageToolsService
         if (!is_dir($directory)) {
             return false;
         }
-
-        $files = glob($directory . DIRECTORY_SEPARATOR . '*' . GLOB_MARK);
+        
+        $files = glob($directory . DIRECTORY_SEPARATOR . '*', GLOB_MARK);
         foreach ($files as $file) {
             if (is_dir($file)) {
                 $this->deleteDirectoryAndFiles($file);

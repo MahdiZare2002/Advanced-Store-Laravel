@@ -16,6 +16,6 @@ class ProductController extends Controller
 
     public function addComment()
     {
-
+        //
     }
 }
