@@ -39,12 +39,13 @@ class ProductColorController extends Controller
     {
         $validated = $request->validate([
             'color_name' => 'required|max:120|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
+            'color' => 'required|max:120',
             'price_increase' => 'required|numeric',
         ]);
         $inputs = $request->all();
-            $inputs['product_id'] = $product->id;
-            $color = ProductColor::create($inputs);
-            return redirect()->route('admin.market.color.index', $product->id)->with('swal-success', 'رنگ شما با موفقیت ثبت شد');
+        $inputs['product_id'] = $product->id;
+        $color = ProductColor::create($inputs);
+        return redirect()->route('admin.market.color.index', $product->id)->with('swal-success', 'رنگ شما با موفقیت ثبت شد');
     }
 
     /**
@@ -87,8 +88,9 @@ class ProductColorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product, ProductColor $color)
     {
-        //
+        $color->delete();
+        return back();
     }
 }
