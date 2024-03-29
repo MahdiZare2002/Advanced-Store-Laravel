@@ -10,8 +10,8 @@ class ProductController extends Controller
 {
     public function product(Product $product)
     {
-        $relatedPosts = Product::all();
-        return view('customer.market.product.product', compact('product' , 'relatedPosts'));
+        $relatedProducts = Product::all();
+        return view('customer.market.product.product', compact('product' , 'relatedProducts'));
     }
 
     public function addComment()

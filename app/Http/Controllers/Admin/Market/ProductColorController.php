@@ -91,6 +91,6 @@ class ProductColorController extends Controller
     public function destroy(Product $product, ProductColor $color)
     {
         $color->delete();
-        return back();
+        return redirect()->route('admin.market.color.index', $product->id);
     }
 }
