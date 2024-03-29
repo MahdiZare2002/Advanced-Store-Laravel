@@ -36,6 +36,7 @@ use App\Http\Controllers\Admin\Market\PropertyValueController;
 use App\Http\Controllers\Admin\Ticket\TicketCategoryController;
 use App\Http\Controllers\Admin\Ticket\TicketPriorityController;
 use App\Http\Controllers\Auth\Customer\LoginRegisterController;
+use App\Http\Controllers\Customer\Market\ProductController as MarketProductController;
 use App\Http\Controllers\Admin\Content\CommentController as ContentCommentController;
 use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
 
@@ -442,6 +443,11 @@ Route::namespace('auth')->group(function () {
 });
 
 Route::get('/', [HomeController::class, 'home'])->name('customer.home');
+
+Route::namespace('market')->group(function () {
+    Route::get('/product/{product:slug}', [MarketProductController::class, 'product'])->name('customer.market.product');
+    Route::post('/add-comment/product/{product:slug}', [MarketProductController::class, 'addComment'])->name('product.market.add-comment');
+});
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
