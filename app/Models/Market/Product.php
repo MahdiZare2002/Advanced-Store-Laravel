@@ -78,7 +78,7 @@ class Product extends Model
 
     public function activeComments()
         {
-            return $this->comments()->whereNull('parnet_id')->where('approved' , 1)->get();
+            return $this->comments()->whereNull('parent_id')->where('approved' , 1)->get();
         }
     
 }

@@ -175,6 +175,7 @@
                                     </section>
                                 @endif
 
+
                                 <section class="">
                                     @if ($product->marketable_number > 0)
                                         <a id="next-level" href="#" class="btn btn-danger d-block">افزودن به سبد
@@ -327,46 +328,22 @@
                             </section>
                             <section class="product-features mb-4 table-responsive">
                                 <table class="table table-bordered border-white">
-                                    <tr>
-                                        <td>وزن</td>
-                                        <td>220 گرم</td>
-                                    </tr>
-                                    <tr>
-                                        <td>قطع</td>
-                                        <td>رقعی</td>
-                                    </tr>
-                                    <tr>
-                                        <td>تعداد صفحات</td>
-                                        <td>173 صفحه</td>
-                                    </tr>
-                                    <tr>
-                                        <td>نوع جلد</td>
-                                        <td>شومیز</td>
-                                    </tr>
-                                    <tr>
-                                        <td>نویسنده/نویسندگان</td>
-                                        <td>دارن هاردی</td>
-                                    </tr>
-                                    <tr>
-                                        <td>مترجم</td>
-                                        <td>ناهید محمدی</td>
-                                    </tr>
-                                    <tr>
-                                        <td>ناشر</td>
-                                        <td>انتشارات نگین ایران</td>
-                                    </tr>
-                                    <tr>
-                                        <td>رده‌بندی کتاب</td>
-                                        <td>روان‌شناسی (فلسفه و روان‌شناسی)</td>
-                                    </tr>
-                                    <tr>
-                                        <td>شابک</td>
-                                        <td>9786227195132</td>
-                                    </tr>
-                                    <tr>
-                                        <td>سایر توضیحات</td>
-                                        <td>چهار صفحه اول رنگی</td>
-                                    </tr>
+                                    @foreach ($product->values()->get() as $value)
+                                        <tr>
+                                            <td>{{ $value->attribute()->first()->name }}</td>
+                                            <td>{{ json_decode($value->value)->value }}
+                                                {{ $value->attribute()->first()->unit }}</td>
+                                        </tr>
+                                    @endforeach
+
+                                    @foreach ($product->metas()->get() as $meta)
+                                        <tr>
+                                            <td>{{ $meta->meta_key }}</td>
+                                            <td>{{ $meta->meta_value }}</td>
+                                        </tr>
+                                    @endforeach
+
+
                                 </table>
                             </section>
 
@@ -397,93 +374,102 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </section>
-                                                <section class="modal-body">
-                                                    <form class="row" action="#">
+                                                @guest
+                                                    <section class="modal-body">
+                                                        <p>کاربر گرامی لطفا برای ثبت نظر ابتدا وارد حساب کاربری خود شوید </p>
+                                                        <p>لینک ثبت نام و یا ورود
+                                                            <a href="{{ route('auth.customer.login-register-form') }}">کلیک
+                                                                کنید</a>
+                                                        </p>
+                                                    </section>
+                                                @endguest
+                                                @auth
 
-                                                        <section class="col-6 mb-2">
-                                                            <label for="first_name" class="form-label mb-1">نام</label>
-                                                            <input type="text" class="form-control form-control-sm"
-                                                                id="first_name" placeholder="نام ...">
-                                                        </section>
+                                                    <section class="modal-body">
+                                                        <form class="row"
+                                                            action="{{ route('customer.market.add-comment', $product) }}"
+                                                            method="post">
+                                                            @csrf
+                                                            {{-- <section class="col-6 mb-2">
+                                                        <label for="first_name" class="form-label mb-1">نام</label>
+                                                        <input type="text" class="form-control form-control-sm" id="first_name" placeholder="نام ...">
+                                                    </section>
 
-                                                        <section class="col-6 mb-2">
-                                                            <label for="last_name" class="form-label mb-1">نام
-                                                                خانوادگی</label>
-                                                            <input type="text" class="form-control form-control-sm"
-                                                                id="last_name" placeholder="نام خانوادگی ...">
-                                                        </section>
+                                                    <section class="col-6 mb-2">
+                                                        <label for="last_name" class="form-label mb-1">نام خانوادگی</label>
+                                                        <input type="text" class="form-control form-control-sm" id="last_name" placeholder="نام خانوادگی ...">
+                                                    </section> --}}
 
-                                                        <section class="col-12 mb-2">
-                                                            <label for="comment" class="form-label mb-1">دیدگاه
-                                                                شما</label>
-                                                            <textarea class="form-control form-control-sm" id="comment" placeholder="دیدگاه شما ..." rows="4"></textarea>
-                                                        </section>
+                                                            <section class="col-12 mb-2">
+                                                                <label for="comment" class="form-label mb-1">دیدگاه
+                                                                    شما</label>
+                                                                <textarea class="form-control form-control-sm" id="comment" placeholder="دیدگاه شما ..." rows="4"
+                                                                    name="body"></textarea>
+                                                            </section>
 
+                                                    </section>
+                                                    <section class="modal-footer py-1">
+                                                        <button type="submit" class="btn btn-sm btn-primary">ثبت
+                                                            دیدگاه</button>
+                                                        <button type="button" class="btn btn-sm btn-danger"
+                                                            data-bs-dismiss="modal">بستن</button>
+                                                    </section>
                                                     </form>
-                                                </section>
-                                                <section class="modal-footer py-1">
-                                                    <button type="button" class="btn btn-sm btn-primary">ثبت
-                                                        دیدگاه</button>
-                                                    <button type="button" class="btn btn-sm btn-danger"
-                                                        data-bs-dismiss="modal">بستن</button>
-                                                </section>
+                                                @endauth
                                             </section>
                                         </section>
                                     </section>
                                 </section>
 
-                                <section class="product-comment">
-                                    <section class="product-comment-header d-flex justify-content-start">
-                                        <section class="product-comment-date">۲۱ مرداد ۱۴۰۰</section>
-                                        <section class="product-comment-title">مجتبی مجدی</section>
-                                    </section>
-                                    <section class="product-comment-body">
-                                        با این تخفیف قیمت خیلی خوبه
-                                    </section>
-                                </section>
-
-                                <section class="product-comment">
-                                    <section class="product-comment-header d-flex justify-content-start">
-                                        <section class="product-comment-date">۲۱ مرداد ۱۴۰۰</section>
-                                        <section class="product-comment-title">هدیه سادات هاشمی نژاد</section>
-                                    </section>
-                                    <section class="product-comment-body">
-                                        پیشنهاد میشه، کتاب مفیدیه
-                                    </section>
-                                </section>
-
-                                <section class="product-comment">
-                                    <section class="product-comment-header d-flex justify-content-start">
-                                        <section class="product-comment-date">۲۱ مرداد ۱۴۰۰</section>
-                                        <section class="product-comment-title">علی محمدی</section>
-                                    </section>
-                                    <section class="product-comment-body">
-                                        هنوز مطالعه نکردم ولی از نظر چاپ و نشر و قيمت مناسب عالیه، کیفیت چاپ و جنسش عالیه با
-                                        تخفیفی که خورده قیمت ۱۳ تومن واقعا براش فوق العاده هست محتوای کتابم که اصلا نیاز به
-                                        تعریف نداره
-                                    </section>
-                                </section>
-
-                                <section class="product-comment">
-                                    <section class="product-comment-header d-flex justify-content-start">
-                                        <section class="product-comment-date">۲۱ مرداد ۱۴۰۰</section>
-                                        <section class="product-comment-title">حسین رحیمی دهنوی</section>
-                                    </section>
-                                    <section class="product-comment-body">
-                                        این کتاب رو هر کسی باید حداقل یکبار تو زندگیش بخونه واقعا کتاب خوبیه
-                                    </section>
-
-                                    <section class="product-comment ms-5 border-bottom-0">
+                                @foreach ($product->activeComments() as $activeComment)
+                                    <section class="product-comment">
                                         <section class="product-comment-header d-flex justify-content-start">
-                                            <section class="product-comment-date">۲۱ مرداد ۱۴۰۰</section>
-                                            <section class="product-comment-title">ادمین</section>
+                                            <section class="product-comment-date">
+                                                {{ jalaliDate($activeComment->created_at) }}</section>
+                                            @php
+                                                $author = $activeComment->user()->first();
+                                            @endphp
+                                            <section class="product-comment-title">
+                                                @if (empty($author->first_name) && empty($author->last_name))
+                                                    ناشناس
+                                                @else
+                                                    {{ $author->first_name . ' ' . $author->last_name }}
+                                                @endif
+                                            </section>
                                         </section>
-                                        <section class="product-comment-body">
-                                            این کتاب برای همه مفیده
+                                        <section
+                                            class="product-comment-body @if ($activeComment->answers()->count() > 0) border-bottom @endif">
+                                            {!! $activeComment->body !!}
                                         </section>
-                                    </section>
 
-                                </section>
+
+                                        @foreach ($activeComment->answers()->get() as $commentAnswer)
+                                            <section class="product-comment">
+                                                <section class="product-comment-header d-flex justify-content-start">
+                                                    <section class="product-comment-date">
+                                                        {{ jalaliDate($commentAnswer->created_at) }}</section>
+                                                    @php
+                                                        $author = $commentAnswer->user()->first();
+                                                    @endphp
+                                                    <section class="product-comment-title">
+                                                        @if (empty($author->first_name) && empty($author->last_name))
+                                                            ناشناس
+                                                        @else
+                                                            {{ $author->first_name . ' ' . $author->last_name }}
+                                                        @endif
+                                                    </section>
+                                                </section>
+                                                <section
+                                                    class="product-comment-body @if ($commentAnswer->answers()->count() > 0) border-bottom @endif">
+                                                    {!! $commentAnswer->body !!}
+                                                </section>
+                                            </section>
+                                        @endforeach
+
+
+                                    </section>
+                                @endforeach
+
 
 
                             </section>
