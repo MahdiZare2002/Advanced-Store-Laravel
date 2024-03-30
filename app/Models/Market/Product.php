@@ -75,4 +75,10 @@ class Product extends Model
     {
         return $this->amazingSales()->where('start_date', '<', Carbon::now())->where('end_date', '>', Carbon::now())->first();
     }
+
+    public function activeComments()
+        {
+            return $this->comments()->whereNull('parnet_id')->where('approved' , 1)->get();
+        }
+    
 }
