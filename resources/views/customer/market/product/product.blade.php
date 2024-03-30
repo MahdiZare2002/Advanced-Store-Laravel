@@ -78,12 +78,19 @@
                                     @endphp
 
                                     @if ($colors->count() != 0)
-                                        <p><span>رنگ : {{ $colors->first()->color_name }}</span></p>
+                                        <p><span>رنگ انتخاب شده : <span id="selected_color_name">
+                                                    {{ $colors->first()->color_name }}</span></span></p>
                                         <p>
                                             @foreach ($colors as $key => $color)
-                                                <span style="background-color: {{ $color->color ?? '#ffffff' }};"
+                                                <label for="{{ 'color_' . $color->id }}"
+                                                    style="background-color: {{ $color->color ?? '#ffffff' }};"
                                                     class="product-info-colors me-1" data-bs-toggle="tooltip"
-                                                    data-bs-placement="bottom" title="{{ $color->color_name }}"></span>
+                                                    data-bs-placement="bottom" title="{{ $color->color_name }}"></label>
+
+                                                <input class="d-none" type="radio" name="color"
+                                                    id="{{ 'color_' . $color->id }}" value="{{ $color->id }}"
+                                                    data-color-name="{{ $color->color_name }}"
+                                                    @if ($key == 0) checked @endif>
                                             @endforeach
 
                                         </p>
@@ -482,4 +489,20 @@
     </section>
     <!-- end description, features and comments -->
 
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function() {
+            bill();
+            //input color
+            $('input[name="color"]').change(function() {
+                bill();
+            })
+        })
+
+        function bill() {
+            var selected_color = $('input[name="color"]:checked');
+            $("#selected_color_name").html(selected_color.attr('data-color-name'))
+        }
+    </script>
 @endsection
