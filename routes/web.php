@@ -37,6 +37,7 @@ use App\Http\Controllers\Customer\SalesProcess\CartController;
 use App\Http\Controllers\Admin\Ticket\TicketCategoryController;
 use App\Http\Controllers\Admin\Ticket\TicketPriorityController;
 use App\Http\Controllers\Auth\Customer\LoginRegisterController;
+use App\Http\Controllers\Customer\SalesProcess\AddressController;
 use App\Http\Controllers\Admin\Content\CommentController as ContentCommentController;
 use App\Http\Controllers\Customer\Market\ProductController as MarketProductController;
 use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
@@ -447,10 +448,16 @@ Route::namespace('auth')->group(function () {
 Route::get('/', [HomeController::class, 'home'])->name('customer.home');
 
 Route::namespace('salesProcess')->group(function () {
+    //cart
     Route::get('/cart', [CartController::class, 'cart'])->name('customer.sales-process.cart');
     Route::post('/cart', [CartController::class, 'updateCart'])->name('customer.sales-process.update-cart');
     Route::post('/cart/add-to-cart/{product:slug}', [CartController::class, 'addToCart'])->name('customer.sales-process.add-to-cart');
     Route::post('/cart/remove-from-cart', [CartController::class, 'removeFromCart'])->name('customer.sales-process.remove-from-cart');
+
+
+    //address
+    Route::get('/address-and-delivery', [AddressController::class, 'addressAndDelivery'])->name('customer.sales-process.address-and-delivery');
+        Route::post('/add-address', [AddressController::class, 'addAddress'])->name('customer.sales-process.add-address');
 });
 
 Route::namespace('market')->group(function () {
