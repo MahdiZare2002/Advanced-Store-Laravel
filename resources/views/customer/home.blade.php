@@ -312,7 +312,7 @@
 
 
     <section class="position-fixed p-4 flex-row-reverse"
-        style="z-index: 909999999; left: 0; top: 3rem; width: 26rem; max-width: 80%;">
+        style="z-index: 909999999; right: 0; top: 3rem; width: 26rem; max-width: 80%;">
         <div class="toast" data-delay="7000" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
                 <strong class="me-auto">فروشگاه</strong>
