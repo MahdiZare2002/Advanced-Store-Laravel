@@ -2,6 +2,7 @@
 
 namespace App\Models\Market;
 
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -77,8 +78,11 @@ class Product extends Model
     }
 
     public function activeComments()
-        {
-            return $this->comments()->whereNull('parent_id')->where('approved' , 1)->get();
-        }
-    
+    {
+        return $this->comments()->whereNull('parent_id')->where('approved', 1)->get();
+    }
+
+    public function user(){
+        return $this->belongsToMany(User::class);
+    }
 }

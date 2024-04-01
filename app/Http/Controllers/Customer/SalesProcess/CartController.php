@@ -33,24 +33,29 @@ class CartController extends Controller
         return redirect()->route('customer.sales-process.address-and-delivery');
     }
 
+
     public function addToCart(Product $product, Request $request)
     {
         if (Auth::check()) {
             $request->validate([
-                'color' => 'nullable|exists:product_colors, id',
-                'guarantee' => 'nullable|exists:guarantees, id',
-                'number' => 'numeric|min:1|max:5',
+                'color' => 'nullable|exists:product_colors,id',
+                'guarantee' => 'nullable|exists:guarantees,id',
+                'number' => 'numeric|min:1|max:5'
             ]);
 
-            $cartItems = CartItem::where('product_id', $product->id)->where('user_id', Auth::user()->id)->get();
+            $cartItems = CartItem::where('product_id', $product->id)->where('user_id', auth()->user()->id)->get();
 
+            if (!isset($request->color)) {
+                $request->color = null;
+            }
+            if (!isset($request->guarantee)) {
+                $request->guarantee = null;
+            }
 
             foreach ($cartItems as $cartItem) {
-                if ($cartItem->color == $request->color && $cartItem->guarantee == $request->guarantee) {
+                if ($cartItem->color_id == $request->color && $cartItem->guarantee_id == $request->guarantee) {
                     if ($cartItem->number != $request->number) {
-                        $cartItem->update([
-                            'number' => $request->number,
-                        ]);
+                        $cartItem->update(['number' => $request->number]);
                     }
                     return back();
                 }
@@ -59,16 +64,18 @@ class CartController extends Controller
             $inputs = [];
             $inputs['color_id'] = $request->color;
             $inputs['guarantee_id'] = $request->guarantee;
-            $inputs['user_id'] = Auth::user()->id;
-            $inputs['product_id'] = $request->product;
+            $inputs['user_id'] =  auth()->user()->id;
+            $inputs['product_id'] =  $product->id;
+            $inputs['number'] =  $request->number;
+
             CartItem::create($inputs);
 
-
-            return back()->with('alert-section-success', 'محصول شما با موفقیت به سبد خرید اضافه شد');
+            return back()->with('alert-section-success', 'محصول مورد نظر با موفقیت به سبد خرید اضافه شد');
         } else {
             return redirect()->route('auth.customer.login-register-form');
         }
     }
+
 
     public function removeFromCart(CartItem $cartItem)
     {

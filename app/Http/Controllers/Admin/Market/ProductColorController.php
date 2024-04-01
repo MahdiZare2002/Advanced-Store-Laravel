@@ -90,7 +90,7 @@ class ProductColorController extends Controller
      */
     public function destroy(Product $product, ProductColor $color)
     {
-        $color->delete();
+        $color->forceDelete();
         return back();
     }
 }
