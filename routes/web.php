@@ -459,9 +459,11 @@ Route::namespace('salesProcess')->group(function () {
     Route::get('/profile-completion', [ProfileCompletionController::class, 'profileCompletion'])->name('customer.sales-process.profile-completion');
     Route::post('/profile-completion', [ProfileCompletionController::class, 'update'])->name('customer.sales-process.profile-completion-update');
 
-    //address
-    Route::get('/address-and-delivery', [AddressController::class, 'addressAndDelivery'])->name('customer.sales-process.address-and-delivery');
+    Route::middleware('profile.compeltion')->group(function () {
+        //address
+        Route::get('/address-and-delivery', [AddressController::class, 'addressAndDelivery'])->name('customer.sales-process.address-and-delivery');
         Route::post('/add-address', [AddressController::class, 'addAddress'])->name('customer.sales-process.add-address');
+    });
 });
 
 Route::namespace('market')->group(function () {
