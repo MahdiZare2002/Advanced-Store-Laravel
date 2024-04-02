@@ -13,11 +13,12 @@ class AddressController extends Controller
     {
         //check profile
         $user = Auth::user();
+        $cartItems = CartItem::where('user_id', $user->id)->get();
 
         if (empty(CartItem::where('user_id', $user->id)->count())) {
             return redirect()->route('customer.sales-process.cart');
         }
 
-        return view('customer.sales-process.delivery-and-address');
+        return view('customer.sales-process.delivery-and-address', compact('cartItems'));
     }
 }
