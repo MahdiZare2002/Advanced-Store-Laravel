@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Customer\SalesProcess;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Customer\SalesProcess\StoreAddressRequest;
+use App\Models\Address;
 use App\Models\Market\CartItem;
 use App\Models\Province;
 use Illuminate\Http\Request;
@@ -32,5 +34,15 @@ class AddressController extends Controller
         } else {
             return response()->json(['status' => false, 'cities' => null]);
         }
+    }
+
+    public function addAddress(StoreAddressRequest $request)
+    {
+        $inputs = $request->all();
+        $inputs['user_id'] = auth()->user()->id;
+        $inputs['postal_code'] = convertArabicToEnglish($request->postal_code);
+        $inputs['postal_code'] = convertPersianToEnglish($inputs['postal_code']);
+        $address = Address::create($inputs);
+        return redirect()->back();
     }
 }
