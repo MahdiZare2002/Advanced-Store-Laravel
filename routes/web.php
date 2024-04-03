@@ -463,6 +463,7 @@ Route::namespace('salesProcess')->group(function () {
         //address
         Route::get('/address-and-delivery', [AddressController::class, 'addressAndDelivery'])->name('customer.sales-process.address-and-delivery');
         Route::post('/add-address', [AddressController::class, 'addAddress'])->name('customer.sales-process.add-address');
+        Route::get('/get-cities/{province}', [AddressController::class, 'getCities'])->name('customer.sales-process.get-cities');
     });
 });
 
