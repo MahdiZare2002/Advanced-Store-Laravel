@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer\SalesProcess;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Customer\SalesProcess\StoreAddressRequest;
+use App\Http\Requests\Customer\SalesProcess\UpdateAddressRequest;
 use App\Models\Address;
 use App\Models\Market\CartItem;
 use App\Models\Province;
@@ -43,6 +44,18 @@ class AddressController extends Controller
         $inputs['postal_code'] = convertArabicToEnglish($request->postal_code);
         $inputs['postal_code'] = convertPersianToEnglish($inputs['postal_code']);
         $address = Address::create($inputs);
+        return redirect()->back();
+    }
+
+    public function updateAddress(Address $address, UpdateAddressRequest $request)
+    {
+        $inputs = $request->all();
+
+        $inputs['user_id'] = auth()->user()->id;
+        $inputs['postal_code'] = convertArabicToEnglish($request->postal_code);
+        $inputs['postal_code'] = convertPersianToEnglish($inputs['postal_code']);
+        
+        $address->update($inputs);
         return redirect()->back();
     }
 }
