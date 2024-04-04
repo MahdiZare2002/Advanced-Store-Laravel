@@ -7,6 +7,7 @@ use App\Http\Requests\Customer\SalesProcess\StoreAddressRequest;
 use App\Http\Requests\Customer\SalesProcess\UpdateAddressRequest;
 use App\Models\Address;
 use App\Models\Market\CartItem;
+use App\Models\Market\Delivery;
 use App\Models\Province;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,13 +19,14 @@ class AddressController extends Controller
         //check profile
         $user = Auth::user();
         $cartItems = CartItem::where('user_id', $user->id)->get();
+        $deliveryMethods = Delivery::where('status', 1)->get();
         $provinces = Province::all();
 
         if (empty(CartItem::where('user_id', $user->id)->count())) {
             return redirect()->route('customer.sales-process.cart');
         }
 
-        return view('customer.sales-process.delivery-and-address', compact('cartItems', 'provinces'));
+        return view('customer.sales-process.delivery-and-address', compact('cartItems', 'provinces', 'deliveryMethods'));
     }
 
     public function getCities(Province $province)
@@ -54,7 +56,7 @@ class AddressController extends Controller
         $inputs['user_id'] = auth()->user()->id;
         $inputs['postal_code'] = convertArabicToEnglish($request->postal_code);
         $inputs['postal_code'] = convertPersianToEnglish($inputs['postal_code']);
-        
+
         $address->update($inputs);
         return redirect()->back();
     }
