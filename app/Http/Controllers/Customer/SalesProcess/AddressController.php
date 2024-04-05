@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer\SalesProcess;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Customer\SalesProcess\ChooseAddressAndDeliveryRequest;
 use App\Http\Requests\Customer\SalesProcess\StoreAddressRequest;
 use App\Http\Requests\Customer\SalesProcess\UpdateAddressRequest;
 use App\Models\Address;
@@ -59,5 +60,10 @@ class AddressController extends Controller
 
         $address->update($inputs);
         return redirect()->back();
+    }
+
+    public function chooseAddressAndDelivery(ChooseAddressAndDeliveryRequest $request)
+    {
+        return redirect()->route('customer.sales-process.payment');
     }
 }
