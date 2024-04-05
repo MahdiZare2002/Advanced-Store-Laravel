@@ -21,9 +21,9 @@ class AddressController extends Controller
     {
         //check profile
         $user = Auth::user();
+        $provinces = Province::all();
         $cartItems = CartItem::where('user_id', $user->id)->get();
         $deliveryMethods = Delivery::where('status', 1)->get();
-        $provinces = Province::all();
 
         if (empty(CartItem::where('user_id', $user->id)->count())) {
             return redirect()->route('customer.sales-process.cart');
@@ -32,9 +32,10 @@ class AddressController extends Controller
         return view('customer.sales-process.address-and-delivery', compact('cartItems', 'provinces', 'deliveryMethods'));
     }
 
+
     public function getCities(Province $province)
     {
-        $cities = $province->cities();
+        $cities = $province->cities;
         if ($cities != null) {
             return response()->json(['status' => true, 'cities' => $cities]);
         } else {
@@ -55,11 +56,9 @@ class AddressController extends Controller
     public function updateAddress(Address $address, UpdateAddressRequest $request)
     {
         $inputs = $request->all();
-
         $inputs['user_id'] = auth()->user()->id;
         $inputs['postal_code'] = convertArabicToEnglish($request->postal_code);
         $inputs['postal_code'] = convertPersianToEnglish($inputs['postal_code']);
-
         $address->update($inputs);
         return redirect()->back();
     }
@@ -68,7 +67,6 @@ class AddressController extends Controller
     {
         $user = auth()->user();
         $inputs = $request->all();
-
 
         //calc price
         $cartItems = CartItem::where('user_id', $user->id)->get();
@@ -82,6 +80,7 @@ class AddressController extends Controller
             $totalFinalPrice += $cartItem->cartItemFinalPrice();
             $totalFinalDiscountPriceWithNumbers += $cartItem->cartItemFinalDiscount();
         }
+
 
         //commonDiscount
         $commonDiscount = CommonDiscount::where([['status', 1], ['end_date', '>', now()], ['start_date', '<', now()]])->first();
@@ -108,11 +107,10 @@ class AddressController extends Controller
         $inputs['order_discount_amount'] = $totalFinalDiscountPriceWithNumbers;
         $inputs['order_common_discount_amount'] = $commonPercentageDiscountAmount;
         $inputs['order_total_products_discount_amount'] = $inputs['order_discount_amount'] + $inputs['order_common_discount_amount'];
-        $inputs['user_id'] = $user->id;
         $order = Order::updateOrCreate(
             ['user_id' => $user->id, 'order_status' => 0],
+            $inputs
         );
-
         return redirect()->route('customer.sales-process.payment');
     }
 }
