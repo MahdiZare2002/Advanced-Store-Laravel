@@ -9,6 +9,7 @@ use App\Http\Requests\Customer\SalesProcess\UpdateAddressRequest;
 use App\Models\Address;
 use App\Models\Market\CartItem;
 use App\Models\Market\Delivery;
+use App\Models\Market\Order;
 use App\Models\Province;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -64,6 +65,31 @@ class AddressController extends Controller
 
     public function chooseAddressAndDelivery(ChooseAddressAndDeliveryRequest $request)
     {
+        $user = auth()->user();
+        $inputs = $request->all();
+
+
+        //calc price
+        $cartItems = CartItem::where('user_id', $user->id)->get();
+        $totalProductPrice = 0;
+        $totalDiscount = 0;
+        $totalFinalPrice = 0;
+        $totalFinalDiscountPriceWithNumbers = 0;
+        foreach ($cartItems as $cartItem) {
+            $totalProductPrice += $cartItem->cartItemProductPrice();
+            $totalDiscount += $cartItem->cartItemProductDiscount();
+            $totalFinalPrice += $cartItem->cartItemFinalPrice();
+            $totalFinalDiscountPriceWithNumbers += $cartItem->cartItemFinalDiscount();
+        }
+
+
+
+
+        $inputs['user_id'] = $user->id;
+        $order = Order::updateOrCreate(
+            ['user_id' => $user->id, 'order_status' => 0],
+        );
+
         return redirect()->route('customer.sales-process.payment');
     }
 }
