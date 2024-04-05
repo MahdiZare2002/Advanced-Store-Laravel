@@ -11,4 +11,9 @@ class PaymentController extends Controller
     {
         return view('customer.sales-process.payment');
     }
+
+    public function copanDiscount(Request $request)
+    {
+        //
+    }
 }
