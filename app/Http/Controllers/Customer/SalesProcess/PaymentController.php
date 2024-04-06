@@ -7,6 +7,10 @@ use App\Models\Market\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Market\CartItem;
+use App\Models\Market\CashPayment;
+use App\Models\Market\OfflinePayment;
+use App\Models\Market\OnlinePayment;
+use App\Models\Market\Payment;
 use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
@@ -76,15 +80,48 @@ class PaymentController extends Controller
         switch ($request->payment_type) {
             case '1':
                 # online...
+                $targetModel = OnlinePayment::class;
+                $type = 0;
                 break;
             case '2':
                 # offline...
+                $targetModel = OfflinePayment::class;
+                $type = 1;
                 break;
             case '3':
                 # cash...
+                $targetModel = CashPayment::class;
+                $type = 2;
                 break;
             default:
-                return redirect()->back();
+                return redirect()->back()->withErrors(['error' => 'خطا']);
         }
+
+        $paymented = $targetModel::create([
+            'amount' => $order->order_final_amount,
+            'user_id' => auth()->user()->id,
+            'pay_date' => now(),
+            'status' => 1,
+        ]);
+
+        $payment = Payment::create([
+            'amount' => $order->order_final_amount,
+            'user_id' => auth()->user()->id,
+            'pay_date' => now(),
+            'paymentable_id' => $paymented->id,
+            'type' => $type,
+            'paymentable_type' => $targetModel,
+            'status' => 1,
+        ]);
+
+        $order->update([
+            'order_status' => 3,
+        ]);
+
+        foreach ($cartItems as $cartItem) {
+            $cartItem->delete();
+        }
+
+        return redirect()->route('customer.home')->with('success', 'سفارش شما با موفقیت ثبت شد');
     }
 }
