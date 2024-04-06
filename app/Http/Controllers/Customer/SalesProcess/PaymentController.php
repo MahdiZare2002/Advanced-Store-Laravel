@@ -63,4 +63,28 @@ class PaymentController extends Controller
             return redirect()->back()->withErrors(['copan' => ['کد تخفیف اشتباه وارد شده است']]);
         }
     }
+
+    public function paymentSubmit(Request $request)
+    {
+        $request->validate([
+            'payment_type' => 'required'
+        ]);
+
+        $order = Order::where('user_id', Auth::user()->id)->where('order_status', 0)->first();
+        $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
+
+        switch ($request->payment_type) {
+            case '1':
+                # online...
+                break;
+            case '2':
+                # offline...
+                break;
+            case '3':
+                # cash...
+                break;
+            default:
+                return redirect()->back();
+        }
+    }
 }
