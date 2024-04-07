@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "348b3c71686b5b022248479c7868c85c",
+    "content-hash": "2bfdb0b43b632a499dec76c5b2a2af37",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4029,6 +4029,62 @@
                 }
             ],
             "time": "2023-11-08T05:53:05+00:00"
+        },
+        {
+            "name": "saeedpooyanfar/zarinpal",
+            "version": "v5.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Saeed-Pooyanfar/zarinpal-laravel.git",
+                "reference": "b2a491892b46e2f22a49293dcf3fa273fbb370ab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Saeed-Pooyanfar/zarinpal-laravel/zipball/b2a491892b46e2f22a49293dcf3fa273fbb370ab",
+                "reference": "b2a491892b46e2f22a49293dcf3fa273fbb370ab",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^7.2.0",
+                "php": "^7.4|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Zarinpal\\ZarinpalServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zarinpal\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Saeed Pooyanfar",
+                    "email": "saeedp47@gmail.com",
+                    "homepage": "https://github.com/Saeed-Pooyanfar"
+                }
+            ],
+            "description": "Zarinpal payment for Laravel Framework (with sandbox support)",
+            "keywords": [
+                "framework",
+                "laravel",
+                "payment",
+                "zarinpal"
+            ],
+            "support": {
+                "issues": "https://github.com/Saeed-Pooyanfar/zarinpal-laravel/issues",
+                "source": "https://github.com/Saeed-Pooyanfar/zarinpal-laravel/tree/v5.0.1"
+            },
+            "time": "2021-05-20T20:08:10+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

@@ -16,7 +16,8 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.5",
-        "morilog/jalali": "3.*"
+        "morilog/jalali": "3.*",
+        "saeedpooyanfar/zarinpal": "^5.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
