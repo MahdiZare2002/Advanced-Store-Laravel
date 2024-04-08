@@ -128,7 +128,7 @@ class PaymentService
     {
         switch ($code) {
             case -1:
-                return "در انتظار پردخت";
+                return "در انتظار پرداخت";
 
             case -2:
                 return "خطای داخلی";

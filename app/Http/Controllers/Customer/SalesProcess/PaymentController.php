@@ -5,14 +5,15 @@ namespace App\Http\Controllers\Customer\SalesProcess;
 use App\Models\Market\Copan;
 use App\Models\Market\Order;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Services\Payment\PaymentService;
-use App\Models\Market\CartItem;
-use App\Models\Market\CashPayment;
-use App\Models\Market\OfflinePayment;
-use App\Models\Market\OnlinePayment;
 use App\Models\Market\Payment;
+use App\Models\Market\CartItem;
+use App\Models\Market\OrderItem;
+use App\Models\Market\CashPayment;
+use App\Http\Controllers\Controller;
+use App\Models\Market\OnlinePayment;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Market\OfflinePayment;
+use App\Http\Services\Payment\PaymentService;
 
 class PaymentController extends Controller
 {
@@ -120,7 +121,7 @@ class PaymentController extends Controller
         ]);
 
         if ($request->payment_type == 1) {
-            
+
             $paymentService->zarinpal($order->order_final_amount, $order, $paymented);
         }
 
@@ -133,5 +134,28 @@ class PaymentController extends Controller
         }
 
         return redirect()->route('customer.home')->with('success', 'سفارش شما با موفقیت ثبت شد');
+    }
+
+    public function paymentCallback(Order $order, OnlinePayment $onlinePayment, PaymentService $paymentService)
+    {
+        $amount = $onlinePayment->amount * 10;
+        $result = $paymentService->zarinpalVerify($amount, $onlinePayment);
+        $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
+
+        foreach ($cartItems as $cartItem) {
+            $cartItem->delete();
+        }
+        if ($result['success']) {
+            $order->update(
+                ['order_status' => 3]
+            );
+
+            return redirect()->route('customer.home')->with('success', 'پرداخت شما با موفقیت انجام شد');
+        } else {
+            $order->update(
+                ['order_status' => 2]
+            );
+            return redirect()->route('customer.home')->with('danger', 'سفارش شما با  خطا مواجه شد');
+        }
     }
 }
