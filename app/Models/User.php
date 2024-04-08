@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Content\Comment;
+use App\Models\Market\Order;
 use App\Models\Market\Payment;
 use App\Models\Ticket\Ticket;
 use App\Models\Ticket\TicketAdmin;
@@ -91,6 +92,11 @@ class User extends Authenticatable
     public function tickets()
     {
         return $this->hasMany(Ticket::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 
     public function roles()
