@@ -6,6 +6,7 @@ use App\Models\Market\Copan;
 use App\Models\Market\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Services\Payment\PaymentService;
 use App\Models\Market\CartItem;
 use App\Models\Market\CashPayment;
 use App\Models\Market\OfflinePayment;
@@ -68,7 +69,7 @@ class PaymentController extends Controller
         }
     }
 
-    public function paymentSubmit(Request $request)
+    public function paymentSubmit(Request $request, PaymentService $paymentService)
     {
         $request->validate([
             'payment_type' => 'required'
@@ -76,7 +77,7 @@ class PaymentController extends Controller
 
         $order = Order::where('user_id', Auth::user()->id)->where('order_status', 0)->first();
         $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
-        
+
         $cash_receiver = null;
 
         switch ($request->payment_type) {
@@ -117,6 +118,11 @@ class PaymentController extends Controller
             'paymentable_type' => $targetModel,
             'status' => 1,
         ]);
+
+        if ($request->payment_type == 1) {
+            
+            $paymentService->zarinpal($order->order_final_amount, $order, $paymented);
+        }
 
         $order->update([
             'order_status' => 3,
