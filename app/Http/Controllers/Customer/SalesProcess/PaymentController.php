@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Customer\SalesProcess;
 
-use App\Models\Market\Copan;
-use App\Models\Market\Order;
-use Illuminate\Http\Request;
-use App\Models\Market\Payment;
-use App\Models\Market\CartItem;
-use App\Models\Market\OrderItem;
-use App\Models\Market\CashPayment;
 use App\Http\Controllers\Controller;
-use App\Models\Market\OnlinePayment;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Market\OfflinePayment;
 use App\Http\Services\Payment\PaymentService;
+use App\Models\Market\CartItem;
+use App\Models\Market\CashPayment;
+use App\Models\Market\Copan;
+use App\Models\Market\OfflinePayment;
+use App\Models\Market\OnlinePayment;
+use App\Models\Market\Order;
+use App\Models\Market\OrderItem;
+use App\Models\Market\Payment;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
@@ -22,7 +22,6 @@ class PaymentController extends Controller
         $user = auth()->user();
         $cartItems = CartItem::where('user_id', $user->id)->get();
         $order = Order::where('user_id', Auth::user()->id)->where('order_status', 0)->first();
-
         return view('customer.sales-process.payment', compact('cartItems', 'order'));
     }
 
@@ -72,28 +71,24 @@ class PaymentController extends Controller
 
     public function paymentSubmit(Request $request, PaymentService $paymentService)
     {
-        $request->validate([
-            'payment_type' => 'required'
-        ]);
+        $request->validate(
+            ['payment_type' => 'required']
+        );
 
         $order = Order::where('user_id', Auth::user()->id)->where('order_status', 0)->first();
         $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
-
         $cash_receiver = null;
 
         switch ($request->payment_type) {
             case '1':
-                # online...
                 $targetModel = OnlinePayment::class;
                 $type = 0;
                 break;
             case '2':
-                # offline...
                 $targetModel = OfflinePayment::class;
                 $type = 1;
                 break;
             case '3':
-                # cash...
                 $targetModel = CashPayment::class;
                 $type = 2;
                 $cash_receiver = $request->cash_receiver ? $request->cash_receiver : null;
@@ -110,26 +105,42 @@ class PaymentController extends Controller
             'status' => 1,
         ]);
 
-        $payment = Payment::create([
-            'amount' => $order->order_final_amount,
-            'user_id' => auth()->user()->id,
-            'pay_date' => now(),
-            'paymentable_id' => $paymented->id,
-            'type' => $type,
-            'paymentable_type' => $targetModel,
-            'status' => 1,
-        ]);
+        $payment = Payment::create(
+            [
+                'amount' => $order->order_final_amount,
+                'user_id' => auth()->user()->id,
+                'pay_date' => now(),
+                'type' => $type,
+                'paymentable_id' => $paymented->id,
+                'paymentable_type' => $targetModel,
+                'staus' => 1,
+            ]
+        );
 
         if ($request->payment_type == 1) {
-
             $paymentService->zarinpal($order->order_final_amount, $order, $paymented);
         }
 
-        $order->update([
-            'order_status' => 3,
-        ]);
+        $order->update(
+            ['order_status' => 3]
+        );
 
         foreach ($cartItems as $cartItem) {
+
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $cartItem->product_id,
+                'product' => $cartItem->product,
+                'amazing_sale_id' => $cartItem->product->activeAmazingSales()->id ?? null,
+                'amazing_sale_object' => $cartItem->product->activeAmazingSales() ?? null,
+                'amazing_sale_discount_amount' => empty($cartItem->product->activeAmazingSales()) ? 0 : $cartItem->cartItemProductPrice() * ($cartItem->product->activeAmazingSales()->percentage / 100),
+                'number' => $cartItem->number,
+                'final_product_price' => empty($cartItem->product->activeAmazingSales()) ? $cartItem->cartItemProductPrice() : ($cartItem->cartItemProductPrice() - $cartItem->cartItemProductPrice() * ($cartItem->product->activeAmazingSales()->percentage / 100)),
+                'final_total_price' => empty($cartItem->product->activeAmazingSales()) ? $cartItem->cartItemProductPrice() * ($cartItem->number) : ($cartItem->cartItemProductPrice() - $cartItem->cartItemProductPrice() * ($cartItem->product->activeAmazingSales()->percentage / 100)) * ($cartItem->number),
+                'color_id' => $cartItem->color_id,
+                'guarantee_id' => $cartItem->guarantee_id,
+            ]);
+
             $cartItem->delete();
         }
 
@@ -143,6 +154,20 @@ class PaymentController extends Controller
         $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
 
         foreach ($cartItems as $cartItem) {
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $cartItem->product_id,
+                'product' => $cartItem->product,
+                'amazing_sale_id' => $cartItem->product->activeAmazingSales()->id ?? null,
+                'amazing_sale_object' => $cartItem->product->activeAmazingSales() ?? null,
+                'amazing_sale_discount_amount' => empty($cartItem->product->activeAmazingSales()) ? 0 : $cartItem->cartItemProductPrice() * ($cartItem->product->activeAmazingSales()->percentage / 100),
+                'number' => $cartItem->number,
+                'final_product_price' => empty($cartItem->product->activeAmazingSales()) ? $cartItem->cartItemProductPrice() : ($cartItem->cartItemProductPrice() - $cartItem->cartItemProductPrice() * ($cartItem->product->activeAmazingSales()->percentage / 100)),
+                'final_total_price' => empty($cartItem->product->activeAmazingSales()) ? $cartItem->cartItemProductPrice() * ($cartItem->number) : ($cartItem->cartItemProductPrice() - $cartItem->cartItemProductPrice() * ($cartItem->product->activeAmazingSales()->percentage / 100)) * ($cartItem->number),
+                'color_id' => $cartItem->color_id,
+                'guarantee_id' => $cartItem->guarantee_id,
+            ]);
+
             $cartItem->delete();
         }
         if ($result['success']) {
