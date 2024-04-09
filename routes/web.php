@@ -44,6 +44,7 @@ use App\Http\Controllers\Admin\Content\CommentController as ContentCommentContro
 use App\Http\Controllers\Customer\Market\ProductController as MarketProductController;
 use App\Http\Controllers\Customer\Profile\OrderController as ProfileOrderController;
 use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
+use App\Http\Controllers\Customer\Profile\FavoriteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -485,7 +486,8 @@ Route::namespace('market')->group(function () {
 });
 
 Route::namespace('profile')->group(function () {
-    Route::get('/orders', [ProfileOrderController::class, 'index'])->name('customer.profile.index');
+    Route::get('/orders', [ProfileOrderController::class, 'index'])->name('customer.profile.orders');
+    Route::get('/my_favorite', [FavoriteController::class, 'index'])->name('customer.profile.my-favorites');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

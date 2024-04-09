@@ -8,7 +8,7 @@
             <section class="d-md-flex justify-content-md-between align-items-md-center py-3">
 
                 <section class="d-flex justify-content-between align-items-center d-md-block">
-                    <a class="text-decoration-none" href="index.html"><img src="assets/images/logo/8.png"
+                    <a class="text-decoration-none" href="{{ route('customer.home') }}"><img src="assets/images/logo/8.png"
                             alt="logo"></a>
                     <button class="btn btn-link text-dark d-md-none" type="button" data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
@@ -57,10 +57,10 @@
                                 aria-labelledby="dropdownMenuButton1">
                                 <section><a class="dropdown-item" href="my-profile.html"><i
                                             class="fa fa-user-circle"></i>پروفایل کاربری</a></section>
-                                <section><a class="dropdown-item" href="my-orders.html"><i
+                                <section><a class="dropdown-item" href="{{ route('customer.profile.orders') }}"><i
                                             class="fa fa-newspaper"></i>سفارشات</a></section>
-                                <section><a class="dropdown-item" href="my-favorites.html"><i class="fa fa-heart"></i>لیست
-                                        علاقه مندی</a></section>
+                                <section><a class="dropdown-item" href="{{ route('customer.profile.my-favorites') }}"><i
+                                            class="fa fa-heart"></i>لیست علاقه مندی</a></section>
                                 <section>
                                     <hr class="dropdown-divider">
                                 </section>
@@ -87,7 +87,7 @@
                             <a class="btn btn-link position-relative text-dark header-cart-link"
                                 href="{{ route('customer.sales-process.cart') }}">
                                 <i class="fa fa-shopping-cart"></i> <span style="top: 80%;"
-                                    class="position-absolute start-0 translate-middle badge rounded-pill bg-danger">2</span>
+                                    class="position-absolute start-0 translate-middle badge rounded-pill bg-danger">{{ $cartItems->count() }}</span>
                             </a>
                             <section class="header-cart-dropdown">
                                 <section class="border-bottom d-flex justify-content-between p-2">
