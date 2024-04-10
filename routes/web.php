@@ -45,6 +45,7 @@ use App\Http\Controllers\Customer\Profile\OrderController as ProfileOrderControl
 use App\Http\Controllers\Admin\Content\CommentController as ContentCommentController;
 use App\Http\Controllers\Customer\Market\ProductController as MarketProductController;
 use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
+use App\Http\Controllers\Customer\Profile\AddressController as ProfileAddressController;
 use App\Http\Controllers\Customer\SalesProcess\PaymentController as CustomerPaymentController;
 
 /*
@@ -491,6 +492,8 @@ Route::namespace('profile')->group(function () {
     Route::get('/my_favorites', [FavoriteController::class, 'index'])->name('customer.profile.my-favorites');
     Route::get('/my_favorites/delete/{product}', [FavoriteController::class, 'delete'])->name('customer.profile.my-favorites.delete');
     Route::get('/profile', [ProfileController::class, 'index'])->name('customer.profile.profile');
+    Route::get('/profile/update', [ProfileController::class, 'update'])->name('customer.profile.profile.update');
+    Route::get('/my-addresses', [ProfileAddressController::class, 'index'])->name('customer.profile.my-addresses.update');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
