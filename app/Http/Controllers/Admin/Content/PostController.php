@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Content\PostCategory;
 use App\Http\Services\Image\ImageService;
 use App\Http\Requests\Admin\Content\PostRequest;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -92,6 +93,18 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post, ImageService $imageService)
     {
+        if (!Gate::allows('update-post', $post)) {
+            abort(403);
+        }
+
+        // $response = Gate::inspect('update-post');
+        // if ($response->allowed()) {
+        //     //
+        // } else {
+        //     dd($response->message());
+        // }
+
+
         $inputs = $request->all();
 
         //date fixed
