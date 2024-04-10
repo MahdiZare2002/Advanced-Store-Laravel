@@ -31,20 +31,21 @@ use App\Http\Controllers\admin\user\PermissionController;
 use App\Http\Controllers\Admin\Market\GuaranteeController;
 use App\Http\Controllers\Admin\Notify\EmailFileController;
 use App\Http\Controllers\Admin\Ticket\TicketAdminController;
+use App\Http\Controllers\Customer\Profile\ProfileController;
 use App\Http\Controllers\Admin\Market\ProductColorController;
+use App\Http\Controllers\Customer\Profile\FavoriteController;
 use App\Http\Controllers\Admin\Market\PropertyValueController;
 use App\Http\Controllers\Customer\SalesProcess\CartController;
 use App\Http\Controllers\Admin\Ticket\TicketCategoryController;
 use App\Http\Controllers\Admin\Ticket\TicketPriorityController;
 use App\Http\Controllers\Auth\Customer\LoginRegisterController;
 use App\Http\Controllers\Customer\SalesProcess\AddressController;
-use App\Http\Controllers\Customer\SalesProcess\PaymentController as CustomerPaymentController;
 use App\Http\Controllers\Customer\SalesProcess\ProfileCompletionController;
+use App\Http\Controllers\Customer\Profile\OrderController as ProfileOrderController;
 use App\Http\Controllers\Admin\Content\CommentController as ContentCommentController;
 use App\Http\Controllers\Customer\Market\ProductController as MarketProductController;
-use App\Http\Controllers\Customer\Profile\OrderController as ProfileOrderController;
 use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
-use App\Http\Controllers\Customer\Profile\FavoriteController;
+use App\Http\Controllers\Customer\SalesProcess\PaymentController as CustomerPaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -489,6 +490,7 @@ Route::namespace('profile')->group(function () {
     Route::get('/orders', [ProfileOrderController::class, 'index'])->name('customer.profile.orders');
     Route::get('/my_favorites', [FavoriteController::class, 'index'])->name('customer.profile.my-favorites');
     Route::get('/my_favorites/delete/{product}', [FavoriteController::class, 'delete'])->name('customer.profile.my-favorites.delete');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('customer.profile.profile');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
