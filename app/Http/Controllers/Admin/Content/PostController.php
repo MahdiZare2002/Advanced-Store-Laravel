@@ -93,9 +93,9 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post, ImageService $imageService)
     {
-        if (!Gate::allows('update-post', $post)) {
-            abort(403);
-        }
+        // if (!Gate::allows('update-post', $post)) {
+        //     abort(403);
+        // }
 
         // $response = Gate::inspect('update-post');
         // if ($response->allowed()) {
