@@ -487,7 +487,8 @@ Route::namespace('market')->group(function () {
 
 Route::namespace('profile')->group(function () {
     Route::get('/orders', [ProfileOrderController::class, 'index'])->name('customer.profile.orders');
-    Route::get('/my_favorite', [FavoriteController::class, 'index'])->name('customer.profile.my-favorites');
+    Route::get('/my_favorites', [FavoriteController::class, 'index'])->name('customer.profile.my-favorites');
+    Route::get('/my_favorites/delete/{product}', [FavoriteController::class, 'delete'])->name('customer.profile.my-favorites.delete');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
