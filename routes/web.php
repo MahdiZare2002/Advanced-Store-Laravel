@@ -31,9 +31,7 @@ use App\Http\Controllers\admin\user\PermissionController;
 use App\Http\Controllers\Admin\Market\GuaranteeController;
 use App\Http\Controllers\Admin\Notify\EmailFileController;
 use App\Http\Controllers\Admin\Ticket\TicketAdminController;
-use App\Http\Controllers\Customer\Profile\ProfileController;
 use App\Http\Controllers\Admin\Market\ProductColorController;
-use App\Http\Controllers\Customer\Profile\FavoriteController;
 use App\Http\Controllers\Admin\Market\PropertyValueController;
 use App\Http\Controllers\Customer\SalesProcess\CartController;
 use App\Http\Controllers\Admin\Ticket\TicketCategoryController;
@@ -41,12 +39,14 @@ use App\Http\Controllers\Admin\Ticket\TicketPriorityController;
 use App\Http\Controllers\Auth\Customer\LoginRegisterController;
 use App\Http\Controllers\Customer\SalesProcess\AddressController;
 use App\Http\Controllers\Customer\SalesProcess\ProfileCompletionController;
-use App\Http\Controllers\Customer\Profile\OrderController as ProfileOrderController;
+use App\Http\Controllers\Customer\SalesProcess\PaymentController as CustomerPaymentController;
 use App\Http\Controllers\Admin\Content\CommentController as ContentCommentController;
 use App\Http\Controllers\Customer\Market\ProductController as MarketProductController;
 use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
 use App\Http\Controllers\Customer\Profile\AddressController as ProfileAddressController;
-use App\Http\Controllers\Customer\SalesProcess\PaymentController as CustomerPaymentController;
+use App\Http\Controllers\Customer\Profile\FavoriteController;
+use App\Http\Controllers\Customer\Profile\OrderController as ProfileOrderController;
+use App\Http\Controllers\Customer\Profile\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,13 +57,13 @@ use App\Http\Controllers\Customer\SalesProcess\PaymentController as CustomerPaym
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 /*
 |--------------------------------------------------------------------------
 | Admin
 |--------------------------------------------------------------------------
-*/
+ */
 
 Route::prefix('admin')->namespace('Admin')->group(function () {
 
@@ -153,7 +153,6 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/cancel-order/{order}', [OrderController::class, 'cancelOrder'])->name('admin.market.order.cancelOrder');
         });
 
-
         //payment
         Route::prefix('payment')->group(function () {
             Route::get('/', [PaymentController::class, 'index'])->name('admin.market.payment.index');
@@ -174,24 +173,23 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::put('/update/{product}', [ProductController::class, 'update'])->name('admin.market.product.update');
             Route::delete('/destroy/{product}', [ProductController::class, 'destroy'])->name('admin.market.product.destroy');
 
+            //gallery
+            Route::get('/gallery/{product}', [GalleryController::class, 'index'])->name('admin.market.gallery.index');
+            Route::get('/gallery/create/{product}', [GalleryController::class, 'create'])->name('admin.market.gallery.create');
+            Route::post('/gallery/store/{product}', [GalleryController::class, 'store'])->name('admin.market.gallery.store');
+            Route::delete('/gallery/destroy/{product}/{gallery}', [GalleryController::class, 'destroy'])->name('admin.market.gallery.destroy');
+
             //color
             Route::get('/color/{product}', [ProductColorController::class, 'index'])->name('admin.market.color.index');
             Route::get('/color/create/{product}', [ProductColorController::class, 'create'])->name('admin.market.color.create');
             Route::post('/color/store/{product}', [ProductColorController::class, 'store'])->name('admin.market.color.store');
             Route::delete('/color/destroy/{product}/{color}', [ProductColorController::class, 'destroy'])->name('admin.market.color.destroy');
 
-
             //guarantee
             Route::get('/guarantee/{product}', [GuaranteeController::class, 'index'])->name('admin.market.guarantee.index');
             Route::get('/guarantee/create/{product}', [GuaranteeController::class, 'create'])->name('admin.market.guarantee.create');
             Route::post('/guarantee/store/{product}', [GuaranteeController::class, 'store'])->name('admin.market.guarantee.store');
             Route::delete('/guarantee/destroy/{product}/{guarantee}', [GuaranteeController::class, 'destroy'])->name('admin.market.guarantee.destroy');
-
-            //gallery
-            Route::get('/gallery/{product}', [GalleryController::class, 'index'])->name('admin.market.gallery.index');
-            Route::get('/gallery/create/{product}', [GalleryController::class, 'create'])->name('admin.market.gallery.create');
-            Route::post('/gallery/store/{product}', [GalleryController::class, 'store'])->name('admin.market.gallery.store');
-            Route::delete('/gallery/destroy/{product}/{gallery}', [GalleryController::class, 'destroy'])->name('admin.market.gallery.destroy');
         });
 
         //property
@@ -211,7 +209,6 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::put('/value/update/{categoryAttribute}/{value}', [PropertyValueController::class, 'update'])->name('admin.market.value.update');
             Route::delete('/value/destroy/{categoryAttribute}/{value}', [PropertyValueController::class, 'destroy'])->name('admin.market.value.destroy');
         });
-
 
         //store
         Route::prefix('store')->group(function () {
@@ -282,8 +279,12 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
         Route::prefix('post')->group(function () {
             Route::get('/', [PostController::class, 'index'])->name('admin.content.post.index');
             Route::get('/create', [PostController::class, 'create'])->name('admin.content.post.create');
+            // Route::post('/store', [PostController::class, 'store'])->name('admin.content.post.store')->middleware('can:create,App\Models\Content\Post');
+            // Route::post('/store', [PostController::class, 'store'])->name('admin.content.post.store')->can('update', Post::class);
             Route::post('/store', [PostController::class, 'store'])->name('admin.content.post.store');
             Route::get('/edit/{post}', [PostController::class, 'edit'])->name('admin.content.post.edit');
+            // Route::put('/update/{post}', [PostController::class, 'update'])->name('admin.content.post.update')->middleware('can:update,post');
+            // Route::put('/update/{post}', [PostController::class, 'update'])->name('admin.content.post.update')->can('update', 'post');
             Route::put('/update/{post}', [PostController::class, 'update'])->name('admin.content.post.update');
             Route::delete('/destroy/{post}', [PostController::class, 'destroy'])->name('admin.content.post.destroy');
             Route::get('/status/{post}', [PostController::class, 'status'])->name('admin.content.post.status');
@@ -345,12 +346,11 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/', [PermissionController::class, 'index'])->name('admin.user.permission.index');
             Route::get('/create', [PermissionController::class, 'create'])->name('admin.user.permission.create');
             Route::post('/store', [PermissionController::class, 'store'])->name('admin.user.permission.store');
-            Route::get('/edit/{id}', [PermissionController::class, 'edit'])->name('admin.user.permission.edit');
-            Route::put('/update/{id}', [PermissionController::class, 'update'])->name('admin.user.permission.update');
-            Route::delete('/destroy/{id}', [PermissionController::class, 'destroy'])->name('admin.user.permission.destroy');
+            Route::get('/edit/{permission}', [PermissionController::class, 'edit'])->name('admin.user.permission.edit');
+            Route::put('/update/{permission}', [PermissionController::class, 'update'])->name('admin.user.permission.update');
+            Route::delete('/destroy/{permission}', [PermissionController::class, 'destroy'])->name('admin.user.permission.destroy');
         });
     });
-
 
     Route::prefix('notify')->namespace('Notify')->group(function () {
 
@@ -364,7 +364,6 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::delete('/destroy/{email}', [EmailController::class, 'destroy'])->name('admin.notify.email.destroy');
             Route::get('/status/{email}', [EmailController::class, 'status'])->name('admin.notify.email.status');
         });
-
 
         //email file
         Route::prefix('email-file')->group(function () {
@@ -402,7 +401,6 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/status/{ticketCategory}', [TicketCategoryController::class, 'status'])->name('admin.ticket.category.status');
         });
 
-
         //priority
         Route::prefix('priority')->group(function () {
             Route::get('/', [TicketPriorityController::class, 'index'])->name('admin.ticket.priority.index');
@@ -413,7 +411,6 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::delete('/destroy/{ticketPriority}', [TicketPriorityController::class, 'destroy'])->name('admin.ticket.priority.destroy');
             Route::get('/status/{ticketPriority}', [TicketPriorityController::class, 'status'])->name('admin.ticket.priority.status');
         });
-
 
         //admin
         Route::prefix('admin')->group(function () {
@@ -442,7 +439,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
     Route::post('/notification/read-all', [NotificationController::class, 'readAll'])->name('admin.notification.readAll');
 });
 
-Route::namespace('auth')->group(function () {
+Route::namespace('Auth')->group(function () {
     Route::get('login-register', [LoginRegisterController::class, 'loginRegisterForm'])->name('auth.customer.login-register-form');
     Route::middleware('throttle:customer-login-register-limiter')->post('/login-register', [LoginRegisterController::class, 'loginRegister'])->name('auth.customer.login-register');
     Route::get('login-confirm/{token}', [LoginRegisterController::class, 'loginConfirmForm'])->name('auth.customer.login-confirm-form');
@@ -453,12 +450,13 @@ Route::namespace('auth')->group(function () {
 
 Route::get('/', [HomeController::class, 'home'])->name('customer.home');
 
-Route::namespace('salesProcess')->group(function () {
+Route::namespace('SalesProcess')->group(function () {
+
     //cart
     Route::get('/cart', [CartController::class, 'cart'])->name('customer.sales-process.cart');
     Route::post('/cart', [CartController::class, 'updateCart'])->name('customer.sales-process.update-cart');
-    Route::post('/cart/add-to-cart/{product:slug}', [CartController::class, 'addToCart'])->name('customer.sales-process.add-to-cart');
-    Route::post('/cart/remove-from-cart', [CartController::class, 'removeFromCart'])->name('customer.sales-process.remove-from-cart');
+    Route::post('/add-to-cart/{product:slug}', [CartController::class, 'addToCart'])->name('customer.sales-process.add-to-cart');
+    Route::get('/remove-from-cart/{cartItem}', [CartController::class, 'removeFromCart'])->name('customer.sales-process.remove-from-cart');
 
     //profile completion
     Route::get('/profile-completion', [ProfileCompletionController::class, 'profileCompletion'])->name('customer.sales-process.profile-completion');
@@ -472,28 +470,29 @@ Route::namespace('salesProcess')->group(function () {
         Route::get('/get-cities/{province}', [AddressController::class, 'getCities'])->name('customer.sales-process.get-cities');
         Route::post('/choose-address-and-delivery', [AddressController::class, 'chooseAddressAndDelivery'])->name('customer.sales-process.choose-address-and-delivery');
 
-
         //payment
         Route::get('/payment', [CustomerPaymentController::class, 'payment'])->name('customer.sales-process.payment');
-        Route::get('/copan-discount', [CustomerPaymentController::class, 'copanDiscount'])->name('customer.sales-process.copan-discount');
+        Route::post('/copan-discount', [CustomerPaymentController::class, 'copanDiscount'])->name('customer.sales-process.copan-discount');
         Route::post('/payment-submit', [CustomerPaymentController::class, 'paymentSubmit'])->name('customer.sales-process.payment-submit');
-        Route::any('/payment-callback/{order}/{onlinePayment}', [CustomerPaymentController::class, 'paymentCallBack'])->name('customer.sales-process.payment-call-back');
+        Route::any('/payment-callback/{order}/{onlinePayment}', [CustomerPaymentController::class, 'paymentCallback'])->name('customer.sales-process.payment-call-back');
     });
 });
 
-Route::namespace('market')->group(function () {
+Route::namespace('Market')->group(function () {
+
     Route::get('/product/{product:slug}', [MarketProductController::class, 'product'])->name('customer.market.product');
     Route::post('/add-comment/product/{product:slug}', [MarketProductController::class, 'addComment'])->name('customer.market.add-comment');
-    Route::get('/add-to_favorite/product/{product:slug}', [MarketProductController::class, 'addToFavorite'])->name('customer.market.add-to-favorite');
+    Route::get('/add-to-favorite/product/{product:slug}', [MarketProductController::class, 'addToFavorite'])->name('customer.market.add-to-favorite');
 });
 
-Route::namespace('profile')->group(function () {
+Route::namespace('Profile')->group(function () {
+
     Route::get('/orders', [ProfileOrderController::class, 'index'])->name('customer.profile.orders');
-    Route::get('/my_favorites', [FavoriteController::class, 'index'])->name('customer.profile.my-favorites');
-    Route::get('/my_favorites/delete/{product}', [FavoriteController::class, 'delete'])->name('customer.profile.my-favorites.delete');
+    Route::get('/my-favorites', [FavoriteController::class, 'index'])->name('customer.profile.my-favorites');
+    Route::get('/my-favorites/delete/{product}', [FavoriteController::class, 'delete'])->name('customer.profile.my-favorites.delete');
     Route::get('/profile', [ProfileController::class, 'index'])->name('customer.profile.profile');
-    Route::get('/profile/update', [ProfileController::class, 'update'])->name('customer.profile.profile.update');
-    Route::get('/my-addresses', [ProfileAddressController::class, 'index'])->name('customer.profile.my-addresses.update');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('customer.profile.profile.update');
+    Route::get('/my-addresses', [ProfileAddressController::class, 'index'])->name('customer.profile.my-addresses');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
