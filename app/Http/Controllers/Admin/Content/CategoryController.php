@@ -19,7 +19,16 @@ class CategoryController extends Controller
     public function index()
     {
         $user = auth()->user();
-        dd($user->hasRole('Operator'));
+        // dd($user->hasRole('Operator'));
+        // dd($user->can('Answer'));
+        // $user = auth()->user();
+        // if ($user->can('سوپرادمین')) {
+
+        // $postCategories = PostCategory::orderBy('created_at', 'desc')->simplePaginate(15);
+        // return view('admin.content.category.index', compact('postCategories'));
+        // } else {
+        //     abort(403);
+        // }
         $postCategories = PostCategory::orderBy('created_at', 'desc')->simplePaginate(15);
         return view('admin.content.category.index', compact('postCategories'));
     }

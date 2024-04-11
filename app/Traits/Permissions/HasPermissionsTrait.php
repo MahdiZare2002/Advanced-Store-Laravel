@@ -17,12 +17,27 @@ trait HasPermissionsTrait
         return $this->belongsToMany(Permission::class);
     }
 
-    public function hasPermission($permission)
+    protected function hasPermission($permission)
     {
         return (bool) $this->permissions->where('name', $permission->name)->count();
     }
 
-    public function hasRole(...$roles)
+    public function hasPermissionTo($permission)
+    {
+        return $this->hasPermission($permission) || $this->hasPermissionThroughRole($permission);
+    }
+
+    public function hasPermissionThroughRole($permission)
+    {
+        foreach ($permission->roles as $role) {
+            if ($this->roles->contains($role)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected function hasRole(...$roles)
     {
         foreach ($roles as $role) {
             if ($this->roles->contains('name', $role)) {
