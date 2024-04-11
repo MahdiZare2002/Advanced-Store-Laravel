@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin\User;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\User\AdminUserRequest;
-use App\Http\Services\Image\ImageService;
 use App\Models\User;
+use App\Models\User\Role;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Services\Image\ImageService;
+use App\Http\Requests\Admin\User\AdminUserRequest;
 
 class AdminUserController extends Controller
 {
@@ -133,5 +134,21 @@ class AdminUserController extends Controller
         } else {
             return response()->json(['status' => false]);
         }
+    }
+
+    public function roles(User $admin)
+    {
+        $roles = Role::all();
+        return view('admin.user.admin-user.roles', compact('admin', 'roles'));
+    }
+
+    public function rolesStore(Request $request, User $admin)
+    {
+        $validated = $request->validate([
+            'roles' => 'required|exists:roles,id|array'
+        ]);
+
+        $admin->roles()->sync($request->roles);
+        return redirect()->route('admin.user.admin-user.index')->with('swal-success', 'نقش با موفقیت ویرایش شد');
     }
 }
