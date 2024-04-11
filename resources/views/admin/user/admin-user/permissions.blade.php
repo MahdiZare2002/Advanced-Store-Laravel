@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-    <title>ایجاد نقش ادمین</title>
+    <title>ایجاد سطح دسترسی ادمین</title>
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
             <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
             <li class="breadcrumb-item font-size-12"> <a href="#">بخش کاربران</a></li>
             <li class="breadcrumb-item font-size-12"> <a href="#">کاربران ادمین</a></li>
-            <li class="breadcrumb-item font-size-12 active" aria-current="page"> ایجاد نقش ادمین</li>
+            <li class="breadcrumb-item font-size-12 active" aria-current="page"> ایجاد سطح دسترسی ادمین</li>
         </ol>
     </nav>
 
@@ -20,7 +20,7 @@
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                        ایجاد نقش ادمین
+                        ایجاد سطح دسترسی ادمین
                     </h5>
                 </section>
 
@@ -29,7 +29,7 @@
                 </section>
 
                 <section>
-                    <form action="{{ route('admin.user.admin-user.roles.store', $admin) }}" method="post"
+                    <form action="{{ route('admin.user.admin-user.permissions.store', $admin) }}" method="post"
                         enctype="multipart/form-data">
                         @csrf
                         <section class="row">
@@ -37,15 +37,18 @@
 
                             <section class="col-12">
                                 <div class="form-group">
-                                    <label for="tags">نقش ها</label>
-                                    <select multiple class="form-control form-control-sm" id="select_roles" name="roles[]">
-                                        @foreach ($roles as $role)
-                                            <option value="{{ $role->id }}"
-                                                @foreach ($admin->roles as $user_role)
-                                        @if ($user_role->id === $role->id)
+                                    <label for="tags">سطح دسترسی ها</label>
+                                    <select multiple class="form-control form-control-sm" id="select_roles"
+                                        name="permissions[]">
+
+                                        @foreach ($permissions as $permission)
+                                            <option value="{{ $permission->id }}"
+                                                @foreach ($admin->permissions as $user_permission)
+
+                                        @if ($user_permission->id === $permission->id)
                                         selected
                                         @endif @endforeach>
-                                                {{ $role->name }}</option>
+                                                {{ $permission->name }}</option>
                                         @endforeach
 
                                     </select>
@@ -76,7 +79,7 @@
     <script>
         var select_roles = $('#select_roles');
         select_roles.select2({
-            placeholder: 'لطفا نقش ها را وارد نمایید',
+            placeholder: 'لطفا دسترسی ها را وارد نمایید',
             multiple: true,
             tags: true
         })
