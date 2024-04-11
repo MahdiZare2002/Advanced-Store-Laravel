@@ -2,11 +2,12 @@
 
 namespace App\Providers;
 
-use App\Models\User\Permission;
 use Exception;
+use App\Models\User\Permission;
 use Illuminate\Auth\Access\Gate;
-use Illuminate\Support\ServiceProvider;
 use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\ServiceProvider;
 
 class PermissionServiceProvider extends ServiceProvider
 {
@@ -37,5 +38,13 @@ class PermissionServiceProvider extends ServiceProvider
             report($e);
             return false;
         }
+
+        Blade::directive('role', function ($role) {
+            return "<?php if(auth()->check() && auth()->user()->hasRole($role)) : ?>";
+        });
+
+        Blade::directive('endrole', function ($role) {
+            return "<?php endif; ?>";
+        });
     }
 }
