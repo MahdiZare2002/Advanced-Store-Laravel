@@ -10,6 +10,7 @@ use App\Models\Ticket\Ticket;
 use App\Models\Ticket\TicketAdmin;
 use App\Models\User\Permission;
 use App\Models\User\Role;
+use App\Traits\Permissions\HasPermissionsTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -25,6 +26,8 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+
+    use HasPermissionsTrait;
 
     /**
      * The attributes that are mass assignable.
