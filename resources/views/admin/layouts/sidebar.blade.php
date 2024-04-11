@@ -2,6 +2,14 @@
     <section class="sidebar-container">
         <section class="sidebar-wrapper">
 
+            <a href="{{ route('customer.home') }}" class="sidebar-link" target="_blank">
+                <i class="fas fa-shopping-cart"></i>
+                <span>فروشگاه</span>
+            </a>
+
+            <hr>
+
+
             <a href="{{ route('admin.home') }}" class="sidebar-link">
                 <i class="fas fa-home"></i>
                 <span>خانه</span>
@@ -76,10 +84,13 @@
 
 
             <section class="sidebar-part-title">بخش محتوی</section>
+            {{-- @role('operator') --}}
             <a href="{{ route('admin.content.category.index') }}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>دسته بندی</span>
             </a>
+            {{-- @endrole --}}
+
             <a href="{{ route('admin.content.post.index') }}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>پست ها</span>

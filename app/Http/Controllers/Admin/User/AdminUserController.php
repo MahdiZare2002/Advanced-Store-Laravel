@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\User;
 use App\Models\User;
 use App\Models\User\Role;
 use Illuminate\Http\Request;
+use App\Models\User\Permission;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Services\Image\ImageService;
