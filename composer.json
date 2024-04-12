@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.5",
         "morilog/jalali": "3.*",
+        "nwidart/laravel-modules": "*",
         "saeedpooyanfar/zarinpal": "^5.0"
     },
     "require-dev": {
@@ -65,7 +66,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "wikimedia/composer-merge-plugin": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
