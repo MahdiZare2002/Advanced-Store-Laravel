@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer\Profile;
 
 use Illuminate\Http\Request;
 use App\Models\Ticket\Ticket;
+use App\Models\Ticket\TicketFile;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Ticket\TicketCategory;
