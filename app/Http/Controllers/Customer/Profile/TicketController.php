@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Ticket\TicketCategory;
 use App\Models\Ticket\TicketPriority;
 use App\Http\Requests\Customer\Profile\StoreTicketRequest;
+use App\Http\Requests\Customer\Profile\StoreAnswerTicketRequest;
 
 class TicketController extends Controller
 {
@@ -29,7 +30,7 @@ class TicketController extends Controller
         return redirect()->back()->with('swal-success', 'تغییر شما با موفقیت انجام شد');
     }
 
-    public function answer(StoreTicketRequest $request, Ticket $ticket)
+    public function answer(StoreAnswerTicketRequest $request, Ticket $ticket)
     {
 
         $inputs = $request->all();
