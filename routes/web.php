@@ -499,6 +499,11 @@ Route::namespace('Profile')->group(function () {
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('customer.profile.profile.update');
     Route::get('/my-addresses', [ProfileAddressController::class, 'index'])->name('customer.profile.my-addresses');
     Route::get('/my-tickets', [ProfileTicketController::class, 'index'])->name('customer.profile.my-tickets');
+    Route::get('my-tickets/show/{ticket}', [ProfileTicketController::class, 'show'])->name('customer.profile.my-tickets.show');
+    Route::post('my-tickets/answer/{ticket}', [ProfileTicketController::class, 'answer'])->name('customer.profile.my-tickets.answer');
+    Route::get('my-tickets/change/{ticket}', [ProfileTicketController::class, 'change'])->name('customer.profile.my-tickets.change');
+    Route::get('my-tickets/create', [ProfileTicketController::class, 'create'])->name('customer.profile.my-tickets.create');
+    Route::post('my-tickets/store', [ProfileTicketController::class, 'store'])->name('customer.profile.my-tickets.store');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
