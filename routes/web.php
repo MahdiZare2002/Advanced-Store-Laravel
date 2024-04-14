@@ -47,6 +47,7 @@ use App\Http\Controllers\Customer\Profile\AddressController as ProfileAddressCon
 use App\Http\Controllers\Customer\Profile\FavoriteController;
 use App\Http\Controllers\Customer\Profile\OrderController as ProfileOrderController;
 use App\Http\Controllers\Customer\Profile\ProfileController;
+use App\Http\Controllers\Customer\Profile\TicketController as ProfileTicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -497,6 +498,7 @@ Route::namespace('Profile')->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('customer.profile.profile');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('customer.profile.profile.update');
     Route::get('/my-addresses', [ProfileAddressController::class, 'index'])->name('customer.profile.my-addresses');
+    Route::get('/my-tickets', [ProfileTicketController::class, 'index'])->name('customer.profile.my-tickets');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
