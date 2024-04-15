@@ -36,9 +36,8 @@
                         حساب</a></span>
             </section>
             <section class="sidebar-nav-item">
-                <span class="sidebar-nav-item-title">
-                    <a class="p-3" href="#">خروج از حساب کاربری</a>
-                </span>
+                <span class="sidebar-nav-item-title"><a class="p-3" href="#">خروج از حساب
+                        کاربری</a></span>
             </section>
 
         </section>
