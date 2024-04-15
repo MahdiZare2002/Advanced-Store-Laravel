@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer\Profile;
 use Illuminate\Http\Request;
 use App\Models\Ticket\Ticket;
 use App\Models\Ticket\TicketFile;
+use App\Models\Ticket\TicketAdmin;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Ticket\TicketCategory;
@@ -51,6 +52,10 @@ class TicketController extends Controller
 
     public function create()
     {
+        // foreach($ticketAdmins as $ticketAdmin){
+        //     dd($ticketAdmin->id);
+        // }
+        // dd($ticketAdmin->id);
         $ticketCategories = TicketCategory::all();
         $ticketPriorities = TicketPriority::all();
         return view('customer.profile.tickets.create', compact('ticketCategories', 'ticketPriorities'));
@@ -61,8 +66,10 @@ class TicketController extends Controller
 
         DB::transaction(function () use ($request, $fileService) {
             //ticket body
+            $ticketAdmin = TicketAdmin::first();
             $inputs = $request->all();
             $inputs['user_id'] = auth()->user()->id;
+            $inputs['reference_id'] = $ticketAdmin->id;
             $ticket = Ticket::create($inputs);
 
             //ticket file
