@@ -10,7 +10,7 @@
             </section>
             <section class="sidebar-nav-item">
                 <span class="sidebar-nav-item-title"><a class="p-3"
-                        href="{{ route('customer.profile.my-compares') }}">
+                        href="">
                         لیست مقایسه من
                     </a></span>
             </section>
