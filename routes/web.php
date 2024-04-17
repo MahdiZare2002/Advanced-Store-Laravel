@@ -454,6 +454,7 @@ Route::namespace('Auth')->group(function () {
 });
 
 Route::get('/', [HomeController::class, 'home'])->name('customer.home');
+Route::get('/products', [HomeController::class, 'products'])->name('customer.products');
 
 Route::namespace('SalesProcess')->group(function () {
 
