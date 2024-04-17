@@ -26,8 +26,36 @@ class HomeController extends Controller
 
     public function products(Request $request)
     {
+        //switch for set sort for filtering
+        switch ($request->sort) {
+            case "1":
+                $column = "created_at";
+                $direction = "DESC";
+                break;
+            case "2":
+                $column = "price";
+                $direction = "DESC";
+                break;
+            case "3":
+                $column = "price";
+                $direction = "ASC";
+                break;
+            case "4":
+                $column = "view";
+                $direction = "DESC";
+                break;
+            case "5":
+                $column = "sold_number";
+                $direction = "DESC";
+                break;
+            default:
+                $column = "created_at";
+                $direction = "ASC";
+        }
         if ($request->search) {
-            $products = Product::where('name', 'LIKE', '%' . $request->search . '%');
+            $products = Product::where('name', 'LIKE', "%" . $request->search . "%")->orderBy($column, $direction);
+        } else {
+            $products = Product::orderBy($column, $direction);
         }
         return view('customer.market.product.products', compact('products'));
     }
