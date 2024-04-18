@@ -70,7 +70,13 @@ class HomeController extends Controller
         $products = $products->when($request->brands, function () use ($request, $products) {
             $products->whereIn('brand_id', $request->brands);
         });
-
-        return view('customer.market.product.products', compact('products', 'brands'));
+        $selectedBrandsArray = [];
+        if ($request->brands) {
+            $selectedBrands = Brand::find($request->brands);
+            foreach ($selectedBrands as $selectedBrand) {
+                array_push($selectedBrandsArray, $selectedBrand->original_name);
+            }
+        }
+        return view('customer.market.product.products', compact('products', 'brands', 'selectedBrandsArray'));
     }
 }
