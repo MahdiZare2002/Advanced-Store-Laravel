@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Customer;
 
-use App\Http\Controllers\Controller;
-use App\Models\Content\Banner;
 use App\Models\Market\Brand;
-use App\Models\Market\Product;
 use Illuminate\Http\Request;
+use App\Models\Content\Banner;
+use App\Models\Market\Product;
+use App\Http\Controllers\Controller;
+use App\Models\Market\ProductCategory;
 
 class HomeController extends Controller
 {
@@ -24,10 +25,21 @@ class HomeController extends Controller
         return view('customer.home', compact('slideShowImages', 'topBanners', 'middleBanners', 'bottomBanners', 'brands', 'mostVisitedProducts', 'offerProducts'));
     }
 
-    public function products(Request $request)
+    public function products(Request $request, ProductCategory $category = null)
     {
         //get brands
         $brands = Brand::all();
+
+        //category selection
+        if ($category)
+            $producModel = $category->products();
+        else
+            $producModel = new Product();
+
+        //get categories
+        $categories = ProductCategory::whereNull('parent_id')->get();
+
+
         //switch for set sort for filtering
         switch ($request->sort) {
             case "1":
@@ -80,6 +92,6 @@ class HomeController extends Controller
                 array_push($selectedBrandsArray, $selectedBrand->original_name);
             }
         }
-        return view('customer.market.product.products', compact('products', 'brands', 'selectedBrandsArray'));
+        return view('customer.market.product.products', compact('products', 'brands', 'selectedBrandsArray', 'categories'));
     }
 }
