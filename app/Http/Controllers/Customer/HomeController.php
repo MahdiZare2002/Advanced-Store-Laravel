@@ -70,6 +70,9 @@ class HomeController extends Controller
         $products = $products->when($request->brands, function () use ($request, $products) {
             $products->whereIn('brand_id', $request->brands);
         });
+        $products = $products->paginate(10);
+        $products->appends($request->query());
+        //get selected brands
         $selectedBrandsArray = [];
         if ($request->brands) {
             $selectedBrands = Brand::find($request->brands);
