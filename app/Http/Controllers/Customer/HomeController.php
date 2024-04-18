@@ -53,10 +53,18 @@ class HomeController extends Controller
                 $direction = "ASC";
         }
         if ($request->search) {
-            $products = Product::where('name', 'LIKE', "%" . $request->search . "%")->orderBy($column, $direction);
+            $query = Product::where('name', 'LIKE', "%" . $request->search . "%")->orderBy($column, $direction);
         } else {
-            $products = Product::orderBy($column, $direction);
+            $query = Product::orderBy($column, $direction);
         }
+        $products = $request->max_price && $request->min_price ? $query->whereBetween('price', [$request->min_price, $request->max_price]) :
+            $query->when($request->min_price, function ($query) use ($request) {
+                $query->where('price', '>=', $request->min_price)->get();
+            })->when($request->max_price, function ($query) use ($request) {
+                $query->where('price', '<=', $request->max_price)->get();
+            })->when(!($request->min_price && $request->max_price), function ($query) {
+                $query->get();
+            });
         return view('customer.market.product.products', compact('products'));
     }
 }
