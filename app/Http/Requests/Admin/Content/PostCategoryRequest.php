@@ -30,6 +30,7 @@ class PostCategoryRequest extends FormRequest
                 'image' => 'required|image|mimes:png,jpg,jpeg,gif',
                 'status' => 'required|numeric|in:0,1',
                 'tags' => 'required|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
+                'g-recaptcha-response' => 'recaptcha',
             ];
         } else {
             return [

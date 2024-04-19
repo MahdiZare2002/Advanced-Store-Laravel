@@ -2,6 +2,30 @@
 
 @section('head-tag')
     <title>دسته بندی</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    {{-- <script>
+    function callbackThen(response)
+    {
+        response.json().then(function(data){
+            console.log(data);
+            if(data.success && data.score > 0.5){
+                console.log('valid recaptcha');
+            }
+            else{
+                document.getElementById('form').addEventListener('submit', function(e){
+                    e.preventDefault();
+                })
+            }
+        })
+    }
+    function callbackCatch(error){
+        document.getElementById('captcha_error').classList().remove('d-none')
+    }
+</script> --}}
+    {!! htmlScriptTagJsApi([
+        'callback_then' => 'callbackThen',
+        'callback_catch' => 'callbackCatch',
+    ]) !!}
 @endsection
 
 @section('content')
@@ -29,6 +53,7 @@
                 </section>
 
                 <section>
+                    <h1 class="text-danger d-none" id="captcha_error">اعتبار سنجی کپچا با خطا روبه رو شد</h1>
                     <form action="{{ route('admin.content.category.store') }}" method="post" enctype="multipart/form-data"
                         id="form">
                         @csrf
