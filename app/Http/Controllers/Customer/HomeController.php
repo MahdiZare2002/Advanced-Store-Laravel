@@ -8,21 +8,24 @@ use App\Models\Content\Banner;
 use App\Models\Market\Product;
 use App\Http\Controllers\Controller;
 use App\Models\Market\ProductCategory;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     public function home()
     {
+        Auth::loginUsingId(15);
+
         $slideShowImages = Banner::where('position', 0)->where('status', 1)->get();
         $topBanners = Banner::where('position', 1)->where('status', 1)->take(2)->get();
         $middleBanners = Banner::where('position', 2)->where('status', 1)->take(2)->get();
-        $bottomBanners = Banner::where('position', 3)->where('status', 1)->first();
+        $bottomBanner = Banner::where('position', 3)->where('status', 1)->first();
 
         $brands = Brand::all();
 
         $mostVisitedProducts = Product::latest()->take(10)->get();
         $offerProducts = Product::latest()->take(10)->get();
-        return view('customer.home', compact('slideShowImages', 'topBanners', 'middleBanners', 'bottomBanners', 'brands', 'mostVisitedProducts', 'offerProducts'));
+        return view('customer.home', compact('slideShowImages', 'topBanners', 'middleBanners', 'bottomBanner', 'brands', 'mostVisitedProducts', 'offerProducts'));
     }
 
     public function products(Request $request, ProductCategory $category = null)
@@ -38,7 +41,6 @@ class HomeController extends Controller
 
         //get categories
         $categories = ProductCategory::whereNull('parent_id')->get();
-
 
         //switch for set sort for filtering
         switch ($request->sort) {
@@ -67,9 +69,9 @@ class HomeController extends Controller
                 $direction = "ASC";
         }
         if ($request->search) {
-            $query = Product::where('name', 'LIKE', "%" . $request->search . "%")->orderBy($column, $direction);
+            $query = $producModel->where('name', 'LIKE', "%" . $request->search . "%")->orderBy($column, $direction);
         } else {
-            $query = Product::orderBy($column, $direction);
+            $query = $producModel->orderBy($column, $direction);
         }
         $products = $request->max_price && $request->min_price ? $query->whereBetween('price', [$request->min_price, $request->max_price]) :
             $query->when($request->min_price, function ($query) use ($request) {
@@ -92,6 +94,7 @@ class HomeController extends Controller
                 array_push($selectedBrandsArray, $selectedBrand->original_name);
             }
         }
+
         return view('customer.market.product.products', compact('products', 'brands', 'selectedBrandsArray', 'categories'));
     }
 }
