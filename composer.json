@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "ext-gd": "*",
+        "biscolab/laravel-recaptcha": "^6.1",
         "cviebrock/eloquent-sluggable": "^9.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
