@@ -20,29 +20,14 @@
                     <section class="search-box">
                         <section class="search-textbox">
                             <span><i class="fa fa-search"></i></span>
-                            <input id="search" type="text" class="" placeholder="جستجو ..."
-                                autocomplete="off">
+                            <form
+                                action="{{ route('customer.products', request()->category ? request()->category->id : null) }}"
+                                method="get">
+                                <input id="search" type="text" class="" name="search"
+                                    value="{{ request()->search }}" placeholder="جستجو ..." autocomplete="off">
+                            </form>
                         </section>
-                        <section class="search-result visually-hidden">
-                            <section class="search-result-title">نتایج جستجو برای <span class="search-words">"موبایل
-                                    شیا"</span><span class="search-result-type">در دسته بندی ها</span></section>
-                            <section class="search-result-item"><a class="text-decoration-none" href="#"><i
-                                        class="fa fa-link"></i> دسته موبایل و وسایل جانبی</a></section>
 
-                            <section class="search-result-title">نتایج جستجو برای <span class="search-words">"موبایل
-                                    شیا"</span><span class="search-result-type">در برندها</span></section>
-                            <section class="search-result-item"><a class="text-decoration-none" href="#"><i
-                                        class="fa fa-link"></i> برند شیائومی</a></section>
-                            <section class="search-result-item"><a class="text-decoration-none" href="#"><i
-                                        class="fa fa-link"></i> برند توشیبا</a></section>
-                            <section class="search-result-item"><a class="text-decoration-none" href="#"><i
-                                        class="fa fa-link"></i> برند شیانگ پینگ</a></section>
-
-                            <section class="search-result-title">نتایج جستجو برای <span class="search-words">"موبایل
-                                    شیا"</span><span class="search-result-type">در کالاها</span></section>
-                            <section class="search-result-item"><span class="search-no-result">موردی یافت نشد</span>
-                            </section>
-                        </section>
                     </section>
                 </section>
 
@@ -763,8 +748,7 @@
                                                 <a href="#" class="sub-sub-category">کالاهای مسی</a>
                                                 <a href="#" class="sub-sub-category">سفال، سرامیک و چینی</a>
                                                 <a href="#" class="sub-sub-category">کیف چرمی</a>
-                                                <a href="#" class="sub-sub-category">ترمه، قلم کار و
-                                                    دستباف</a>
+                                                <a href="#" class="sub-sub-category">ترمه، قلم کار و دستباف</a>
                                                 <a href="#" class="sub-sub-category">خاتم، منبت، حصیری و
                                                     چوبی</a>
                                                 <a href="#" class="sub-sub-category">تابلو و ساعت</a>
@@ -822,7 +806,8 @@
                                                 <a href="#" class="sub-category">لوازم ورزشی</a>
                                                 <a href="#" class="sub-category">ورزش های هوازی و بدنسازی</a>
                                                 <a href="#" class="sub-sub-category">تجهیزات جانبی ایروبیک و
-                                                    تناسب اندام</a>
+                                                    تناسب
+                                                    اندام</a>
                                                 <a href="#" class="sub-sub-category">طناب</a>
                                                 <a href="#" class="sub-sub-category">بارفیکس</a>
                                                 <a href="#" class="sub-sub-category">تردمیل</a>
@@ -956,17 +941,22 @@
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هدست</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">اسپیکر
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">پاوربانک</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هندزفری
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">قاب
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هولدر
-                                                    نگهدارنده</a></section>
+                                                    نگهدارنده</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">شارژر
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">مونوپاد</a>
                                             </section>
                                         </section>
@@ -980,17 +970,22 @@
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هدست</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">اسپیکر
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">پاوربانک</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هندزفری
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">قاب
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هولدر
-                                                    نگهدارنده</a></section>
+                                                    نگهدارنده</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">شارژر
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">مونوپاد</a>
                                             </section>
                                         </section>
@@ -1010,17 +1005,22 @@
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هدست</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">اسپیکر
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">پاوربانک</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هندزفری
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">قاب
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هولدر
-                                                    نگهدارنده</a></section>
+                                                    نگهدارنده</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">شارژر
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">مونوپاد</a>
                                             </section>
                                         </section>
@@ -1034,17 +1034,22 @@
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هدست</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">اسپیکر
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">پاوربانک</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هندزفری
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">قاب
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هولدر
-                                                    نگهدارنده</a></section>
+                                                    نگهدارنده</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">شارژر
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">مونوپاد</a>
                                             </section>
                                         </section>
@@ -1064,17 +1069,22 @@
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هدست</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">اسپیکر
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">پاوربانک</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هندزفری
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">قاب
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هولدر
-                                                    نگهدارنده</a></section>
+                                                    نگهدارنده</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">شارژر
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">مونوپاد</a>
                                             </section>
                                         </section>
@@ -1088,17 +1098,22 @@
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هدست</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">اسپیکر
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">پاوربانک</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هندزفری
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">قاب
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هولدر
-                                                    نگهدارنده</a></section>
+                                                    نگهدارنده</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">شارژر
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">مونوپاد</a>
                                             </section>
                                         </section>
@@ -1118,17 +1133,22 @@
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هدست</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">اسپیکر
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">پاوربانک</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هندزفری
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">قاب
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هولدر
-                                                    نگهدارنده</a></section>
+                                                    نگهدارنده</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">شارژر
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">مونوپاد</a>
                                             </section>
                                         </section>
@@ -1142,17 +1162,22 @@
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هدست</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">اسپیکر
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">پاوربانک</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هندزفری
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">قاب
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هولدر
-                                                    نگهدارنده</a></section>
+                                                    نگهدارنده</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">شارژر
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">مونوپاد</a>
                                             </section>
                                         </section>
@@ -1172,17 +1197,22 @@
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هدست</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">اسپیکر
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">پاوربانک</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هندزفری
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">قاب
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هولدر
-                                                    نگهدارنده</a></section>
+                                                    نگهدارنده</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">شارژر
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">مونوپاد</a>
                                             </section>
                                         </section>
@@ -1196,17 +1226,22 @@
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هدست</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">اسپیکر
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">پاوربانک</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هندزفری
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">قاب
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هولدر
-                                                    نگهدارنده</a></section>
+                                                    نگهدارنده</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">شارژر
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">مونوپاد</a>
                                             </section>
                                         </section>
@@ -1226,17 +1261,22 @@
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هدست</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">اسپیکر
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">پاوربانک</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هندزفری
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">قاب
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هولدر
-                                                    نگهدارنده</a></section>
+                                                    نگهدارنده</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">شارژر
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">مونوپاد</a>
                                             </section>
                                         </section>
@@ -1250,17 +1290,22 @@
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هدست</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">اسپیکر
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">پاوربانک</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هندزفری
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">قاب
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هولدر
-                                                    نگهدارنده</a></section>
+                                                    نگهدارنده</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">شارژر
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">مونوپاد</a>
                                             </section>
                                         </section>
@@ -1280,17 +1325,22 @@
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هدست</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">اسپیکر
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">پاوربانک</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هندزفری
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">قاب
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هولدر
-                                                    نگهدارنده</a></section>
+                                                    نگهدارنده</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">شارژر
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">مونوپاد</a>
                                             </section>
                                         </section>
@@ -1304,17 +1354,22 @@
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هدست</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">اسپیکر
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">پاوربانک</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هندزفری
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">قاب
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هولدر
-                                                    نگهدارنده</a></section>
+                                                    نگهدارنده</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">شارژر
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">مونوپاد</a>
                                             </section>
                                         </section>
@@ -1334,17 +1389,22 @@
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هدست</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">اسپیکر
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">پاوربانک</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هندزفری
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">قاب
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هولدر
-                                                    نگهدارنده</a></section>
+                                                    نگهدارنده</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">شارژر
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">مونوپاد</a>
                                             </section>
                                         </section>
@@ -1358,17 +1418,22 @@
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هدست</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">اسپیکر
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">پاوربانک</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هندزفری
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">قاب
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هولدر
-                                                    نگهدارنده</a></section>
+                                                    نگهدارنده</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">شارژر
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">مونوپاد</a>
                                             </section>
                                         </section>
@@ -1388,17 +1453,22 @@
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هدست</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">اسپیکر
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">پاوربانک</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هندزفری
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">قاب
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هولدر
-                                                    نگهدارنده</a></section>
+                                                    نگهدارنده</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">شارژر
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">مونوپاد</a>
                                             </section>
                                         </section>
@@ -1412,17 +1482,22 @@
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هدست</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">اسپیکر
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">پاوربانک</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هندزفری
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">قاب
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هولدر
-                                                    نگهدارنده</a></section>
+                                                    نگهدارنده</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">شارژر
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">مونوپاد</a>
                                             </section>
                                         </section>
@@ -1442,17 +1517,22 @@
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هدست</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">اسپیکر
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">پاوربانک</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هندزفری
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">قاب
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هولدر
-                                                    نگهدارنده</a></section>
+                                                    نگهدارنده</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">شارژر
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">مونوپاد</a>
                                             </section>
                                         </section>
@@ -1466,17 +1546,22 @@
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هدست</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">اسپیکر
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">پاوربانک</a>
                                             </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هندزفری
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">قاب
-                                                    موبایل</a></section>
+                                                    موبایل</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">هولدر
-                                                    نگهدارنده</a></section>
+                                                    نگهدارنده</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">شارژر
-                                                    بیسیم</a></section>
+                                                    بیسیم</a>
+                                            </section>
                                             <section class="sidebar-nav-sub-sub-item"><a href="#">مونوپاد</a>
                                             </section>
                                         </section>
