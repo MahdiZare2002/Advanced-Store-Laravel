@@ -8,6 +8,7 @@ use App\Models\Ticket\Ticket;
 use App\Models\Market\Payment;
 use App\Models\Market\Product;
 use App\Models\Content\Comment;
+use App\Models\Market\Compare;
 use App\Models\User\Permission;
 use App\Models\Market\OrderItem;
 use Laravel\Sanctum\HasApiTokens;
@@ -144,5 +145,10 @@ class User extends Authenticatable
         }
         $productIds = $productIds->unique();
         return $productIds;
+    }
+
+    public function compare()
+    {
+        return $this->hasOne(Compare::class);
     }
 }
