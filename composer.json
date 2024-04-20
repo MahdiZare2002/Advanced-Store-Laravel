@@ -21,6 +21,7 @@
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.5",
         "morilog/jalali": "3.*",
+        "nagy/laravel-rating": "^1.0",
         "saeedpooyanfar/zarinpal": "^5.0"
     },
     "require-dev": {
