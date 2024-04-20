@@ -52,7 +52,7 @@
                             @endif
 
                         </section>
-                        <section class="sort ">
+                        <section class="sort">
                             <span>مرتب سازی بر اساس : </span>
                             <a class="btn {{ request()->sort == 1 ? 'btn-info' : '' }} btn-sm px-1 py-0"
                                 href="{{ route('customer.products', ['category' => request()->category ? request()->category->id : null, 'search' => request()->search, 'sort' => '1', 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands]) }}">جدیدترین</a>
@@ -82,7 +82,7 @@
                                         <section class="product-add-to-favorite"><a href="#" data-bs-toggle="tooltip"
                                                 data-bs-placement="left" title="افزودن به علاقه مندی"><i
                                                     class="fa fa-heart"></i></a></section>
-                                        <a class="product-link" href="#">
+                                        <a class="product-link" href="{{ route('customer.market.product', $product) }}">
                                             <section class="product-image">
                                                 <img class=""
                                                     src="{{ asset($product->image['indexArray']['medium']) }}"

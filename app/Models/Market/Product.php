@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Nagy\LaravelRating\Traits\Rateable;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes, Sluggable;
+    use HasFactory, SoftDeletes, Sluggable, Rateable;
 
     public function sluggable(): array
     {
@@ -82,7 +83,8 @@ class Product extends Model
         return $this->comments()->whereNull('parent_id')->where('approved', 1)->get();
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsToMany(User::class);
     }
 }

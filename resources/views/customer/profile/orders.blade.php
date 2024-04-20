@@ -79,10 +79,11 @@
                                                 {{ $order->paymentStatusValue }}
                                             </section>
                                             <section class="order-item-products">
-                                                <a href="#"><img src="assets/images/products/1.jpg"
-                                                        alt=""></a>
-                                                <a href="#"><img src="assets/images/products/2.jpg"
-                                                        alt=""></a>
+                                                @foreach ($order->orderItems as $item)
+                                                    <a href="#"><img
+                                                            src="{{ asset(json_decode($item->product)->image->indexArray->small) }}"
+                                                            alt=""></a>
+                                                @endforeach
                                             </section>
                                         </section>
                                         <section class="order-item-link"><a href="#">پرداخت سفارش</a></section>

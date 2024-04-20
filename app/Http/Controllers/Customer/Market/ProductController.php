@@ -43,4 +43,17 @@ class ProductController extends Controller
             response()->json(['status' => 3]);
         }
     }
+
+    public function addRate(Product $product, Request $request)
+    {
+        $productIds = auth()->user()->isUserPurchedProduct($product->id);
+
+        if (Auth::check() && $productIds->count() > 0) {
+            $user = Auth::user();
+            $user->rate($product, $request->rating);
+            return back()->with('alert-section-success', 'امتیاز شما با موفقیت ثبت گردید');
+        } else {
+            return back()->with('alert-section-error', 'شما اجازه ثبت امتیاز ندارید - ابتدا باید محصول را خریداری نمایید');
+        }
+    }
 }
