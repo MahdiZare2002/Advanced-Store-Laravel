@@ -2,6 +2,43 @@
 
 @section('head-tag')
     <title>{{ $product->name }}</title>
+    <style>
+        @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+        /* Styling h1 and links
+    ––––––––––––––––––––––––––––––––– */
+        .starrating>input {
+            display: none;
+        }
+
+        /* Remove radio buttons */
+
+        .starrating>label:before {
+            content: "\f005";
+            /* Star */
+            margin: 2px;
+            font-size: 2em;
+            font-family: FontAwesome;
+            display: inline-block;
+        }
+
+        .starrating>label {
+            color: #222222;
+            /* Start color when not clicked */
+        }
+
+        .starrating>input:checked~label {
+            color: #ffca08;
+        }
+
+        /* Set yellow color when star checked */
+
+        .starrating>input:hover~label {
+            color: #ffca08;
+        }
+
+        /* Set yellow color when star hover */
+    </style>
 @endsection
 
 @section('content')
@@ -27,6 +64,7 @@
                     <section class="row mt-4">
                         <!-- start image gallery -->
                         <section class="col-md-4">
+
                             <section class="content-wrapper bg-white p-3 rounded-2 mb-4">
                                 <section class="product-gallery">
                                     @php
@@ -113,7 +151,8 @@
                                                         <option value="{{ $guarantee->id }}"
                                                             data-guarantee-price={{ $guarantee->price_increase }}
                                                             @if ($key == 0) selected @endif>
-                                                            {{ $guarantee->name }}</option>
+                                                            {{ $guarantee->name }}
+                                                        </option>
                                                     @endforeach
 
                                                 </select>
@@ -131,29 +170,10 @@
                                                     ناموجود</span>
                                             @endif
                                         </p>
-                                        <p>
 
+                                        <div class="d-flex">
+                                            {{-- favorite --}}
                                             @guest
-                                            <section class="product-add-to-favorite position-relative" style="top: 0">
-                                                <button type="button" class="btn btn-light btn-sm text-decoration-none"
-                                                    data-url="{{ route('customer.market.add-to-favorite', $product) }}"
-                                                    data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="اضافه از علاقه مندی">
-                                                    <i class="fa fa-heart"></i>
-                                                </button>
-                                            </section>
-                                        @endguest
-                                        @auth
-                                            @if ($product->user->contains(auth()->user()->id))
-                                                <section class="product-add-to-favorite position-relative" style="top: 0">
-                                                    <button type="button" class="btn btn-light btn-sm text-decoration-none"
-                                                        data-url="{{ route('customer.market.add-to-favorite', $product) }}"
-                                                        data-bs-toggle="tooltip" data-bs-placement="left"
-                                                        title="حذف از علاقه مندی">
-                                                        <i class="fa fa-heart text-danger"></i>
-                                                    </button>
-                                                </section>
-                                            @else
                                                 <section class="product-add-to-favorite position-relative" style="top: 0">
                                                     <button type="button" class="btn btn-light btn-sm text-decoration-none"
                                                         data-url="{{ route('customer.market.add-to-favorite', $product) }}"
@@ -162,9 +182,66 @@
                                                         <i class="fa fa-heart"></i>
                                                     </button>
                                                 </section>
-                                            @endif
-                                        @endauth
-                                        </p>
+                                            @endguest
+                                            @auth
+                                                @if ($product->user->contains(auth()->user()->id))
+                                                    <section class="product-add-to-favorite position-relative" style="top: 0">
+                                                        <button type="button" class="btn btn-light btn-sm text-decoration-none"
+                                                            data-url="{{ route('customer.market.add-to-favorite', $product) }}"
+                                                            data-bs-toggle="tooltip" data-bs-placement="left"
+                                                            title="حذف از علاقه مندی">
+                                                            <i class="fa fa-heart text-danger"></i>
+                                                        </button>
+                                                    </section>
+                                                @else
+                                                    <section class="product-add-to-favorite position-relative" style="top: 0">
+                                                        <button type="button" class="btn btn-light btn-sm text-decoration-none"
+                                                            data-url="{{ route('customer.market.add-to-favorite', $product) }}"
+                                                            data-bs-toggle="tooltip" data-bs-placement="left"
+                                                            title="اضافه به علاقه مندی">
+                                                            <i class="fa fa-heart"></i>
+                                                        </button>
+                                                    </section>
+                                                @endif
+                                            @endauth
+
+                                            {{-- compare --}}
+                                            @guest
+                                                <section class="product-add-to-compare position-relative" style="top: 0">
+                                                    <button type="button" class="btn btn-light btn-sm text-decoration-none"
+                                                        data-url="{{ route('customer.market.add-to-compare', $product) }}"
+                                                        data-bs-toggle="tooltip" data-bs-placement="left"
+                                                        title="اضافه به مقایسه">
+                                                        <i class="fa fa fa-industry"></i>
+                                                    </button>
+                                                </section>
+                                            @endguest
+                                            @auth
+                                                @if (
+                                                    $product->compares->contains(function ($compare, $key) {
+                                                        return $compare->id === auth()->user()->compare->id;
+                                                    }))
+                                                    <section class="product-add-to-compare position-relative" style="top: 0">
+                                                        <button type="button" class="btn btn-light btn-sm text-decoration-none"
+                                                            data-url="{{ route('customer.market.add-to-compare', $product) }}"
+                                                            data-bs-toggle="tooltip" data-bs-placement="left"
+                                                            title="حذف از مقایسه">
+                                                            <i class="fa fa fa-industry text-danger"></i>
+                                                        </button>
+                                                    </section>
+                                                @else
+                                                    <section class="product-add-to-compare position-relative" style="top: 0">
+                                                        <button type="button"
+                                                            class="btn btn-light btn-sm text-decoration-none"
+                                                            data-url="{{ route('customer.market.add-to-compare', $product) }}"
+                                                            data-bs-toggle="tooltip" data-bs-placement="left"
+                                                            title="اضافه به مقایسه">
+                                                            <i class="fa fa fa-industry"></i>
+                                                        </button>
+                                                    </section>
+                                                @endif
+                                            @endauth
+                                        </div>
                                         <section>
                                             <section class="cart-product-number d-inline-block ">
                                                 <button class="cart-number cart-number-down" type="button">-</button>
@@ -242,100 +319,7 @@
 
 
 
-    <!-- start product lazy load -->
-    <section class="mb-4">
-        <section class="container-xxl">
-            <section class="row">
-                <section class="col">
-                    <section class="content-wrapper bg-white p-3 rounded-2">
-                        <!-- start vontent header -->
-                        <section class="content-header">
-                            <section class="d-flex justify-content-between align-items-center">
-                                <h2 class="content-header-title">
-                                    <span>کالاهای مرتبط</span>
-                                </h2>
-                                <section class="content-header-link">
-                                    <!--<a href="#">مشاهده همه</a>-->
-                                </section>
-                            </section>
-                        </section>
-                        <!-- start vontent header -->
-                        <section class="lazyload-wrapper">
-                            <section class="lazyload light-owl-nav owl-carousel owl-theme">
-
-                                @foreach ($relatedProducts as $relatedProduct)
-                                    <section class="item">
-                                        <section class="lazyload-item-wrapper">
-                                            <section class="product">
-                                                <section class="product-add-to-cart"><a href="#"
-                                                        data-bs-toggle="tooltip" data-bs-placement="left"
-                                                        title="افزودن به سبد خرید"><i class="fa fa-cart-plus"></i></a>
-                                                </section>
-                                                @guest
-                                                    <section class="product-add-to-favorite">
-                                                        <button class="btn btn-light btn-sm text-decoration-none"
-                                                            data-url="{{ route('customer.market.add-to-favorite', $relatedProduct) }}"
-                                                            data-bs-toggle="tooltip" data-bs-placement="left"
-                                                            title="اضافه از علاقه مندی">
-                                                            <i class="fa fa-heart"></i>
-                                                        </button>
-                                                    </section>
-                                                @endguest
-                                                @auth
-                                                    @if ($relatedProduct->user->contains(auth()->user()->id))
-                                                        <section class="product-add-to-favorite">
-                                                            <button class="btn btn-light btn-sm text-decoration-none"
-                                                                data-url="{{ route('customer.market.add-to-favorite', $relatedProduct) }}"
-                                                                data-bs-toggle="tooltip" data-bs-placement="left"
-                                                                title="حذف از علاقه مندی">
-                                                                <i class="fa fa-heart text-danger"></i>
-                                                            </button>
-                                                        </section>
-                                                    @else
-                                                        <section class="product-add-to-favorite">
-                                                            <button class="btn btn-light btn-sm text-decoration-none"
-                                                                data-url="{{ route('customer.market.add-to-favorite', $relatedProduct) }}"
-                                                                data-bs-toggle="tooltip" data-bs-placement="left"
-                                                                title="اضافه به علاقه مندی">
-                                                                <i class="fa fa-heart"></i>
-                                                            </button>
-                                                        </section>
-                                                    @endif
-                                                @endauth
-                                                <a class="product-link" href="#">
-                                                    <section class="product-image">
-                                                        <img class=""
-                                                            src="{{ asset($relatedProduct->image['indexArray']['medium']) }}"
-                                                            alt="">
-                                                    </section>
-                                                    <section class="product-name">
-                                                        <h3>{{ $relatedProduct->name }}</h3>
-                                                    </section>
-                                                    <section class="product-price-wrapper">
-                                                        <section class="product-price">
-                                                            {{ priceFormat($relatedProduct->price) }} تومان</section>
-                                                    </section>
-                                                    <section class="product-colors">
-                                                        @foreach ($relatedProduct->colors()->get() as $color)
-                                                            <section class="product-colors-item"
-                                                                style="background-color: {{ $color->color }};"></section>
-                                                        @endforeach
-                                                    </section>
-                                                </a>
-                                            </section>
-                                        </section>
-                                    </section>
-                                @endforeach
-
-
-                            </section>
-                        </section>
-                    </section>
-                </section>
-            </section>
-        </section>
-    </section>
-    <!-- end product lazy load -->
+    @include('customer.layouts.partials.related-products')
 
     <!-- start description, features and comments -->
     <section class="mb-4">
@@ -351,9 +335,13 @@
                                         <span class="me-2"><a class="text-decoration-none text-dark"
                                                 href="#introduction">معرفی</a></span>
                                         <span class="me-2"><a class="text-decoration-none text-dark"
-                                                href="#features">ویژگی ها</a></span>
+                                                href="#features">ویژگی
+                                                ها</a></span>
                                         <span class="me-2"><a class="text-decoration-none text-dark"
-                                                href="#comments">دیدگاه ها</a></span>
+                                                href="#comments">دیدگاه
+                                                ها</a></span>
+                                        <span class="me-2"><a class="text-decoration-none text-dark" href="#rating">
+                                                امتیاز ها</a></span>
                                     </h2>
                                     <section class="content-header-link">
                                         <!--<a href="#">مشاهده همه</a>-->
@@ -397,7 +385,8 @@
                                         <tr>
                                             <td>{{ $value->attribute()->first()->name }}</td>
                                             <td>{{ json_decode($value->value)->value }}
-                                                {{ $value->attribute()->first()->unit }}</td>
+                                                {{ $value->attribute()->first()->unit }}
+                                            </td>
                                         </tr>
                                     @endforeach
 
@@ -455,16 +444,6 @@
                                                             action="{{ route('customer.market.add-comment', $product) }}"
                                                             method="post">
                                                             @csrf
-                                                            {{-- <section class="col-6 mb-2">
-                                                        <label for="first_name" class="form-label mb-1">نام</label>
-                                                        <input type="text" class="form-control form-control-sm" id="first_name" placeholder="نام ...">
-                                                    </section>
-
-                                                    <section class="col-6 mb-2">
-                                                        <label for="last_name" class="form-label mb-1">نام خانوادگی</label>
-                                                        <input type="text" class="form-control form-control-sm" id="last_name" placeholder="نام خانوادگی ...">
-                                                    </section> --}}
-
                                                             <section class="col-12 mb-2">
                                                                 <label for="comment" class="form-label mb-1">دیدگاه
                                                                     شما</label>
@@ -490,7 +469,8 @@
                                     <section class="product-comment">
                                         <section class="product-comment-header d-flex justify-content-start">
                                             <section class="product-comment-date">
-                                                {{ jalaliDate($activeComment->created_at) }}</section>
+                                                {{ jalaliDate($activeComment->created_at) }}
+                                            </section>
                                             @php
                                                 $author = $activeComment->user()->first();
                                             @endphp
@@ -538,6 +518,74 @@
 
 
                             </section>
+
+
+
+                            @auth
+                                @if (auth()->user()->isUserPurchedProduct($product->id)->count() > 0)
+                                    <!-- start rating -->
+                                    <section id="rating" class="content-header mt-2 mb-4">
+                                        <section class="d-flex justify-content-between align-items-center">
+                                            <h2 class="content-header-title content-header-title-small">
+                                                امیتاز ها
+                                            </h2>
+                                            <section class="content-header-link">
+                                                <!--<a href="#">مشاهده همه</a>-->
+                                            </section>
+                                        </section>
+                                    </section>
+
+                                    <section class="product-rating mb-4">
+
+                                        <div class="container">
+                                            <h5 class="text-danger">
+                                                امتیاز خود را به این محصول انتخاب نمایید
+                                            </h5>
+                                            <form
+                                                class="starrating risingstar d-flex justify-content-end flex-row-reverse align-items-center"
+                                                action="{{ route('customer.market.add-rate', $product) }}" method="post">
+                                                @csrf
+                                                <div class="mx-3">
+                                                    <button class="btn btn-info btn-sm">ثبت امتیاز</button>
+                                                </div>
+                                                <input type="radio" id="star5" name="rating" value="5" />
+                                                <label for="star5" title="5 star"></label>
+                                                <input type="radio" id="star4" name="rating" value="4" />
+                                                <label for="star4" title="4 star"></label>
+                                                <input type="radio" id="star3" name="rating" value="3" />
+                                                <label for="star3" title="3 star"></label>
+                                                <input type="radio" id="star2" name="rating" value="2" />
+                                                <label for="star2" title="2 star"></label>
+                                                <input type="radio" id="star1" name="rating" value="1" />
+                                                <label for="star1" title="1 star"></label>
+
+                                            </form>
+                                            <h6>
+                                                میانگین امتیاز :
+                                                {{ number_format($product->ratingsAvg(), 1, '/') ??
+                                                    'شما اولین
+                                                                                    امتیاز را ثبت نمایید!!!' }}
+                                            </h6>
+                                            <h6>
+                                                تعداد افراد شرکت کننده :
+                                                {{ $product->ratingsCount() ??
+                                                    'شما اولین امتیاز را ثبت
+                                                                                    نمایید!!!' }}
+                                            </h6>
+                                        </div>
+
+                                    </section>
+                                @endif
+                            @endauth
+                            @guest
+                                <section class="modal-body">
+                                    <p>کاربر گرامی لطفا برای ثبت نظر ابتدا وارد حساب کاربری خود شوید </p>
+                                    <p>لینک ثبت نام و یا ورود
+                                        <a href="{{ route('auth.customer.login-register-form') }}">کلیک
+                                            کنید</a>
+                                    </p>
+                                </section>
+                            @endguest
                         </section>
 
                     </section>
@@ -646,8 +694,8 @@
                         $(element).attr('data-bs-original-title', 'حذف از علاقه مندی ها');
                     } else if (result.status == 2) {
                         $(element).children().first().removeClass('text-danger')
-                        $(element).attr('data-original-title', 'افزودن از علاقه مندی ها');
-                        $(element).attr('data-bs-original-title', 'افزودن از علاقه مندی ها');
+                        $(element).attr('data-original-title', 'افزودن به علاقه مندی ها');
+                        $(element).attr('data-bs-original-title', 'افزودن به علاقه مندی ها');
                     } else if (result.status == 3) {
                         $('.toast').toast('show');
                     }
@@ -655,6 +703,32 @@
             })
         })
     </script>
+
+
+
+    <script>
+        $('.product-add-to-compare button').click(function() {
+            var url = $(this).attr('data-url');
+            var element = $(this);
+            $.ajax({
+                url: url,
+                success: function(result) {
+                    if (result.status == 1) {
+                        $(element).children().first().addClass('text-danger');
+                        $(element).attr('data-original-title', 'حذف از مقایسه ها');
+                        $(element).attr('data-bs-original-title', 'حذف از مقایسه ها');
+                    } else if (result.status == 2) {
+                        $(element).children().first().removeClass('text-danger')
+                        $(element).attr('data-original-title', 'افزودن به مقایسه ها');
+                        $(element).attr('data-bs-original-title', 'افزودن به مقایسه ها');
+                    } else if (result.status == 3) {
+                        $('.toast').toast('show');
+                    }
+                }
+            })
+        })
+    </script>
+
 
     <script>
         //start product introduction, features and comment
