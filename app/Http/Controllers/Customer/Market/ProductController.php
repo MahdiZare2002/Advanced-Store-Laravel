@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Customer\Market;
 
-use App\Http\Controllers\Controller;
-use App\Models\Content\Comment;
-use App\Models\Market\Product;
 use Illuminate\Http\Request;
+use App\Models\Market\Compare;
+use App\Models\Market\Product;
+use App\Models\Content\Comment;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
@@ -21,10 +22,10 @@ class ProductController extends Controller
     public function addComment(Product $product, Request $request)
     {
         $request->validate([
-            'body' => 'required|max:2000',
+            'body' => 'required|max:2000'
         ]);
 
-        $inputs['body'] = str_replace(PHP_EOL, '</br>', $request->body);
+        $inputs['body'] = str_replace(PHP_EOL, '<br/>', $request->body);
         $inputs['author_id'] = Auth::user()->id;
         $inputs['commentable_id'] = $product->id;
         $inputs['commentable_type'] = Product::class;
@@ -32,17 +33,38 @@ class ProductController extends Controller
         return back();
     }
 
+
     public function addToFavorite(Product $product)
     {
         if (Auth::check()) {
-            $product->user()->toggle(Auth::user()->id);
+            $product->user()->toggle([Auth::user()->id]);
             if ($product->user->contains(Auth::user()->id)) {
-                response()->json(['status' => 1]);
+                return response()->json(['status' => 1]);
             } else {
-                response()->json(['status' => 2]);
+                return response()->json(['status' => 2]);
             }
         } else {
-            response()->json(['status' => 3]);
+            return response()->json(['status' => 3]);
+        }
+    }
+
+    public function addToCompare(Product $product)
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($user->compare()->count() > 0) {
+                $userCompareList = $user->compare;
+            } else {
+                $userCompareList = Compare::create(['user_id' => $user->id]);
+            }
+            $product->compares()->toggle([$userCompareList->id]);
+            if ($product->compares->contains($userCompareList->id)) {
+                return response()->json(['status' => 1]);
+            } else {
+                return response()->json(['status' => 2]);
+            }
+        } else {
+            return response()->json(['status' => 3]);
         }
     }
 
