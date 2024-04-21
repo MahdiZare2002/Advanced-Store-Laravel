@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Notification;
 use App\Models\Content\Comment;
 use App\Models\Market\CartItem;
+use App\Models\Setting\Setting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 

@@ -8,8 +8,8 @@
             <section class="d-md-flex justify-content-md-between align-items-md-center py-3">
 
                 <section class="d-flex justify-content-between align-items-center d-md-block">
-                    <a class="text-decoration-none" href="{{ route('customer.home') }}"><img src="assets/images/logo/8.png"
-                            alt="logo"></a>
+                    <a class="text-decoration-none" href="{{ route('customer.home') }}"><img
+                            src="{{ asset($settings->logo) }}" alt="logo"></a>
                     <button class="btn btn-link text-dark d-md-none" type="button" data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                         <i class="fa fa-bars me-1"></i>

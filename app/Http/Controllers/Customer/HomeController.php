@@ -8,6 +8,7 @@ use App\Models\Content\Banner;
 use App\Models\Market\Product;
 use App\Http\Controllers\Controller;
 use App\Models\Market\ProductCategory;
+use App\Models\Setting\Setting;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -20,12 +21,13 @@ class HomeController extends Controller
         $topBanners = Banner::where('position', 1)->where('status', 1)->take(2)->get();
         $middleBanners = Banner::where('position', 2)->where('status', 1)->take(2)->get();
         $bottomBanner = Banner::where('position', 3)->where('status', 1)->first();
-
         $brands = Brand::all();
+        $settings = Setting::first();
+        // dd($settings);
 
         $mostVisitedProducts = Product::latest()->take(10)->get();
         $offerProducts = Product::latest()->take(10)->get();
-        return view('customer.home', compact('slideShowImages', 'topBanners', 'middleBanners', 'bottomBanner', 'brands', 'mostVisitedProducts', 'offerProducts'));
+        return view('customer.home', compact('slideShowImages', 'topBanners', 'middleBanners', 'bottomBanner', 'brands', 'mostVisitedProducts', 'offerProducts', 'settings'));
     }
 
     public function products(Request $request, ProductCategory $category = null)
