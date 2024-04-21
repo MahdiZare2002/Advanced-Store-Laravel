@@ -1,11 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Notify;
+namespace App\Http\Controllers\admin\notify;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Notify\EmailRequest;
+use App\Models\User;
 use App\Models\Notify\Email;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Services\Message\MessageService;
+use App\Http\Requests\Admin\Notify\EmailRequest;
+use App\Http\Services\Message\Email\EmailService;
+use App\Jobs\SendEmailToUsers;
 
 class EmailController extends Controller
 {
@@ -16,7 +20,7 @@ class EmailController extends Controller
      */
     public function index()
     {
-        $emails = Email::orderby('created_at', 'desc')->simplePaginate(15);
+        $emails = Email::orderBy('created_at', 'desc')->simplePaginate(15);
         return view('admin.notify.email.index', compact('emails'));
     }
 
@@ -39,13 +43,11 @@ class EmailController extends Controller
     public function store(EmailRequest $request)
     {
         $inputs = $request->all();
-
         //date fixed
         $realTimestampStart = substr($request->published_at, 0, 10);
         $inputs['published_at'] = date("Y-m-d H:i:s", (int)$realTimestampStart);
-
-        $sms = Email::create($inputs);
-        return redirect()->route('admin.notify.email.index')->with('swal-success', 'اطلاعیه ایمیل جدید شما با موفقیت ثبت شد');
+        $email = Email::create($inputs);
+        return redirect()->route('admin.notify.email.index')->with('swal-success', 'ایمیل شما با موفقیت ثبت شد');
     }
 
     /**
@@ -54,7 +56,7 @@ class EmailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
         //
     }
@@ -80,13 +82,11 @@ class EmailController extends Controller
     public function update(EmailRequest $request, Email $email)
     {
         $inputs = $request->all();
-
         //date fixed
         $realTimestampStart = substr($request->published_at, 0, 10);
         $inputs['published_at'] = date("Y-m-d H:i:s", (int)$realTimestampStart);
-
         $email->update($inputs);
-        return redirect()->route('admin.notify.email.index')->with('swal-success', 'اطلاعیه ایمیل شما با موفقیت تغییر یافت');
+        return redirect()->route('admin.notify.email.index')->with('swal-success', 'ایمیل شما با موفقیت ویرایش شد');
     }
 
     /**
@@ -97,8 +97,8 @@ class EmailController extends Controller
      */
     public function destroy(Email $email)
     {
-        $email->delete();
-        return redirect()->route('admin.notify.email.index')->with('swal-success', 'اطلاعیه ایمیل شما با موفقیت حذف شد');
+        $result = $email->delete();
+        return redirect()->route('admin.notify.email.index')->with('swal-success', 'ایمیل شما با موفقیت حذف شد');
     }
 
 
@@ -116,5 +116,12 @@ class EmailController extends Controller
         } else {
             return response()->json(['status' => false]);
         }
+    }
+
+    public function sendMail(Email $email)
+    {
+        SendEmailToUsers::dispatch($email);
+
+        return back()->with('swal-success', 'ایمیل شما با موفقیت ارسال شد');;
     }
 }

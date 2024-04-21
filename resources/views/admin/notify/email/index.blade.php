@@ -68,6 +68,8 @@
                                             <button class="btn btn-danger btn-sm delete" type="submit"><i
                                                     class="fa fa-trash-alt"></i> حذف</button>
                                         </form>
+                                        <a href="{{ route('admin.notify.email.send-mail', $email) }}"
+                                            class="btn btn-sm btn-primary">ارسال</a>
                                     </td>
                                 </tr>
                             @endforeach
