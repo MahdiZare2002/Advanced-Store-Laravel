@@ -4,7 +4,7 @@
 
 
 <title>{{ $settings->title }}</title>
-<link rel="icon" type="{{ $settings->description }}" href="{{ $settings->icon }}">
+<link rel="icon" type="{{ $settings->description }}" href="{{ asset($settings->icon) }}">
 
 
 <!-- Bootstrap CSS -->
