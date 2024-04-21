@@ -51,7 +51,7 @@ class SendEmailToUsers implements ShouldQueue
             $emailService->setFrom('noreply@example.com', 'example');
             $emailService->setSubject($this->email->subject);
             $emailService->setTo($user->email);
-            $emailService->setEmailFiles($filePaths);
+            // $emailService->setEmailFiles($filePaths);
             $messagesService = new MessageService($emailService);
             $messagesService->send();
         }
