@@ -4,10 +4,15 @@
 
 <h2>Project Screenshots:</h2>
 
-<img src="" alt="" width="100%" height="400/">
+<img src=".\public\screenshots\admin-panel.png" alt="" style="max-width: 100%;">
+<img src=".\public\screenshots\login-register.png" alt="" style="max-width: 100%;">
+<img src=".\public\screenshots\home.png" alt="" style="max-width: 100%;">
+<img src=".\public\screenshots\send-email.png" alt="" style="max-width: 100%;">
+<img src=".\public\screenshots\products.png" alt="" style="max-width: 100%;">
+<img src=".\public\screenshots\cart.png" alt="" style="max-width: 100%;">
+<img src=".\public\screenshots\tickets.png" alt="" style="max-width: 100%;">
+<img src=".\public\screenshots\orders.png" alt="" style="max-width: 100%;">
 
-  
-  
 <h2>🧐 Features</h2>
 
 Here're some of the project's best features:
