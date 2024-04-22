@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Notify;
 
+use App\Models\Notify\SMS;
+use App\Jobs\SendSmsToUsers;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Notify\SMSRequest;
-use App\Models\Notify\SMS;
-use Illuminate\Http\Request;
 
 class SMSController extends Controller
 {
@@ -114,5 +115,12 @@ class SMSController extends Controller
         } else {
             return response()->json(['status' => false]);
         }
+    }
+
+    public function sendSMS(SMS $sms)
+    {
+        SendSmsToUsers::dispatch($sms);
+
+        return back()->with('swal-success', 'پیامک شما با موفقیت ارسال شد');
     }
 }
